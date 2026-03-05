@@ -333,6 +333,8 @@ static bool8 CorpseRun_IsPlayerAtOrFacingMarker(void)
         return TRUE;
 
     GetXYCoordsOneStepInFrontOfPlayer(&facingX, &facingY);
+    facingX -= MAP_OFFSET;
+    facingY -= MAP_OFFSET;
     if (facingX == gSaveBlock1Ptr->corpseRun.markerX
      && facingY == gSaveBlock1Ptr->corpseRun.markerY)
         return TRUE;
