@@ -107,4 +107,8 @@ void CB2_EndSafariBattle(void)
             SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         }
     }
+    else
+    {
+        SetMainCallback2(CB2_ReturnToField);
+    }
 }

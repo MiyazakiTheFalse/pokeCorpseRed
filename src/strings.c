@@ -855,6 +855,17 @@ const u8 gText_StaminaHudLabel[] = _("STA ");
 const u8 gText_ChaseHudInactive[] = _("CHASE: OFF");
 const u8 gText_ChaseHudChasersLabel[] = _("CHASERS ");
 const u8 gText_ChaseHudStepsLabel[] = _("STEPS ");
+const u8 gText_ChaseTutorialIntro[] = _("You're being chased!\p"
+    "Chasers pursue you while CHASE is active.\n"
+    "Reach a safe hub (town/city/indoors)\n"
+    "to end it.\p"
+    "If an encounter starts before the timer\n"
+    "runs out, the chase can re-engage.\n"
+    "Keep moving!");
+const u8 gText_ChaseTutorialReminder[] = _("Hint: if you keep getting caught,\n"
+    "head for a safe hub to reset pressure.\n"
+    "On routes, avoid long grass/water\n"
+    "until you're ready to re-engage.");
 const u8 gText_TrainerCardYen[] = _("¥");
 const u8 gText_TrainerCardPokedex[] = _("POKéDEX");
 const u8 gText_TrainerCardNull[] = _("");
@@ -1072,6 +1083,8 @@ ALIGNED(4) const u8 gText_Ghost[] = _("GHOST");
 const u8 gText_PokemonOnHook[] = _("A POKéMON's on the hook!{PAUSE_UNTIL_PRESS}");
 const u8 gText_NotEvenANibble[] = _("Not even a nibble‥{PAUSE_UNTIL_PRESS}");
 const u8 gText_ItGotAway[] = _("It got away‥{PAUSE_UNTIL_PRESS}");
+const u8 gText_YouGotAway[] = _("You got away.");
+const u8 gText_TheChaseEnded[] = _("The chase ended.");
 const u8 gText_Rooftop2[] = _("ROOFTOP");
 ALIGNED(4) const u8 gString_PokemonFireRed_Staff[] = _("Pokémon FireRed Version\nStaff");
 ALIGNED(4) const u8 gString_PokemonLeafGreen_Staff[] = _("Pokémon LeafGreen Version\nStaff");
