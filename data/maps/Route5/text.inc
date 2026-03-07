@@ -8,5 +8,5 @@ Route5_Text_UnderpassGuard::
 
 Route5_Text_UndergroundPathSign::
     .string "UNDERGROUND PATH\n"
-    .string "CERULEAN CITY - VERMILION CITY$"
-
+    .string "Closed until you pass the ROUTE 6\l"
+    .string "doubles drill.$"

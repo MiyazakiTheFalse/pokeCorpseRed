@@ -1,25 +1,49 @@
 Route6_Text_RickyIntro::
-    .string "Who's there?\n"
-    .string "Quit listening in on us!$"
+    .string "Hold it right there!\p"
+    .string "This is an official doubles readiness\n"
+    .string "check before VERMILION GYM.\p"
+    .string "BROCK says discipline wins battles.\n"
+    .string "Stay focused and hold formation!$"
 
 Route6_Text_RickyDefeat::
-    .string "I just can't win!$"
+    .string "Solid tactics!\n"
+    .string "You kept your line steady!$"
 
 Route6_Text_RickyPostBattle::
-    .string "Whisper…\n"
-    .string "Whisper…$"
+    .string "Certified. You're cleared to challenge\n"
+    .string "LT. SURGE now.\p"
+    .string "We're reopening the ROUTE 5/6\n"
+    .string "underpass right away. Move out!$"
+
+Route6_Text_RickyPostBattleRepeat::
+    .string "You've already passed inspection.\n"
+    .string "Keep your team drilled and sharp.$"
+
+Route6_Text_RickyNotEnoughMons::
+    .string "Field drills run in pairs. Train up\n"
+    .string "until you have two fit POK\xe9MON, then\l"
+    .string "report back.$"
 
 Route6_Text_NancyIntro::
-    .string "Excuse me!\n"
-    .string "This is a private conversation!$"
+    .string "Hey, challenger!\p"
+    .string "MISTY told us to test your nerve\n"
+    .string "before SURGE gets you.\p"
+    .string "If you can keep cool in this doubles\n"
+    .string "drill, you're ready for his pressure.$"
 
 Route6_Text_NancyDefeat::
-    .string "Ugh!\n"
-    .string "I hate losing.$"
+    .string "Nice!\n"
+    .string "You didn't blink once.$"
 
 Route6_Text_NancyPostBattle::
-    .string "Whisper…\n"
-    .string "Whisper…$"
+    .string "That's the confidence check done.\n"
+    .string "You're officially Surge-ready now!\p"
+    .string "And yeah--underpass on ROUTE 5/6\n"
+    .string "is reopening as we speak.$"
+
+Route6_Text_NancyPostBattleRepeat::
+    .string "You passed the drill already.\n"
+    .string "Take that momentum into the GYM.$"
 
 Route6_Text_KeigoIntro::
     .string "There aren't many bugs out here.$"
@@ -41,7 +65,7 @@ Route6_Text_JeffDefeat::
     .string "I couldn't beat your challenge…$"
 
 Route6_Text_JeffPostBattle::
-    .string "I should bring more POKéMON with\n"
+    .string "I should bring more POK\xe9MON with\n"
     .string "me. I'll feel safer that way.$"
 
 Route6_Text_IsabelleIntro::
@@ -63,7 +87,7 @@ Route6_Text_ElijahDefeat::
     .string "You're too good!$"
 
 Route6_Text_ElijahPostBattle::
-    .string "Are my POKéMON weak?\n"
+    .string "Are my POK\xe9MON weak?\n"
     .string "Or, am I just bad?\l"
     .string "Which do you think?$"
 
@@ -77,6 +101,8 @@ Route6_Text_UnderpassGuard::
 
 Route6_Text_UndergroundPathSign::
     .string "UNDERGROUND PATH\n"
+    .string "Closed until you pass the ROUTE 6\l"
+    .string "doubles drill.$"
     .string "CERULEAN CITY - VERMILION CITY$"
 
 Route6_Text_BrockMistyIntro::
