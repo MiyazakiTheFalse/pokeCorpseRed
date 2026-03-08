@@ -93,10 +93,8 @@ Route6_Text_ElijahPostBattle::
 
 
 Route6_Text_UnderpassGuard::
-    .string "Tunnel's still closed for safety.
-"
-    .string "BROCK and MISTY are running drills
-"
+    .string "Tunnel's still closed for safety.\n"
+    .string "BROCK and MISTY are running drills\n"
     .string "until cleanup is done.$"
 
 Route6_Text_UndergroundPathSign::
