@@ -79,8 +79,19 @@ Route12_EventScript_BridgeLeaders::
 	release
 	end
 
+Route12_EventScript_BridgeMidpointCoordTrigger::
+	lockall
+	call Route12_EventScript_TryStartBridgeMidpointEncounter
+	releaseall
+	end
+
 Route12_EventScript_BridgeMidpointBlock::
 	lockall
+	call Route12_EventScript_TryStartBridgeMidpointEncounter
+	releaseall
+	end
+
+Route12_EventScript_TryStartBridgeMidpointEncounter::
 	goto_if_set FLAG_DEFEATED_ROUTE12_KOGA_SABRINA, Route12_EventScript_BridgeMidpointAlreadyCleared
 	call Route12_EventScript_CheckBridgePrerequisites
 	goto_if_eq VAR_RESULT, FALSE, Route12_EventScript_BridgeMidpointPrereqFailed
@@ -88,8 +99,8 @@ Route12_EventScript_BridgeMidpointBlock::
 	applymovement LOCALID_PLAYER, Route12_Movement_PlayerBridgeMidpointCollisionBlock
 	setobjectxy 16, 16, 20
 	setobjectxy 15, 16, 26
-	applymovement 15, Route12_Movement_KogaApproachBridgeMidpoint
 	applymovement 16, Route12_Movement_SabrinaApproachBridgeMidpoint
+	applymovement 15, Route12_Movement_KogaApproachBridgeMidpoint
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Route12_Movement_PlayerBridgeMidpointCollisionUnblock
 	msgbox Route12_Text_SabrinaPsychicDisturbanceIntro, MSGBOX_AUTOCLOSE
@@ -105,18 +116,15 @@ Route12_EventScript_BridgeMidpointBlock::
 	waitmovement 0
 	removeobject 15
 	removeobject 16
-	releaseall
-	end
+	return
 
 Route12_EventScript_BridgeMidpointAlreadyCleared::
 	msgbox Route12_Text_BridgeLeadersStandDown, MSGBOX_AUTOCLOSE
-	releaseall
-	end
+	return
 
 Route12_EventScript_BridgeMidpointPrereqFailed::
 	msgbox Route12_Text_BridgeLeadersStandDown, MSGBOX_AUTOCLOSE
-	releaseall
-	end
+	return
 
 Route12_EventScript_CheckBridgePrerequisites::
 	setvar VAR_RESULT, FALSE

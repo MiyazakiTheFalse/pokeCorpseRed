@@ -335,7 +335,17 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 16,
+      "y": 23,
+      "elevation": 3,
+      "var": "VAR_MAP_SCENE_ROUTE12",
+      "var_value": "0",
+      "script": "Route12_EventScript_BridgeMidpointCoordTrigger"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",
