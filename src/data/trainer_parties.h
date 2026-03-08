@@ -5672,6 +5672,14 @@ static const struct TrainerMonItemCustomMovesAbility sParty_LeaderBrockMisty[] =
 static const struct TrainerMonItemCustomMovesAbility sParty_LeaderSurgeErika[] = {
     {
         .iv = 31,
+        .lvl = 39,
+        .species = SPECIES_TANGELA,
+        .heldItem = ITEM_SITRUS_BERRY,
+        .ability = 0,
+        .moves = {MOVE_GIGA_DRAIN, MOVE_SLEEP_POWDER, MOVE_LEECH_SEED, MOVE_INGRAIN},
+    },
+    {
+        .iv = 31,
         .lvl = 40,
         .species = SPECIES_RAICHU,
         .heldItem = ITEM_MAGNET,
@@ -5680,11 +5688,11 @@ static const struct TrainerMonItemCustomMovesAbility sParty_LeaderSurgeErika[] =
     },
     {
         .iv = 31,
-        .lvl = 39,
-        .species = SPECIES_ELECTRODE,
-        .heldItem = ITEM_SITRUS_BERRY,
+        .lvl = 40,
+        .species = SPECIES_VICTREEBEL,
+        .heldItem = ITEM_MIRACLE_SEED,
         .ability = 0,
-        .moves = {MOVE_THUNDERBOLT, MOVE_SWIFT, MOVE_LIGHT_SCREEN, MOVE_THUNDER_WAVE},
+        .moves = {MOVE_GIGA_DRAIN, MOVE_ACID, MOVE_STUN_SPORE, MOVE_SYNTHESIS},
     },
     {
         .iv = 31,
@@ -5697,26 +5705,18 @@ static const struct TrainerMonItemCustomMovesAbility sParty_LeaderSurgeErika[] =
     {
         .iv = 31,
         .lvl = 40,
-        .species = SPECIES_VICTREEBEL,
+        .species = SPECIES_EXEGGUTOR,
         .heldItem = ITEM_MIRACLE_SEED,
         .ability = 0,
-        .moves = {MOVE_GIGA_DRAIN, MOVE_ACID, MOVE_SLEEP_POWDER, MOVE_STUN_SPORE},
-    },
-    {
-        .iv = 31,
-        .lvl = 40,
-        .species = SPECIES_VILEPLUME,
-        .heldItem = ITEM_MIRACLE_SEED,
-        .ability = 0,
-        .moves = {MOVE_GIGA_DRAIN, MOVE_MOONLIGHT, MOVE_SLEEP_POWDER, MOVE_ACID},
+        .moves = {MOVE_PSYCHIC, MOVE_SLEEP_POWDER, MOVE_LEECH_SEED, MOVE_EXPLOSION},
     },
     {
         .iv = 31,
         .lvl = 39,
-        .species = SPECIES_TANGELA,
+        .species = SPECIES_ELECTRODE,
         .heldItem = ITEM_SITRUS_BERRY,
         .ability = 0,
-        .moves = {MOVE_GIGA_DRAIN, MOVE_SLEEP_POWDER, MOVE_INGRAIN, MOVE_CONSTRICT},
+        .moves = {MOVE_THUNDERBOLT, MOVE_SWIFT, MOVE_LIGHT_SCREEN, MOVE_EXPLOSION},
     },
 };
 
