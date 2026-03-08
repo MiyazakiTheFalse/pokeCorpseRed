@@ -142,11 +142,13 @@ Route12_EventScript_CompleteBridgeMidpointEncounter::
 	setvar VAR_MAP_SCENE_ROUTE12, 1
 	removeobject 15
 	removeobject 16
+	removeobject 19
 	return
 
 Route12_EventScript_PostBattleUnlockShortcut::
 	playse SE_UNLOCK
 	waitse
+	msgbox Route12_Text_BridgeLeadersShortcutUnlock, MSGBOX_AUTOCLOSE
 	playse SE_RS_DOOR
 	waitse
 	delay 16
