@@ -70,9 +70,13 @@ Route12_EventScript_BridgeMidpointBlock::
 	goto_if_set FLAG_ROUTE12_BRIDGE_SHORTCUT_CLEARED, Route12_EventScript_BridgeMidpointAlreadyCleared
 	call Route12_EventScript_CheckBridgePrerequisites
 	goto_if_eq VAR_RESULT, FALSE, Route12_EventScript_BridgeMidpointPrereqFailed
+	applymovement LOCALID_PLAYER, Route12_Movement_PlayerBridgeMidpointCollisionBlock
+	setobjectxy 16, 16, 20
+	setobjectxy 15, 16, 26
 	applymovement 15, Route12_Movement_KogaApproachBridgeMidpoint
 	applymovement 16, Route12_Movement_SabrinaApproachBridgeMidpoint
 	waitmovement 0
+	applymovement LOCALID_PLAYER, Route12_Movement_PlayerBridgeMidpointCollisionUnblock
 	msgbox Route12_Text_SabrinaPsychicDisturbanceIntro, MSGBOX_AUTOCLOSE
 	msgbox Route12_Text_KogaCorruptionWarning, MSGBOX_AUTOCLOSE
 	msgbox Route12_Text_BridgeLeadersPreBattleChallenge, MSGBOX_AUTOCLOSE
@@ -118,13 +122,23 @@ Route12_EventScript_PostBattleUnlockShortcut::
 	return
 
 Route12_Movement_KogaApproachBridgeMidpoint:
-	walk_right
-	walk_right
+	walk_up
+	walk_up
+	face_up
 	step_end
 
 Route12_Movement_SabrinaApproachBridgeMidpoint:
-	walk_left
-	walk_left
+	walk_down
+	walk_down
+	face_down
+	step_end
+
+Route12_Movement_PlayerBridgeMidpointCollisionBlock:
+	lock_facing_direction
+	step_end
+
+Route12_Movement_PlayerBridgeMidpointCollisionUnblock:
+	unlock_facing_direction
 	step_end
 
 Route12_Movement_KogaExitAfterBridgeBattle:
