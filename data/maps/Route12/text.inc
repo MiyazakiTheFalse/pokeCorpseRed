@@ -109,6 +109,39 @@ Route12_Text_RouteSign::
 Route12_Text_SportfishingArea::
     .string "SPORTFISHING AREA$"
 
+Route12_Text_KogaIntro::
+    .string "KOGA: Hah! You tracked me here?\p"
+    .string "Then witness ninja venom in a\n"
+    .string "linked battle!$"
+
+Route12_Text_KogaDefeat::
+    .string "KOGA: Tch! Your teamwork pierced\n"
+    .string "my smokescreen!$"
+
+Route12_Text_KogaPostBattle::
+    .string "KOGA: You and your partner fight\n"
+    .string "with discipline. Impressive.$"
+
+Route12_Text_KogaNotEnoughMons::
+    .string "KOGA: A linked battle demands\n"
+    .string "two POKéMON at minimum.$"
+
+Route12_Text_SabrinaIntro::
+    .string "SABRINA: I foresaw your arrival.\p"
+    .string "KOGA and I will test your mind\n"
+    .string "and tactics together.$"
+
+Route12_Text_SabrinaDefeat::
+    .string "SABRINA: Your focus exceeded even\n"
+    .string "my prediction…$"
+
+Route12_Text_SabrinaPostBattle::
+    .string "SABRINA: Psychic timing and ninja\n"
+    .string "timing did not suffice.$"
+
+Route12_Text_SabrinaNotEnoughMons::
+    .string "SABRINA: A paired match requires\n"
+    .string "at least two POKéMON.$"
 Route12_Text_JesIntro::
     .string "JES: If I win, I'm going to\n"
     .string "propose to GIA.$"
