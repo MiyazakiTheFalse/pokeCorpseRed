@@ -204,6 +204,11 @@ Route12_Text_BridgeLeadersPreBattleChallenge::
     .string "KOGA & SABRINA: Show us your resolve\n"
     .string "in a synchronized double battle!$"
 
+
+Route12_Text_BridgeLeadersShortcutUnlock::
+    .string "A heavy rumble echoes from the cliff…\n"
+    .string "Something shifted near the shortcut!$"
+
 Route12_Text_BridgeLeadersHiddenPathReveal::
     .string "KOGA: The lock gives way. A hidden\n"
     .string "path now opens through the cliff.$"
