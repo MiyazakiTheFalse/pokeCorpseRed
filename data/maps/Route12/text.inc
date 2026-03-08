@@ -109,36 +109,36 @@ Route12_Text_RouteSign::
 Route12_Text_SportfishingArea::
     .string "SPORTFISHING AREA$"
 
-Route12_Text_JesIntro::
-    .string "JES: If I win, I'm going to\n"
-    .string "propose to GIA.$"
+Route12_Text_KogaIntro::
+    .string "KOGA: Hah! You tracked me here?\p"
+    .string "Then witness ninja venom in a\n"
+    .string "linked battle!$"
 
-Route12_Text_JesDefeat::
-    .string "JES: Oh, please, why couldn't you\n"
-    .string "let us win?$"
+Route12_Text_KogaDefeat::
+    .string "KOGA: Tch! Your teamwork pierced\n"
+    .string "my smokescreen!$"
 
-Route12_Text_JesPostBattle::
-    .string "JES: Oh, GIA, forgive me,\n"
-    .string "my love!$"
+Route12_Text_KogaPostBattle::
+    .string "KOGA: You and your partner fight\n"
+    .string "with discipline. Impressive.$"
 
-Route12_Text_JesNotEnoughMons::
-    .string "JES: GIA and I, we'll be\n"
-    .string "together forever.\p"
-    .string "We won't battle unless you have\n"
-    .string "two POKéMON of your own.$"
+Route12_Text_KogaNotEnoughMons::
+    .string "KOGA: A linked battle demands\n"
+    .string "two POKéMON at minimum.$"
 
-Route12_Text_GiaIntro::
-    .string "GIA: Hey, JES…\p"
-    .string "If we win, I'll marry you!$"
+Route12_Text_SabrinaIntro::
+    .string "SABRINA: I foresaw your arrival.\p"
+    .string "KOGA and I will test your mind\n"
+    .string "and tactics together.$"
 
-Route12_Text_GiaDefeat::
-    .string "GIA: Oh, but why?$"
+Route12_Text_SabrinaDefeat::
+    .string "SABRINA: Your focus exceeded even\n"
+    .string "my prediction…$"
 
-Route12_Text_GiaPostBattle::
-    .string "GIA: JES, you silly!\n"
-    .string "You ruined this!$"
+Route12_Text_SabrinaPostBattle::
+    .string "SABRINA: Psychic timing and ninja\n"
+    .string "timing did not suffice.$"
 
-Route12_Text_GiaNotEnoughMons::
-    .string "GIA: I can't bear to battle\n"
-    .string "without my JES!\p"
-    .string "Don't you have one more POKéMON?$"
+Route12_Text_SabrinaNotEnoughMons::
+    .string "SABRINA: A paired match requires\n"
+    .string "at least two POKéMON.$"
