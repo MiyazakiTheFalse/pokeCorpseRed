@@ -746,6 +746,7 @@
 #define TRAINER_CHAMPION_REMATCH_BULBASAUR       740
 #define TRAINER_CHAMPION_REMATCH_CHARMANDER      741
 #define TRAINER_CUE_BALL_PAXTON                  742
+#define TRAINER_LEADER_BROCK_MISTY               743
 #define TRAINER_ROUTE12_KOGA                     743
 #define TRAINER_ROUTE12_SABRINA                  744
 

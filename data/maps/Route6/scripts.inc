@@ -1,6 +1,58 @@
 Route6_MapScripts::
 	.byte 0
 
+Route6_EventScript_Brock::
+	lock
+	faceplayer
+	goto_if_set FLAG_DEFEATED_BROCK_MISTY_DUO, Route6_EventScript_BrockMistyPostBattle
+	goto Route6_EventScript_BrockMistyBattle
+	end
+
+Route6_EventScript_Misty::
+	lock
+	faceplayer
+	goto_if_set FLAG_DEFEATED_BROCK_MISTY_DUO, Route6_EventScript_BrockMistyPostBattle
+	goto Route6_EventScript_BrockMistyBattle
+	end
+
+Route6_EventScript_BrockMistyBattle::
+	setvar VAR_0x8004, 4
+	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
+	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	trainerbattle_double TRAINER_LEADER_BROCK_MISTY, Route6_Text_BrockMistyIntro, Route6_Text_BrockMistyDefeat, Route6_Text_BrockMistyNotEnoughMons
+	setflag FLAG_DEFEATED_BROCK_MISTY_DUO
+	setflag FLAG_HIDE_ROUTE5_ROUTE6_UNDERPASS_GUARDS
+	goto_if_set FLAG_GOT_MYSTIC_WATER_FROM_BROCK_MISTY_DUO, Route6_EventScript_BrockMistyPostBattle
+	checkitemspace ITEM_MYSTIC_WATER
+	goto_if_eq VAR_RESULT, FALSE, Route6_EventScript_BrockMistyNoRoomForReward
+	giveitem_msg Route6_Text_ReceivedMysticWaterFromBrockAndMisty, ITEM_MYSTIC_WATER
+	setflag FLAG_GOT_MYSTIC_WATER_FROM_BROCK_MISTY_DUO
+	goto Route6_EventScript_BrockMistyPostBattle
+	end
+
+Route6_EventScript_BrockMistyNoRoomForReward::
+	msgbox Route6_Text_NoRoomForMysticWater
+	release
+	end
+
+Route6_EventScript_BrockMistyPostBattle::
+	msgbox Route6_Text_BrockMistyPostBattle
+	release
+	end
+
+
+Route6_EventScript_UnderpassGuard::
+	lock
+	faceplayer
+	msgbox Route6_Text_UnderpassGuard
+	release
+	end
+
 Route6_EventScript_UndergroundPathSign::
+	goto_if_set FLAG_HIDE_ROUTE5_ROUTE6_UNDERPASS_GUARDS, Route6_EventScript_UndergroundPathSignOpen
 	msgbox Route6_Text_UndergroundPathSign, MSGBOX_SIGN
+	end
+
+Route6_EventScript_UndergroundPathSignOpen::
+	msgbox Route6_Text_UndergroundPathSignOpen, MSGBOX_SIGN
 	end
