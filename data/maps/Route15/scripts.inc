@@ -8,11 +8,11 @@ Route15_OnResume::
 
 Route15_EventScript_UpdateHiddenPassVisual::
 	goto_if_set FLAG_DEFEATED_ROUTE12_KOGA_SABRINA, Route15_EventScript_SetHiddenPassVisualOpen
-	setmetatile 6, 12, METATILE_General_ThinTreeTop_Grass, 1
+	setmetatile 6, 12, METATILE_FuchsiaCity_SafariZoneTreeTopMiddle_Grass, 1
 	return
 
 Route15_EventScript_SetHiddenPassVisualOpen::
-	setmetatile 6, 12, METATILE_General_Plain_Grass, 0
+	setmetatile 6, 12, METATILE_FuchsiaCity_Door, 0
 	return
 
 Route15_EventScript_RouteSign::
@@ -43,7 +43,7 @@ Route15_EventScript_HiddenPassEntrance::
 Route15_EventScript_HiddenPassEntranceTraverse::
 	call Route15_EventScript_SetHiddenPassVisualOpen
 	special DrawWholeMapView
-	warp MAP_ROUTE12_CLIFF_PASS, 78, 3
+	warp MAP_ROUTE12_CLIFF_PASS, 6, 3
 	waitstate
 	end
 
