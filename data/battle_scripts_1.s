@@ -4377,6 +4377,10 @@ BattleScript_ActionSelectionItemsCantBeUsed::
 	printselectionstring STRINGID_ITEMSCANTBEUSEDNOW
 	endselectionscript
 
+BattleScript_ActionSelectionGiovanniMemoryNoCapture::
+	printselectionstring STRINGID_GIOVANNIMEMORY_NOCAPTURE
+	endselectionscript
+
 BattleScript_FlushMessageBox::
 	printstring STRINGID_EMPTYSTRING3
 	return

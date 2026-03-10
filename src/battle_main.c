@@ -18,6 +18,7 @@
 #include "graphics.h"
 #include "help_system.h"
 #include "item.h"
+#include "field_specials.h"
 #include "link.h"
 #include "link_rfu.h"
 #include "load_save.h"
@@ -3372,6 +3373,17 @@ static void HandleTurnActionSelectionState(void)
                     else
                     {
                         gLastUsedItem = (gBattleBufferB[gActiveBattler][1] | (gBattleBufferB[gActiveBattler][2] << 8));
+                        if ((gLastUsedItem <= ITEM_PREMIER_BALL)
+                         && IsGiovanniMemoryModeCaptureLocked())
+                        {
+                            gSelectionBattleScripts[gActiveBattler] = BattleScript_ActionSelectionGiovanniMemoryNoCapture;
+                            gBattleCommunication[gActiveBattler] = STATE_SELECTION_SCRIPT;
+                            *(gBattleStruct->selectionScriptFinished + gActiveBattler) = FALSE;
+                            *(gBattleStruct->stateIdAfterSelScript + gActiveBattler) = STATE_BEFORE_ACTION_CHOSEN;
+                            gBattleBufferB[gActiveBattler][1] = 0;
+                            gBattleBufferB[gActiveBattler][2] = 0;
+                            return;
+                        }
                         gBattleCommunication[gActiveBattler]++;
                     }
                     break;

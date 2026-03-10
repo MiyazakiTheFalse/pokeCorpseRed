@@ -2709,6 +2709,7 @@ u16 StartGiovanniMemoryMode(void)
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER1_STARTED);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ABORTED);
+    FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
 
     gPlayerPartyCount = 1;
     ZeroPlayerPartyMons();
@@ -2738,6 +2739,7 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
 u16 AbortGiovanniMemoryMode(void)
 {
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ABORTED);
+    FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
     return TRUE;
 }
 
@@ -2771,6 +2773,7 @@ u16 RestoreGiovanniMemoryModeSnapshot(void)
 
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_RESTORED);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE);
+    FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
     sGiovanniMemoryModeSnapshot.valid = FALSE;
     return TRUE;
 }
@@ -2783,4 +2786,15 @@ u16 IsGiovanniMemoryModeReadyForBattle(void)
         return TRUE;
 
     return FALSE;
+}
+
+bool8 IsGiovanniMemoryModeCaptureLocked(void)
+{
+    return FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
+}
+
+u16 ClearGiovanniMemoryModeCaptureLock(void)
+{
+    FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
+    return TRUE;
 }

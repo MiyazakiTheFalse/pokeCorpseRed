@@ -476,6 +476,7 @@ static const u8 sText_GotchaPkmnCaught[] = _("Gotcha!\n{B_OPPONENT_MON1_NAME} wa
 static const u8 sText_GotchaPkmnCaught2[] = _("Gotcha!\n{B_OPPONENT_MON1_NAME} was caught!{WAIT_SE}{PLAY_BGM MUS_CAUGHT}{PAUSE 127}");
 static const u8 sText_GiveNicknameCaptured[] = _("Give a nickname to the\ncaptured {B_OPPONENT_MON1_NAME}?");
 static const u8 sText_PkmnTooStrongToFollow[] = _("{B_OPPONENT_MON1_NAME} is too strong\nto follow!");
+static const u8 sText_GiovanniMemoryNoCapture[] = _("{B_PLAYER_NAME} heard GIOVANNI's voice:\n\"No captures. This memory isn't yours to keep.\"");
 static const u8 sText_PkmnSentToPC[] = _("{B_OPPONENT_MON1_NAME} was sent to\n{B_PC_CREATOR_NAME} PC.");
 static const u8 sText_Someones[] = _("someone's");
 static const u8 sText_Bills[] = _("BILL's");
@@ -890,7 +891,8 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_ST
     [STRINGID_TRAINER1WINTEXT - BATTLESTRINGS_TABLE_START]               = sText_Trainer1WinText,
     [STRINGID_TRAINER1MON2COMEBACK - BATTLESTRINGS_TABLE_START]          = sText_Trainer1RecallPkmn2,
     [STRINGID_TRAINER1MON1AND2COMEBACK - BATTLESTRINGS_TABLE_START]      = sText_Trainer1RecallBoth,
-    [STRINGID_PKMNTOOSTRONGTOFOLLOW - BATTLESTRINGS_TABLE_START]         = sText_PkmnTooStrongToFollow
+    [STRINGID_PKMNTOOSTRONGTOFOLLOW - BATTLESTRINGS_TABLE_START]         = sText_PkmnTooStrongToFollow,
+    [STRINGID_GIOVANNIMEMORY_NOCAPTURE - BATTLESTRINGS_TABLE_START]      = sText_GiovanniMemoryNoCapture
 };
 
 const u16 gMissStringIds[] =
