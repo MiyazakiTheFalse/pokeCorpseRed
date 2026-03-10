@@ -202,6 +202,7 @@ extern const u8 BattleScript_BerryConfuseHealEnd2[];
 extern const u8 BattleScript_BerryStatRaiseEnd2[];
 extern const u8 BattleScript_BerryFocusEnergyEnd2[];
 extern const u8 BattleScript_ActionSelectionItemsCantBeUsed[];
+extern const u8 BattleScript_ActionSelectionGiovanniMemoryNoCapture[];
 extern const u8 BattleScript_AskIfWantsToForfeitMatch[];
 extern const u8 BattleScript_PrintPlayerForfeited[];
 extern const u8 BattleScript_PrintPlayerForfeitedLinkBattle[];

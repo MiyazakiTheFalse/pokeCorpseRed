@@ -20,6 +20,7 @@
 #include "fieldmap.h"
 #include "field_control_avatar.h"
 #include "field_player_avatar.h"
+#include "field_specials.h"
 #include "field_screen_effect.h"
 #include "field_message_box.h"
 #include "vs_seeker.h"
@@ -467,6 +468,8 @@ static void CB2_EndScriptedWildBattle(void)
     ChaseStamina_OnWildBattleEnded(gBattleOutcome, gBattleTypeFlags);
     CpuFill16(0, (void *)BG_PLTT, BG_PLTT_SIZE);
     ResetOamRange(0, 128);
+    if (gBattleOutcome == B_OUTCOME_CAUGHT && IsGiovanniMemoryModeCaptureLocked())
+        gBattleOutcome = B_OUTCOME_WON;
     if (IsPlayerDefeated(gBattleOutcome) == TRUE)
         SetMainCallback2(CB2_WhiteOut);
     else

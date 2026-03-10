@@ -463,5 +463,6 @@ gSpecials::
 	def_special SetGiovanniMemoryModeChapter3Complete
 	def_special AbortGiovanniMemoryMode
 	def_special RestoreGiovanniMemoryModeSnapshot
+	def_special ClearGiovanniMemoryModeCaptureLock
 	def_special IsGiovanniMemoryModeReadyForBattle
 gSpecialsEnd::

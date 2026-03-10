@@ -8,6 +8,7 @@ ViridianCity_Gym_OnTransition::
 
 ViridianCity_Gym_EventScript_RestoreGiovanniMemoryModeOnTransition::
 	special RestoreGiovanniMemoryModeSnapshot
+	special ClearGiovanniMemoryModeCaptureLock
 	end
 
 ViridianCity_Gym_EventScript_Giovanni::
@@ -34,6 +35,7 @@ ViridianCity_Gym_EventScript_Giovanni::
 
 ViridianCity_Gym_EventScript_AbortGiovanniMemoryMode::
 	special AbortGiovanniMemoryMode
+	special ClearGiovanniMemoryModeCaptureLock
 	special RestoreGiovanniMemoryModeSnapshot
 	release
 	end
@@ -55,11 +57,13 @@ ViridianCity_Gym_EventScript_GiveTM26::
 	giveitem_msg ViridianCity_Gym_Text_ReceivedTM26FromGiovanni, ITEM_TM26
 	setflag FLAG_GOT_TM26_FROM_GIOVANNI
 	msgbox ViridianCity_Gym_Text_ExplainTM26
+	special ClearGiovanniMemoryModeCaptureLock
 	release
 	end
 
 ViridianCity_Gym_EventScript_NoRoomForTM26::
 	msgbox ViridianCity_Gym_Text_YouDoNotHaveSpace
+	special ClearGiovanniMemoryModeCaptureLock
 	release
 	end
 
