@@ -26,6 +26,21 @@ SilphCo_11F_EventScript_MemorySpaceMarker::
 	msgbox SilphCo_11F_Text_MemorySpaceMarker, MSGBOX_AUTOCLOSE
 	end
 
+
+SilphCo_11F_EventScript_MemoryFieldAide::
+	lockall
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_11F_EventScript_MemoryFieldAideOffline
+	msgbox SilphCo_11F_Text_MemoryFieldAideIntro
+	special HealPlayerParty
+	msgbox SilphCo_11F_Text_MemoryFieldAideDone
+	releaseall
+	end
+
+SilphCo_11F_EventScript_MemoryFieldAideOffline::
+	msgbox SilphCo_11F_Text_MemoryFieldAideOffline
+	releaseall
+	end
+
 SilphCo_11F_OnLoad::
 	call_if_unset FLAG_SILPH_11F_DOOR, EventScript_Close11FDoor
 	end

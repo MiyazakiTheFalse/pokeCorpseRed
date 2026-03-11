@@ -29,6 +29,21 @@ ViridianCity_Gym_EventScript_RestoreGiovanniMemoryModeOnTransition::
 	special ClearGiovanniMemoryModeCaptureLock
 	end
 
+
+ViridianCity_Gym_EventScript_MemoryMedicKit::
+	lockall
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemoryMedicKitOffline
+	msgbox ViridianCity_Gym_Text_MemoryMedicKitIntro
+	special HealPlayerParty
+	msgbox ViridianCity_Gym_Text_MemoryMedicKitDone
+	releaseall
+	end
+
+ViridianCity_Gym_EventScript_MemoryMedicKitOffline::
+	msgbox ViridianCity_Gym_Text_MemoryMedicKitOffline
+	releaseall
+	end
+
 ViridianCity_Gym_EventScript_Giovanni::
 	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemorySpaceMarker
 	lockall

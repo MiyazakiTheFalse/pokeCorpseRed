@@ -65,3 +65,16 @@ RocketHideout_B4F_Text_MemoryExitBlocked::
 RocketHideout_B4F_Text_MemoryChapterMismatch::
     .string "[MEMORY] The chapter state is unstable.\n"
     .string "Please continue from the current fragment.$"
+
+
+RocketHideout_B4F_Text_MemoryMedicTerminalIntro::
+    .string "[MEMORY] ROCKET medic terminal online.\n"
+    .string "Emergency stabilization in progress.$"
+
+RocketHideout_B4F_Text_MemoryMedicTerminalDone::
+    .string "[MEMORY] Team restored. This terminal is\n"
+    .string "the chapter-safe fallback point.$"
+
+RocketHideout_B4F_Text_MemoryMedicTerminalOffline::
+    .string "The terminal is dead. It only responds\n"
+    .string "inside GIOVANNI's memory fragment.$"

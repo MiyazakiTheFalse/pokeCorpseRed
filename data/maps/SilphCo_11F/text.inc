@@ -101,3 +101,16 @@ SilphCo_11F_Text_MemoryExitBlocked::
 SilphCo_11F_Text_MemoryChapterMismatch::
     .string "[MEMORY] The chapter state is unstable.\n"
     .string "Please continue from the current fragment.$"
+
+
+SilphCo_11F_Text_MemoryFieldAideIntro::
+    .string "[MEMORY] Field aide online. Emergency\n"
+    .string "recovery authorized for this operation.$"
+
+SilphCo_11F_Text_MemoryFieldAideDone::
+    .string "[MEMORY] Team condition restored. Use this\n"
+    .string "point before confronting GIOVANNI.$"
+
+SilphCo_11F_Text_MemoryFieldAideOffline::
+    .string "This aide is a projection. It only\n"
+    .string "exists during GIOVANNI memory chapters.$"

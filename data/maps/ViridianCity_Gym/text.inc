@@ -177,3 +177,16 @@ ViridianCity_Gym_Text_MemoryExitBlocked::
 ViridianCity_Gym_Text_MemoryChapterMismatch::
     .string "[MEMORY] The chapter state is unstable.\n"
     .string "Please continue from the current fragment.$"
+
+
+ViridianCity_Gym_Text_MemoryMedicKitIntro::
+    .string "[MEMORY] Rocket medic cache unlocked.\n"
+    .string "Stabilizing your team for the finale.$"
+
+ViridianCity_Gym_Text_MemoryMedicKitDone::
+    .string "[MEMORY] Recovery complete. Standard\n"
+    .string "CENTERS remain inaccessible in this echo.$"
+
+ViridianCity_Gym_Text_MemoryMedicKitOffline::
+    .string "The cache is sealed. It only unlocks in\n"
+    .string "GIOVANNI's memory reconstruction.$"

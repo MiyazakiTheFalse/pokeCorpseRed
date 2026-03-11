@@ -63,12 +63,18 @@ Text_WhitedOutCorpseRunRepeat::
 	.string "{PLAYER} whited out!$"
 
 Text_CorpseRun_BlockMart::
-	.string "You can't shop while your SOULS are\n"
-	.string "scattered. Retrieve them first.$"
+		.string "You can't shop while your SOULS are\n"
+		.string "scattered. Retrieve them first.\p"
+		.string "In GIOVANNI memory chapters, use ROCKET\n"
+		.string "recovery points instead of MARTS.$"
+
 
 Text_CorpseRun_BlockHeal::
-	.string "The healing machine won't respond\n"
-	.string "until you reclaim your SOULS.$"
+		.string "The healing machine won't respond\n"
+		.string "until you reclaim your SOULS.\p"
+		.string "In GIOVANNI memory chapters, standard\n"
+		.string "CENTERS are locked out by the projection.$"
+
 
 Text_CorpseRun_BlockPC::
 	.string "The PC connection is unstable while\n"

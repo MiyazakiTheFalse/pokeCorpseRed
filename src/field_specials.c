@@ -3005,28 +3005,28 @@ bool8 HandleGiovanniMemoryModeWhiteout(void)
     if (!FlagGet(FLAG_GIO_MEM_CH1_COMPLETE))
     {
         VarSet(VAR_GIO_CHAPTER, 1);
-        SetWarpDestination(MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F), MAP_NUM(MAP_ROCKET_HIDEOUT_B4F), WARP_ID_NONE, 19, 6);
+        SetWarpDestination(MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F), MAP_NUM(MAP_ROCKET_HIDEOUT_B4F), WARP_ID_NONE, 18, 6);
         return TRUE;
     }
 
     if (!FlagGet(FLAG_GIO_MEM_CH2_COMPLETE))
     {
         VarSet(VAR_GIO_CHAPTER, 2);
-        SetWarpDestination(MAP_GROUP(MAP_SILPH_CO_11F), MAP_NUM(MAP_SILPH_CO_11F), WARP_ID_NONE, 6, 14);
+        SetWarpDestination(MAP_GROUP(MAP_SILPH_CO_11F), MAP_NUM(MAP_SILPH_CO_11F), WARP_ID_NONE, 6, 13);
         return TRUE;
     }
 
     if (FlagGet(FLAG_GIO_MEM_CH3_COMPLETE))
     {
         VarSet(VAR_GIO_CHAPTER, 3);
-        SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 17, 21);
+        SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 17, 20);
         return TRUE;
     }
 
     AbortGiovanniMemoryMode();
     RestoreGiovanniMemoryModeSnapshot();
     ReconcileGiovanniMemoryModeOutcome();
-    SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 17, 21);
+    SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 17, 20);
     return TRUE;
 }
 
@@ -3044,7 +3044,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
         gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F);
         gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_ROCKET_HIDEOUT_B4F);
         gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
-        gSaveBlock1Ptr->location.x = 19;
+        gSaveBlock1Ptr->location.x = 18;
         gSaveBlock1Ptr->location.y = 6;
     }
     else if (!FlagGet(FLAG_GIO_MEM_CH2_COMPLETE))
@@ -3054,7 +3054,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
         gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_SILPH_CO_11F);
         gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
         gSaveBlock1Ptr->location.x = 6;
-        gSaveBlock1Ptr->location.y = 14;
+        gSaveBlock1Ptr->location.y = 13;
     }
     else
     {
@@ -3063,7 +3063,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
         gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_VIRIDIAN_CITY_GYM);
         gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
         gSaveBlock1Ptr->location.x = 17;
-        gSaveBlock1Ptr->location.y = 21;
+        gSaveBlock1Ptr->location.y = 20;
     }
 
     gSaveBlock1Ptr->pos.x = gSaveBlock1Ptr->location.x;
