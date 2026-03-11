@@ -26,6 +26,20 @@ RocketHideout_B4F_EventScript_MemorySpaceMarker::
 	msgbox RocketHideout_B4F_Text_MemorySpaceMarker, MSGBOX_AUTOCLOSE
 	end
 
+RocketHideout_B4F_EventScript_MemoryMedicTerminal::
+	lockall
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, RocketHideout_B4F_EventScript_MemoryMedicTerminalOffline
+	msgbox RocketHideout_B4F_Text_MemoryMedicTerminalIntro
+	special HealPlayerParty
+	msgbox RocketHideout_B4F_Text_MemoryMedicTerminalDone
+	releaseall
+	end
+
+RocketHideout_B4F_EventScript_MemoryMedicTerminalOffline::
+	msgbox RocketHideout_B4F_Text_MemoryMedicTerminalOffline
+	releaseall
+	end
+
 RocketHideout_B4F_OnLoad::
 	setvar NUM_DOOR_GRUNTS_DEFEATED, 0
 	call_if_defeated TRAINER_TEAM_ROCKET_GRUNT_16, RocketHideout_B4F_EventScript_CountGruntDefeated
