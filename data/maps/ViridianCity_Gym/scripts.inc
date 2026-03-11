@@ -51,11 +51,16 @@ ViridianCity_Gym_EventScript_Giovanni::
 	setvar VAR_0x8004, 4
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE, ViridianCity_Gym_EventScript_GiovanniStartBattle
 	specialvar VAR_RESULT, StartGiovanniMemoryMode
 	goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_AbortGiovanniMemoryMode
-	special SetGiovanniMemoryModeChapter3Complete
-	specialvar VAR_RESULT, RestoreGiovanniMemoryModeSnapshot
-	goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_AbortGiovanniMemoryMode
+	fadescreen FADE_TO_BLACK
+	warp MAP_ROCKET_HIDEOUT_B4F, 18, 6
+	waitstate
+	release
+	end
+
+ViridianCity_Gym_EventScript_GiovanniStartBattle::
 	specialvar VAR_RESULT, IsGiovanniMemoryModeReadyForBattle
 	goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_AbortGiovanniMemoryMode
 	trainerbattle_single TRAINER_LEADER_GIOVANNI, ViridianCity_Gym_Text_GiovanniIntro, ViridianCity_Gym_Text_GiovanniDefeat, ViridianCity_Gym_EventScript_DefeatedGiovanni, NO_MUSIC

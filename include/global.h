@@ -756,6 +756,45 @@ struct ExternalEventFlags
 
 } __attribute__((packed));/*size = 0x15*/
 
+
+struct GiovanniMemoryModeFlagSnapshot
+{
+    bool8 hideMiscKantoRockets;
+    bool8 defeatedLeaderGiovanni;
+    bool8 gotTm26FromGiovanni;
+    bool8 hideViridianGiovanni;
+    bool8 hideHideoutGiovanni;
+    bool8 hideCeruleanRocket;
+    bool8 hideSaffronRockets;
+    bool8 hideCeladonRockets;
+    bool8 hideSaffronCivilians;
+    bool8 hideTowerRocket1;
+    bool8 hideTowerRocket2;
+    bool8 hideTowerRocket3;
+    bool8 rescuedMrFuji;
+};
+
+struct GiovanniMemoryModeSnapshot
+{
+    bool8 valid;
+    u8 playerPartyCount;
+    struct Pokemon playerParty[PARTY_SIZE];
+    u32 money;
+    u16 coins;
+    struct ItemSlot bagPocket_Items[BAG_ITEMS_COUNT];
+    struct ItemSlot bagPocket_KeyItems[BAG_KEYITEMS_COUNT];
+    struct ItemSlot bagPocket_PokeBalls[BAG_POKEBALLS_COUNT];
+    struct ItemSlot bagPocket_TMHM[BAG_TMHM_COUNT];
+    struct ItemSlot bagPocket_Berries[BAG_BERRIES_COUNT];
+    struct WarpData location;
+    struct WarpData continueGameWarp;
+    struct WarpData dynamicWarp;
+    struct WarpData lastHealLocation;
+    struct WarpData escapeWarp;
+    struct Coords16 pos;
+    struct GiovanniMemoryModeFlagSnapshot flags;
+};
+
 struct CorpseRunPartySnapshot
 {
     u16 species;
@@ -879,6 +918,7 @@ struct SaveBlock1
     /*0x3D24*/ u8 unused_3D24[16];
     /*0x3D34*/ u32 towerChallengeId;
     /*0x3D38*/ struct TrainerTower trainerTower[NUM_TOWER_CHALLENGE_TYPES];
+    struct GiovanniMemoryModeSnapshot giovanniMemorySnapshot;
     u8 staminaLevel;
     u8 staminaCurrent;
     struct
