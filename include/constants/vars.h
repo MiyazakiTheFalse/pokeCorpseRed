@@ -192,7 +192,7 @@
 
 
 #define VAR_MAP_SCENE_ROUTE12       0x408C
-#define VAR_0x408D                 0x408D
+#define VAR_GIO_CHAPTER            0x408D
 #define VAR_0x408E                 0x408E
 #define VAR_0x408F                 0x408F
 #define VAR_MODE_GIOVANNI_MEMORY   0x4090

@@ -173,3 +173,7 @@ ViridianCity_Gym_Text_MemorySpaceMarker::
 ViridianCity_Gym_Text_MemoryExitBlocked::
     .string "[MEMORY] The gym doors open to nothing.\n"
     .string "Finish this memory first.$"
+
+ViridianCity_Gym_Text_MemoryChapterMismatch::
+    .string "[MEMORY] The chapter state is unstable.\n"
+    .string "Please continue from the current fragment.$"

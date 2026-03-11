@@ -62,6 +62,7 @@ RocketHideout_B4F_EventScript_Giovanni::
 RocketHideout_B4F_EventScript_SetMemoryCeladonOutcome::
 	setflag FLAG_GIO_MEM_CH1_COMPLETE
 	setflag FLAG_GIO_MEM_CH2_STARTED
+	setvar VAR_GIO_CHAPTER, 2
 	setflag FLAG_GIO_MEM_HIDE_CELADON_ROCKETS
 	setdynamicwarp MAP_SILPH_CO_11F, 5, 14
 	return
@@ -156,6 +157,14 @@ RocketHideout_B4F_EventScript_MemoryExitGuard::
 	goto_if_ne VAR_CHAPTER_ID, 1, RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub
 	lockall
 	msgbox RocketHideout_B4F_Text_MemoryExitBlocked
+	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
+	releaseall
+	end
+
+RocketHideout_B4F_EventScript_MemoryExitGuard_Mismatch::
+	lockall
+	msgbox RocketHideout_B4F_Text_MemoryChapterMismatch
 	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
 	waitstate
 	releaseall

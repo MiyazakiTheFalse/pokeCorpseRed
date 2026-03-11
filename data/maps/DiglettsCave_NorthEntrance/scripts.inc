@@ -22,6 +22,7 @@ DiglettsCave_NorthEntrance_EventScript_MemoryDesyncReturnToHub::
 
 DiglettsCave_NorthEntrance_EventScript_MemoryObjectiveBegin::
 	setflag FLAG_GIO_MEM_CH1_STARTED
+	setvar VAR_GIO_CHAPTER, 1
 	end
 
 DiglettsCave_NorthEntrance_EventScript_Hiker::
@@ -39,6 +40,14 @@ DiglettsCave_NorthEntrance_EventScript_MemoryExitGuard::
 	goto_if_ne VAR_CHAPTER_ID, 1, DiglettsCave_NorthEntrance_EventScript_MemoryDesyncReturnToHub
 	lockall
 	msgbox DiglettsCave_NorthEntrance_Text_MemoryExitBlocked
+	warp MAP_DIGLETTS_CAVE_B1F, 3, 4
+	waitstate
+	releaseall
+	end
+
+DiglettsCave_NorthEntrance_EventScript_MemoryExitGuard_Mismatch::
+	lockall
+	msgbox DiglettsCave_NorthEntrance_Text_MemoryChapterMismatch
 	warp MAP_DIGLETTS_CAVE_B1F, 3, 4
 	waitstate
 	releaseall

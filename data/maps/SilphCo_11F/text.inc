@@ -97,3 +97,7 @@ SilphCo_11F_Text_MemorySpaceMarker::
 SilphCo_11F_Text_MemoryExitBlocked::
     .string "[MEMORY] The projection destabilizes\n"
     .string "outside mission bounds.$"
+
+SilphCo_11F_Text_MemoryChapterMismatch::
+    .string "[MEMORY] The chapter state is unstable.\n"
+    .string "Please continue from the current fragment.$"

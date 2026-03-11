@@ -12,3 +12,7 @@ DiglettsCave_SouthEntrance_Text_MemoryRetreatTunnel::
 DiglettsCave_SouthEntrance_Text_MemoryExitBlocked::
     .string "[MEMORY] That route belongs to another\n"
     .string "time. Continue through the chapter path.$"
+
+DiglettsCave_SouthEntrance_Text_MemoryChapterMismatch::
+    .string "[MEMORY] The chapter state is unstable.\n"
+    .string "Please continue from the current fragment.$"

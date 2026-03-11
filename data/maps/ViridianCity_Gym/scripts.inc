@@ -68,6 +68,14 @@ ViridianCity_Gym_EventScript_MemoryExitGuard::
 	releaseall
 	end
 
+ViridianCity_Gym_EventScript_MemoryExitGuard_Mismatch::
+	lockall
+	msgbox ViridianCity_Gym_Text_MemoryChapterMismatch
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	releaseall
+	end
+
 ViridianCity_Gym_EventScript_GiovanniMemoryPostBattle::
 	msgbox ViridianCity_Gym_Text_GiovanniPostBattle
 	closemessage

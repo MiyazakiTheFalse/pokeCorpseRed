@@ -105,6 +105,7 @@ SilphCo_11F_EventScript_BattleGiovanni::
 SilphCo_11F_EventScript_SetMemorySaffronOutcome::
 	setflag FLAG_GIO_MEM_CH2_COMPLETE
 	setflag FLAG_GIO_MEM_CH3_STARTED
+	setvar VAR_GIO_CHAPTER, 3
 	setflag FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS
 	clearflag FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS
 	setflag FLAG_GIO_MEM_CH3_COMPLETE
@@ -170,6 +171,14 @@ SilphCo_11F_EventScript_MemoryExitGuard::
 	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
 	lockall
 	msgbox SilphCo_11F_Text_MemoryExitBlocked
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	releaseall
+	end
+
+SilphCo_11F_EventScript_MemoryExitGuard_Mismatch::
+	lockall
+	msgbox SilphCo_11F_Text_MemoryChapterMismatch
 	warp MAP_SILPH_CO_11F, 6, 14
 	waitstate
 	releaseall

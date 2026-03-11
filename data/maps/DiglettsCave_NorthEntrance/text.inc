@@ -14,3 +14,7 @@ DiglettsCave_NorthEntrance_Text_MemoryLogisticsBriefing::
 DiglettsCave_NorthEntrance_Text_MemoryExitBlocked::
     .string "[MEMORY] The edge of this recollection\n"
     .string "rejects you and pulls you back.$"
+
+DiglettsCave_NorthEntrance_Text_MemoryChapterMismatch::
+    .string "[MEMORY] The chapter state is unstable.\n"
+    .string "Please continue from the current fragment.$"
