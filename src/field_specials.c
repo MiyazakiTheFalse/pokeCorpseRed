@@ -2797,6 +2797,7 @@ u16 StartGiovanniMemoryMode(void)
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_VALIDATED);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_VALIDATION_FAILED);
+    VarSet(VAR_GIO_CHAPTER, 1);
 
     gPlayerPartyCount = 1;
     ZeroPlayerPartyMons();
@@ -2818,6 +2819,7 @@ u16 StartGiovanniMemoryMode(void)
 
 u16 SetGiovanniMemoryModeChapter3Complete(void)
 {
+    VarSet(VAR_GIO_CHAPTER, 3);
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE);
     FlagSet(FLAG_GIO_MEM_CH3_STARTED);
     FlagSet(FLAG_GIO_MEM_CH3_COMPLETE);
@@ -2829,6 +2831,7 @@ u16 AbortGiovanniMemoryMode(void)
 {
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ABORTED);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
+    VarSet(VAR_GIO_CHAPTER, 0);
     return TRUE;
 }
 
@@ -2875,6 +2878,7 @@ u16 RestoreGiovanniMemoryModeSnapshot(void)
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_RESTORED);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
+    VarSet(VAR_GIO_CHAPTER, 0);
     sGiovanniMemoryModeSnapshot.valid = FALSE;
     return TRUE;
 }
@@ -2886,18 +2890,21 @@ bool8 HandleGiovanniMemoryModeWhiteout(void)
 
     if (!FlagGet(FLAG_GIO_MEM_CH1_COMPLETE))
     {
+        VarSet(VAR_GIO_CHAPTER, 1);
         SetWarpDestination(MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F), MAP_NUM(MAP_ROCKET_HIDEOUT_B4F), WARP_ID_NONE, 19, 6);
         return TRUE;
     }
 
     if (!FlagGet(FLAG_GIO_MEM_CH2_COMPLETE))
     {
+        VarSet(VAR_GIO_CHAPTER, 2);
         SetWarpDestination(MAP_GROUP(MAP_SILPH_CO_11F), MAP_NUM(MAP_SILPH_CO_11F), WARP_ID_NONE, 6, 14);
         return TRUE;
     }
 
     if (FlagGet(FLAG_GIO_MEM_CH3_COMPLETE))
     {
+        VarSet(VAR_GIO_CHAPTER, 3);
         SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 17, 21);
         return TRUE;
     }
@@ -2916,6 +2923,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
 
     if (!FlagGet(FLAG_GIO_MEM_CH1_COMPLETE))
     {
+        VarSet(VAR_GIO_CHAPTER, 1);
         gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F);
         gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_ROCKET_HIDEOUT_B4F);
         gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
@@ -2924,6 +2932,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
     }
     else if (!FlagGet(FLAG_GIO_MEM_CH2_COMPLETE))
     {
+        VarSet(VAR_GIO_CHAPTER, 2);
         gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(MAP_SILPH_CO_11F);
         gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_SILPH_CO_11F);
         gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
@@ -2932,6 +2941,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
     }
     else
     {
+        VarSet(VAR_GIO_CHAPTER, 3);
         gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(MAP_VIRIDIAN_CITY_GYM);
         gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_VIRIDIAN_CITY_GYM);
         gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
@@ -2978,6 +2988,8 @@ u16 ReconcileGiovanniMemoryModeOutcome(void)
     FlagClear(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS);
     FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS);
     FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS);
+    FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE);
+    VarSet(VAR_GIO_CHAPTER, 0);
 
     return TRUE;
 }

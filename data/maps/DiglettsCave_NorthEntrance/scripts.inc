@@ -8,6 +8,7 @@ DiglettsCave_NorthEntrance_OnTransition::
 
 DiglettsCave_NorthEntrance_EventScript_MemoryObjectiveBegin::
 	setflag FLAG_GIO_MEM_CH1_STARTED
+	setvar VAR_GIO_CHAPTER, 1
 	end
 
 DiglettsCave_NorthEntrance_EventScript_Hiker::
@@ -21,8 +22,20 @@ DiglettsCave_NorthEntrance_EventScript_HikerMemory::
 
 DiglettsCave_NorthEntrance_EventScript_MemoryExitGuard::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_eq VAR_GIO_CHAPTER, 1, DiglettsCave_NorthEntrance_EventScript_MemoryExitGuard_Block
+	goto DiglettsCave_NorthEntrance_EventScript_MemoryExitGuard_Mismatch
+
+DiglettsCave_NorthEntrance_EventScript_MemoryExitGuard_Block::
 	lockall
 	msgbox DiglettsCave_NorthEntrance_Text_MemoryExitBlocked
+	warp MAP_DIGLETTS_CAVE_B1F, 3, 4
+	waitstate
+	releaseall
+	end
+
+DiglettsCave_NorthEntrance_EventScript_MemoryExitGuard_Mismatch::
+	lockall
+	msgbox DiglettsCave_NorthEntrance_Text_MemoryChapterMismatch
 	warp MAP_DIGLETTS_CAVE_B1F, 3, 4
 	waitstate
 	releaseall

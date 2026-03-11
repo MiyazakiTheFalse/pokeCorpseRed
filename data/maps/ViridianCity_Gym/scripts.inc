@@ -43,8 +43,20 @@ ViridianCity_Gym_EventScript_MemorySpaceMarker::
 
 ViridianCity_Gym_EventScript_MemoryExitGuard::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_eq VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemoryExitGuard_Block
+	goto ViridianCity_Gym_EventScript_MemoryExitGuard_Mismatch
+
+ViridianCity_Gym_EventScript_MemoryExitGuard_Block::
 	lockall
 	msgbox ViridianCity_Gym_Text_MemoryExitBlocked
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	releaseall
+	end
+
+ViridianCity_Gym_EventScript_MemoryExitGuard_Mismatch::
+	lockall
+	msgbox ViridianCity_Gym_Text_MemoryChapterMismatch
 	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
 	waitstate
 	releaseall

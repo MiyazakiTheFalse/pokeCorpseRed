@@ -61,3 +61,7 @@ RocketHideout_B4F_Text_MemorySpaceMarker::
 RocketHideout_B4F_Text_MemoryExitBlocked::
     .string "[MEMORY] Unrelated exits are sealed in\n"
     .string "this chapter fragment.$"
+
+RocketHideout_B4F_Text_MemoryChapterMismatch::
+    .string "[MEMORY] The chapter state is unstable.\n"
+    .string "Please continue from the current fragment.$"
