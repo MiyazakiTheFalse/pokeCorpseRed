@@ -59,6 +59,49 @@ static struct GiovanniMemoryModeSnapshot *GetGiovanniMemoryModeSnapshot(void)
     return &gSaveBlock1Ptr->giovanniMemorySnapshot;
 }
 
+
+struct GiovanniNpcStateReset
+{
+    u16 map;
+    const u8 *localIds;
+    u8 localIdCount;
+};
+
+static const u8 sGiovanniNpcLocalIds_CeladonGameCorner[] =
+{
+    LOCALID_GAME_CORNER_GRUNT,
+};
+
+static const u8 sGiovanniNpcLocalIds_SilphCo11F[] =
+{
+    LOCALID_SILPH_CO_GIOVANNI,
+    LOCALID_SILPH_CO_11F_GRUNT1,
+    LOCALID_SILPH_CO_11F_GRUNT2,
+};
+
+static const u8 sGiovanniNpcLocalIds_ViridianGym[] =
+{
+    LOCALID_VIRIDIAN_GIOVANNI,
+};
+
+static const struct GiovanniNpcStateReset sGiovanniNpcStateResets[] =
+{
+    {
+        .map = MAP_CELADON_CITY_GAME_CORNER,
+        .localIds = sGiovanniNpcLocalIds_CeladonGameCorner,
+        .localIdCount = ARRAY_COUNT(sGiovanniNpcLocalIds_CeladonGameCorner),
+    },
+    {
+        .map = MAP_SILPH_CO_11F,
+        .localIds = sGiovanniNpcLocalIds_SilphCo11F,
+        .localIdCount = ARRAY_COUNT(sGiovanniNpcLocalIds_SilphCo11F),
+    },
+    {
+        .map = MAP_VIRIDIAN_CITY_GYM,
+        .localIds = sGiovanniNpcLocalIds_ViridianGym,
+        .localIdCount = ARRAY_COUNT(sGiovanniNpcLocalIds_ViridianGym),
+    },
+};
 struct GiovanniMapOverlay
 {
     u16 map;
@@ -148,6 +191,73 @@ static void ApplyGiovanniOverlayForCurrentMap(u16 map)
     else if (map == MAP_VIRIDIAN_CITY_GYM)
     {
         FlagClear(FLAG_HIDE_VIRIDIAN_GIOVANNI);
+    }
+}
+
+
+static void ApplyGiovanniMemoryModeNpcFlags(u8 chapterId)
+{
+    if (chapterId == 0)
+    {
+        FlagClear(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS);
+        FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS);
+        FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS);
+        return;
+    }
+
+    if (chapterId == 1)
+    {
+        FlagClear(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS);
+        FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS);
+        FlagSet(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS);
+    }
+    else if (chapterId == 2)
+    {
+        FlagSet(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS);
+        FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS);
+        FlagSet(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS);
+    }
+    else
+    {
+        FlagSet(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS);
+        FlagSet(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS);
+        FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS);
+    }
+
+    if (FlagGet(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS))
+        FlagSet(FLAG_HIDE_CELADON_ROCKETS);
+    else
+        FlagClear(FLAG_HIDE_CELADON_ROCKETS);
+
+    if (FlagGet(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS))
+        FlagSet(FLAG_HIDE_SAFFRON_ROCKETS);
+    else
+        FlagClear(FLAG_HIDE_SAFFRON_ROCKETS);
+
+    if (FlagGet(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS))
+        FlagSet(FLAG_HIDE_SAFFRON_CIVILIANS);
+    else
+        FlagClear(FLAG_HIDE_SAFFRON_CIVILIANS);
+
+    FlagClear(FLAG_HIDE_VIRIDIAN_GIOVANNI);
+}
+
+static void ReloadGiovanniMemoryModeNpcObjects(void)
+{
+    u8 i;
+    u8 j;
+
+    for (i = 0; i < ARRAY_COUNT(sGiovanniNpcStateResets); i++)
+    {
+        u8 mapNum = MAP_NUM(sGiovanniNpcStateResets[i].map);
+        u8 mapGroup = MAP_GROUP(sGiovanniNpcStateResets[i].map);
+
+        for (j = 0; j < sGiovanniNpcStateResets[i].localIdCount; j++)
+        {
+            u8 localId = sGiovanniNpcStateResets[i].localIds[j];
+            RemoveObjectEventByLocalIdAndMap(localId, mapNum, mapGroup);
+            TrySpawnObjectEvent(localId, mapNum, mapGroup);
+        }
     }
 }
 
@@ -2860,9 +2970,7 @@ u16 StartGiovanniMemoryMode(void)
     FlagClear(FLAG_GIO_MEM_CH2_COMPLETE);
     FlagClear(FLAG_GIO_MEM_CH3_STARTED);
     FlagClear(FLAG_GIO_MEM_CH3_COMPLETE);
-    FlagClear(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS);
-    FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS);
-    FlagSet(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS);
+    ApplyGiovanniMemoryModeNpcFlags(1);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ABORTED);
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
@@ -2896,6 +3004,8 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
     FlagSet(FLAG_GIO_MEM_CH3_COMPLETE);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ABORTED);
     VarSet(VAR_CHAPTER_ID, 3);
+    ApplyGiovanniMemoryModeNpcFlags(3);
+    ReloadGiovanniMemoryModeNpcObjects();
     return TRUE;
 }
 
@@ -2905,6 +3015,8 @@ u16 AbortGiovanniMemoryMode(void)
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
     VarSet(VAR_MODE_GIOVANNI_MEMORY, FALSE);
     VarSet(VAR_CHAPTER_ID, 0);
+    ApplyGiovanniMemoryModeNpcFlags(0);
+    ReloadGiovanniMemoryModeNpcObjects();
     return TRUE;
 }
 
@@ -2915,6 +3027,8 @@ u16 RestoreGiovanniMemoryModeSnapshot(void)
 
     VarSet(VAR_MODE_GIOVANNI_MEMORY, TRUE);
     VarSet(VAR_CHAPTER_ID, GetGiovanniMemoryModeChapterId());
+    ApplyGiovanniMemoryModeNpcFlags(GetGiovanniMemoryModeChapterId());
+    ReloadGiovanniMemoryModeNpcObjects();
 
     if (FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_RESTORED))
         return TRUE;
@@ -2966,6 +3080,8 @@ bool8 HandleGiovanniMemoryModeWhiteout(void)
 
     VarSet(VAR_MODE_GIOVANNI_MEMORY, TRUE);
     VarSet(VAR_CHAPTER_ID, GetGiovanniMemoryModeChapterId());
+    ApplyGiovanniMemoryModeNpcFlags(GetGiovanniMemoryModeChapterId());
+    ReloadGiovanniMemoryModeNpcObjects();
 
     if (!FlagGet(FLAG_GIO_MEM_CH1_COMPLETE))
     {
@@ -3008,6 +3124,8 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
 
     VarSet(VAR_MODE_GIOVANNI_MEMORY, TRUE);
     VarSet(VAR_CHAPTER_ID, GetGiovanniMemoryModeChapterId());
+    ApplyGiovanniMemoryModeNpcFlags(GetGiovanniMemoryModeChapterId());
+    ReloadGiovanniMemoryModeNpcObjects();
 
     if (!FlagGet(FLAG_GIO_MEM_CH1_COMPLETE))
     {
@@ -3079,12 +3197,29 @@ u16 ReconcileGiovanniMemoryModeOutcome(void)
     FlagClear(FLAG_GIO_MEM_CH2_COMPLETE);
     FlagClear(FLAG_GIO_MEM_CH3_STARTED);
     FlagClear(FLAG_GIO_MEM_CH3_COMPLETE);
-    FlagClear(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS);
-    FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS);
-    FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS);
+    ApplyGiovanniMemoryModeNpcFlags(0);
     VarSet(VAR_MODE_GIOVANNI_MEMORY, FALSE);
     VarSet(VAR_CHAPTER_ID, 0);
 
+    return TRUE;
+}
+
+u16 SyncGiovanniMemoryModeNpcState(void)
+{
+    if (FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
+    {
+        u8 chapterId = GetGiovanniMemoryModeChapterId();
+
+        VarSet(VAR_MODE_GIOVANNI_MEMORY, TRUE);
+        VarSet(VAR_CHAPTER_ID, chapterId);
+        ApplyGiovanniMemoryModeNpcFlags(chapterId);
+    }
+    else
+    {
+        ApplyGiovanniMemoryModeNpcFlags(0);
+    }
+
+    ReloadGiovanniMemoryModeNpcObjects();
     return TRUE;
 }
 
