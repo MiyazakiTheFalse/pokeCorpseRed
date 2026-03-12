@@ -59,6 +59,16 @@ RocketHideout_B4F_Text_MemorySpaceMarker::
     .string "stabilized. Dock crews report local hires\n"
     .string "were pushed out for ROCKET freight quotas.$"
 
+RocketHideout_B4F_Text_MemoryChapterIntro::
+    .string "[MEMORY:C1] Celadon operations begin.\n"
+    .string "Secure the hideout, keep pressure on\n"
+    .string "civilians low, and reach GIOVANNI.$"
+
+RocketHideout_B4F_Text_MemoryChapterOutro::
+    .string "[MEMORY:C1] Hideout objective complete.\n"
+    .string "Silph route is now the active chapter\n"
+    .string "path. Prepare for transfer.$"
+
 RocketHideout_B4F_Text_MemoryExitBlocked::
     .string "[MEMORY] Unrelated exits are sealed in\n"
     .string "this chapter fragment.$"
@@ -99,3 +109,13 @@ RocketHideout_B4F_Text_RocketOps_DestroyData_C1::
 RocketHideout_B4F_Text_RocketOps_ExtractStaff_C1::
     .string "[ROCKETOPS:C1] Medic evac corridor open.\n"
     .string "Temporary hub heal point activated.$"
+
+RocketHideout_B4F_Text_GruntReport_ObjectiveLive::
+    .string "[REPORT:C1] Storefront pressure is still\n"
+    .string "high. Keep civilians moving away from\n"
+    .string "the freight lanes.$"
+
+RocketHideout_B4F_Text_GruntReport_ObjectiveDone::
+    .string "[REPORT:C1] Celadon segment closed.\n"
+    .string "Silph command took over the chapter\n"
+    .string "route as ordered.$"

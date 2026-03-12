@@ -25,7 +25,17 @@ RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub::
 	end
 
 RocketHideout_B4F_EventScript_MemorySpaceMarker::
+	goto_if_ne VAR_CHAPTER_ID, 1, RocketHideout_B4F_EventScript_MemoryChapterMismatchMarker
+	goto_if_set FLAG_GIO_MEM_CH1_COMPLETE, RocketHideout_B4F_EventScript_MemorySpaceMarkerComplete
+	msgbox RocketHideout_B4F_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
+	end
+
+RocketHideout_B4F_EventScript_MemorySpaceMarkerComplete::
 	msgbox RocketHideout_B4F_Text_MemorySpaceMarker, MSGBOX_AUTOCLOSE
+	end
+
+RocketHideout_B4F_EventScript_MemoryChapterMismatchMarker::
+	msgbox RocketHideout_B4F_Text_MemoryChapterMismatch, MSGBOX_AUTOCLOSE
 	end
 
 RocketHideout_B4F_EventScript_MemoryMedicTerminal::
@@ -83,6 +93,8 @@ RocketHideout_B4F_EventScript_Giovanni::
 	end
 
 RocketHideout_B4F_EventScript_SetMemoryCeladonOutcome::
+	msgbox RocketHideout_B4F_Text_MemoryChapterOutro, MSGBOX_AUTOCLOSE
+	closemessage
 	setflag FLAG_GIO_MEM_CH1_COMPLETE
 	setflag FLAG_GIO_MEM_CH2_STARTED
 	setvar VAR_GIO_CHAPTER, 2
@@ -126,7 +138,18 @@ RocketHideout_B4F_EventScript_LiftKey::
 
 RocketHideout_B4F_EventScript_Grunt2::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_16, RocketHideout_B4F_Text_Grunt2Intro, RocketHideout_B4F_Text_Grunt2Defeat, RocketHideout_B4F_EventScript_DefeatedGrunt2
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, RocketHideout_B4F_EventScript_Grunt2PostBattleNormal
+	goto_if_ne VAR_CHAPTER_ID, 1, RocketHideout_B4F_EventScript_Grunt2PostBattleNormal
+	goto_if_set FLAG_GIO_MEM_CH1_COMPLETE, RocketHideout_B4F_EventScript_Grunt2PostBattleReportDone
+	msgbox RocketHideout_B4F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+RocketHideout_B4F_EventScript_Grunt2PostBattleNormal::
 	msgbox RocketHideout_B4F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
+	end
+
+RocketHideout_B4F_EventScript_Grunt2PostBattleReportDone::
+	msgbox RocketHideout_B4F_Text_GruntReport_ObjectiveDone, MSGBOX_AUTOCLOSE
 	end
 
 RocketHideout_B4F_EventScript_DefeatedGrunt2::
