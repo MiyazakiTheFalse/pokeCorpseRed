@@ -133,6 +133,7 @@ SilphCo_11F_EventScript_SetMemorySaffronOutcome::
 	setvar VAR_GIO_CHAPTER, 3
 	setflag FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS
 	clearflag FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS
+	special SetGiovanniMemoryModePartyForCurrentChapter
 	special SyncGiovanniMemoryModeNpcState
 	releaseall
 	end
