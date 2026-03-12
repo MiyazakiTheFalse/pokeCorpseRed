@@ -41,6 +41,7 @@ u8 GetCorpseRunFieldBlockReason(void);
 u16 GetCorpseRunFieldBlockTextId(void);
 u16 StartGiovanniMemoryMode(void);
 u16 SetGiovanniMemoryModeChapter3Complete(void);
+u16 SetGiovanniMemoryModePartyForCurrentChapter(void);
 u16 AbortGiovanniMemoryMode(void);
 u16 RestoreGiovanniMemoryModeSnapshot(void);
 u16 IsGiovanniMemoryModeReadyForBattle(void);

@@ -67,6 +67,62 @@ struct GiovanniNpcStateReset
     u8 localIdCount;
 };
 
+struct GiovanniPartyTemplateMon
+{
+    u16 species;
+    u8 level;
+};
+
+struct GiovanniPartyTemplate
+{
+    u8 chapterId;
+    const struct GiovanniPartyTemplateMon *mons;
+    u8 monCount;
+};
+
+static const struct GiovanniPartyTemplateMon sGiovanniMemoryParty_Chapter1[] =
+{
+    {SPECIES_ONIX, 25},
+    {SPECIES_RHYHORN, 24},
+    {SPECIES_KANGASKHAN, 29},
+};
+
+static const struct GiovanniPartyTemplateMon sGiovanniMemoryParty_Chapter2[] =
+{
+    {SPECIES_NIDORINO, 37},
+    {SPECIES_KANGASKHAN, 35},
+    {SPECIES_RHYHORN, 37},
+    {SPECIES_NIDOQUEEN, 41},
+};
+
+static const struct GiovanniPartyTemplateMon sGiovanniMemoryParty_Chapter3[] =
+{
+    {SPECIES_RHYHORN, 45},
+    {SPECIES_DUGTRIO, 42},
+    {SPECIES_NIDOQUEEN, 44},
+    {SPECIES_NIDOKING, 45},
+    {SPECIES_RHYHORN, 50},
+};
+
+static const struct GiovanniPartyTemplate sGiovanniMemoryPartyTemplates[] =
+{
+    {
+        .chapterId = 1,
+        .mons = sGiovanniMemoryParty_Chapter1,
+        .monCount = ARRAY_COUNT(sGiovanniMemoryParty_Chapter1),
+    },
+    {
+        .chapterId = 2,
+        .mons = sGiovanniMemoryParty_Chapter2,
+        .monCount = ARRAY_COUNT(sGiovanniMemoryParty_Chapter2),
+    },
+    {
+        .chapterId = 3,
+        .mons = sGiovanniMemoryParty_Chapter3,
+        .monCount = ARRAY_COUNT(sGiovanniMemoryParty_Chapter3),
+    },
+};
+
 static const u8 sGiovanniNpcLocalIds_CeladonGameCorner[] =
 {
     LOCALID_GAME_CORNER_GRUNT,
@@ -3253,6 +3309,45 @@ static bool8 IsRocketOpsTriggerTypeValidForCommand(u16 commandId, u16 triggerTyp
     }
 }
 
+
+static const struct GiovanniPartyTemplate *GetGiovanniPartyTemplateByChapter(u8 chapterId)
+{
+    u8 i;
+
+    for (i = 0; i < ARRAY_COUNT(sGiovanniMemoryPartyTemplates); i++)
+    {
+        if (sGiovanniMemoryPartyTemplates[i].chapterId == chapterId)
+            return &sGiovanniMemoryPartyTemplates[i];
+    }
+
+    return NULL;
+}
+
+static bool8 LoadGiovanniMemoryPartyTemplate(u8 chapterId)
+{
+    const struct GiovanniPartyTemplate *template = GetGiovanniPartyTemplateByChapter(chapterId);
+    u8 i;
+
+    if (template == NULL)
+        return FALSE;
+
+    if (template->monCount == 0 || template->monCount > PARTY_SIZE)
+        return FALSE;
+
+    ZeroPlayerPartyMons();
+    gPlayerPartyCount = template->monCount;
+
+    for (i = 0; i < template->monCount; i++)
+    {
+        CreateMon(&gPlayerParty[i], template->mons[i].species, template->mons[i].level, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    }
+
+    for (i = 0; i < PARTY_SIZE; i++)
+        CalculateMonStats(&gPlayerParty[i]);
+
+    return TRUE;
+}
+
 static bool8 GiovanniRocketProgressFlagsMatchSnapshot(const struct GiovanniMemoryModeFlagSnapshot *flags)
 {
     if (flags->hideMiscKantoRockets != FlagGet(FLAG_HIDE_MISC_KANTO_ROCKETS))
@@ -3338,9 +3433,8 @@ u16 StartGiovanniMemoryMode(void)
     ResetRocketOpsState();
     VarSet(VAR_ROCKETOPS_CHAPTER, 1);
 
-    gPlayerPartyCount = 1;
-    ZeroPlayerPartyMons();
-    CreateMon(&gPlayerParty[0], SPECIES_NIDOKING, 50, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    if (!LoadGiovanniMemoryPartyTemplate(1))
+        return FALSE;
 
     gSaveBlock1Ptr->money = 0;
     gSaveBlock1Ptr->coins = 0;
@@ -3364,7 +3458,19 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
     FlagSet(FLAG_GIO_MEM_CH3_COMPLETE);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ABORTED);
     RunGiovanniMemoryModeResetHooks(3);
+
+    if (!LoadGiovanniMemoryPartyTemplate(3))
+        return FALSE;
+
     return TRUE;
+}
+
+u16 SetGiovanniMemoryModePartyForCurrentChapter(void)
+{
+    if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
+        return FALSE;
+
+    return LoadGiovanniMemoryPartyTemplate(GetGiovanniMemoryModeChapterId());
 }
 
 u16 AbortGiovanniMemoryMode(void)

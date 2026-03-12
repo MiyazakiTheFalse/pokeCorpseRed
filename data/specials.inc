@@ -461,6 +461,7 @@ gSpecials::
 	def_special CreateEnemyEventMon
 	def_special StartGiovanniMemoryMode
 	def_special SetGiovanniMemoryModeChapter3Complete
+	def_special SetGiovanniMemoryModePartyForCurrentChapter
 	def_special AbortGiovanniMemoryMode
 	def_special RestoreGiovanniMemoryModeSnapshot
 	def_special ClearGiovanniMemoryModeCaptureLock
