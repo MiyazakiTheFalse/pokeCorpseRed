@@ -174,6 +174,17 @@ ViridianCity_Gym_Text_MemorySpaceMarker::
     .string "GIOVANNI's recollection. Evac logs show\n"
     .string "whole blocks strained by rushed clearances.$"
 
+
+ViridianCity_Gym_Text_MemoryChapterIntro::
+    .string "[MEMORY:C3] Viridian command chamber\n"
+    .string "is active. Resolve final RocketOps states\n"
+    .string "and confront GIOVANNI.$"
+
+ViridianCity_Gym_Text_MemoryChapterOutro::
+    .string "[MEMORY:C3] Chapter objective complete.\n"
+    .string "The reconstruction will hand control\n"
+    .string "back to the present frame.$"
+
 ViridianCity_Gym_Text_MemoryExitBlocked::
     .string "[MEMORY] The gym doors open to nothing.\n"
     .string "Finish this memory first.$"
@@ -199,6 +210,20 @@ ViridianCity_Gym_Text_MemoryMedicKitOffline::
     .string "The cache is sealed. It only unlocks in\n"
     .string "GIOVANNI's memory reconstruction.$"
 
+ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH1Only::
+    .string "[GIOVANNI] Celadon was the first scar.\n"
+    .string "One chapter closed, yet the city still\n"
+    .string "echoes in every order I gave.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH1CH2::
+    .string "[GIOVANNI] Celadon and Silph are both\n"
+    .string "behind us. Two chapters complete, and\n"
+    .string "the last debt waits in this room.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH3::
+    .string "[GIOVANNI] All three chapters stand\n"
+    .string "resolved. What remains is judgment.$"
+
 ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFull::
     .string "[MEMORY] The chamber settles into the\n"
     .string "present. RED's frame is restored.$"
@@ -206,6 +231,16 @@ ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFull::
 ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFallback::
     .string "[MEMORY] Residual echoes are fading.\n"
     .string "Hold position while the chamber stabilizes.$"
+
+ViridianCity_Gym_Text_RocketReport_ObjectiveLive::
+    .string "[REPORT:C3] Command ring is still live.\n"
+    .string "Final objective remains: hold Viridian\n"
+    .string "until the BOSS gives last orders.$"
+
+ViridianCity_Gym_Text_RocketReport_ObjectiveDone::
+    .string "[REPORT:C3] Viridian segment complete.\n"
+    .string "Chapter chain resolved; command traffic\n"
+    .string "is terminating.$"
 
 ViridianCity_Gym_Text_RocketOps_SecureRoute_C3::
     .string "[ROCKETOPS:C3] Flanking lane sealed.\n"

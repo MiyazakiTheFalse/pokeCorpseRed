@@ -23,7 +23,17 @@ SilphCo_11F_EventScript_MemoryDesyncReturnToHub::
 	end
 
 SilphCo_11F_EventScript_MemorySpaceMarker::
+	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_MemoryChapterMismatchMarker
+	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_MemorySpaceMarkerComplete
+	msgbox SilphCo_11F_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
+	end
+
+SilphCo_11F_EventScript_MemorySpaceMarkerComplete::
 	msgbox SilphCo_11F_Text_MemorySpaceMarker, MSGBOX_AUTOCLOSE
+	end
+
+SilphCo_11F_EventScript_MemoryChapterMismatchMarker::
+	msgbox SilphCo_11F_Text_MemoryChapterMismatch, MSGBOX_AUTOCLOSE
 	end
 
 
@@ -128,6 +138,8 @@ SilphCo_11F_EventScript_BattleGiovanni::
 	end
 
 SilphCo_11F_EventScript_SetMemorySaffronOutcome::
+	msgbox SilphCo_11F_Text_MemoryChapterOutro, MSGBOX_AUTOCLOSE
+	closemessage
 	setflag FLAG_GIO_MEM_CH2_COMPLETE
 	setflag FLAG_GIO_MEM_CH3_STARTED
 	setvar VAR_GIO_CHAPTER, 3
@@ -183,7 +195,18 @@ SilphCo_11F_EventScript_FloorSign::
 
 SilphCo_11F_EventScript_Grunt1::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_40, SilphCo_11F_Text_Grunt1Intro, SilphCo_11F_Text_Grunt1Defeat
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_11F_EventScript_Grunt1PostBattleNormal
+	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_Grunt1PostBattleNormal
+	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_Grunt1PostBattleReportDone
+	msgbox SilphCo_11F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+SilphCo_11F_EventScript_Grunt1PostBattleNormal::
 	msgbox SilphCo_11F_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
+	end
+
+SilphCo_11F_EventScript_Grunt1PostBattleReportDone::
+	msgbox SilphCo_11F_Text_GruntReport_ObjectiveDone, MSGBOX_AUTOCLOSE
 	end
 
 SilphCo_11F_EventScript_Grunt2::

@@ -95,6 +95,16 @@ SilphCo_11F_Text_MemorySpaceMarker::
     .string "loaded. Celadon shops report supply squeezes\n"
     .string "and price spikes after routed shipments.$"
 
+SilphCo_11F_Text_MemoryChapterIntro::
+    .string "[MEMORY:C2] Silph incursion active.\n"
+    .string "Pressure command nodes, hold the corridor,\n"
+    .string "and force the executive floor breach.$"
+
+SilphCo_11F_Text_MemoryChapterOutro::
+    .string "[MEMORY:C2] Silph objective complete.\n"
+    .string "Viridian confrontation is now the active\n"
+    .string "chapter path.$"
+
 SilphCo_11F_Text_MemoryExitBlocked::
     .string "[MEMORY] The projection destabilizes\n"
     .string "outside mission bounds.$"
@@ -135,3 +145,13 @@ SilphCo_11F_Text_RocketOps_DestroyData_C2::
 SilphCo_11F_Text_RocketOps_ExtractStaff_C2::
     .string "[ROCKETOPS:C2] Scientist extracted.\n"
     .string "Access code transferred to local cache.$"
+
+SilphCo_11F_Text_GruntReport_ObjectiveLive::
+    .string "[REPORT:C2] Executive floor still locked\n"
+    .string "down. Keep pressure on SILPH control\n"
+    .string "nodes until the BOSS gives signal.$"
+
+SilphCo_11F_Text_GruntReport_ObjectiveDone::
+    .string "[REPORT:C2] Silph segment is finished.\n"
+    .string "Viridian link is now the only valid\n"
+    .string "chapter route.$"
