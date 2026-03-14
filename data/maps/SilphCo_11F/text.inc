@@ -100,6 +100,17 @@ SilphCo_11F_Text_MemoryChapterIntro::
     .string "Pressure command nodes, hold the corridor,\n"
     .string "and force the executive floor breach.$"
 
+
+SilphCo_11F_Text_MemoryChapter3EmergencyBriefing::
+    .string "[MEMORY:C3 ACT1] Emergency briefing from\n"
+    .string "Saffron confirms Viridian's command ring is\n"
+    .string "the final Rocket fallback.$"
+
+SilphCo_11F_Text_MemoryChapter3ObjectiveInit::
+    .string "[OBJECTIVE:C3] Act 2: destroy archive nodes\n"
+    .string "in Silph/tunnel routes. Act 3: escort\n"
+    .string "scientists through evacuation checkpoints.$"
+
 SilphCo_11F_Text_MemoryChapterOutro::
     .string "[MEMORY:C2] Silph objective complete.\n"
     .string "Viridian confrontation is now the active\n"

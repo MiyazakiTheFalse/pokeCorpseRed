@@ -64,11 +64,13 @@ ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpoint::
 	goto_if_set FLAG_GIO_MEM_CH3_STAFF_EXTRACTED, ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpointDone
 	setflag FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1
+	setvar VAR_GIO_ACT, 3
 	setvar VAR_GIO_CHECKPOINT_ID, 1
 	clearflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2
 	clearflag FLAG_GIO_MEM_CH3_EVAC_COMPLETE
 	clearflag FLAG_ROCKETOPS_COMMAND_COOLDOWN
 	msgbox ViridianCity_Gym_Text_RocketOps_StaffCheckpoint_C3, MSGBOX_AUTOCLOSE
+	msgbox ViridianCity_Gym_Text_MemoryAct3EscortRoute, MSGBOX_AUTOCLOSE
 	end
 
 ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpointDone::
@@ -82,9 +84,12 @@ ViridianCity_Gym_EventScript_MemoryEvacEndpoint::
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2
 	setflag FLAG_ROCKET_EVACUATION_COMPLETE
 	setflag FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON
+	setvar VAR_GIO_ACT, 4
 	setvar VAR_GIO_CHECKPOINT_ID, 2
 	clearflag FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
 	msgbox ViridianCity_Gym_Text_RocketOps_EvacEndpoint_C3, MSGBOX_AUTOCLOSE
+	msgbox ViridianCity_Gym_Text_MemoryAct4DecisionScene, MSGBOX_AUTOCLOSE
+	setflag FLAG_ROCKET_DISBANDED
 	end
 
 ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked::
@@ -106,6 +111,8 @@ EventScript_RocketOps_Command_DeployAgent_C3::
 EventScript_RocketOps_Command_DestroyData_C3::
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1
+	setvar VAR_GIO_ACT, 2
+	setvar VAR_GIO_CHECKPOINT_ID, 1
 	msgbox ViridianCity_Gym_Text_RocketOps_DestroyData_C3
 	msgbox ViridianCity_Gym_Text_RocketOps_StatusReport_OpenRoute_C3, MSGBOX_AUTOCLOSE
 	goto EventScript_RocketOps_CommandFinalize
@@ -167,7 +174,10 @@ ViridianCity_Gym_EventScript_GiovanniStartBattle::
 ViridianCity_Gym_EventScript_MemorySpaceMarker::
 	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_MemorySpaceMarkerComplete
+	setvar VAR_GIO_ACT, 1
+	setvar VAR_GIO_CHECKPOINT_ID, 0
 	msgbox ViridianCity_Gym_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
+	msgbox ViridianCity_Gym_Text_MemoryAct1ObjectiveInit, MSGBOX_AUTOCLOSE
 	return
 
 ViridianCity_Gym_EventScript_MemorySpaceMarkerComplete::
@@ -192,6 +202,7 @@ ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence::
 	special ClearGiovanniMemoryModeCaptureLock
 	fadescreen FADE_FROM_BLACK
 	call ViridianCity_Gym_EventScript_GiovanniMemoryClosingMonologue
+	msgbox ViridianCity_Gym_Text_MemoryAct5PresentResume, MSGBOX_AUTOCLOSE
 	special ReconcileGiovanniMemoryModeOutcome
 	special SyncGiovanniMemoryModeNpcState
 	goto ViridianCity_Gym_EventScript_GiovanniStartBattle

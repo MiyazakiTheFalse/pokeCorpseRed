@@ -160,6 +160,10 @@ SilphCo_11F_EventScript_SetMemorySaffronOutcome::
 	call_if_set FLAG_SILPH_INFILTRATION_PREPARED, SilphCo_11F_EventScript_RocketOpsMilestoneConfirm
 	setflag FLAG_GIO_MEM_CH2_HIDEOUT_CLEARED
 	setflag FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON
+	setvar VAR_GIO_ACT, 1
+	setvar VAR_GIO_CHECKPOINT_ID, 0
+	msgbox SilphCo_11F_Text_MemoryChapter3EmergencyBriefing, MSGBOX_AUTOCLOSE
+	msgbox SilphCo_11F_Text_MemoryChapter3ObjectiveInit, MSGBOX_AUTOCLOSE
 	msgbox SilphCo_11F_Text_MemoryChapterOutro, MSGBOX_AUTOCLOSE
 	closemessage
 	specialvar VAR_RESULT, CompleteGiovanniMemoryModeChapter2
