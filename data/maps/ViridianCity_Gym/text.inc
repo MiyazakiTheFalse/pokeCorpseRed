@@ -236,6 +236,27 @@ ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFallback::
     .string "[MEMORY] Residual echoes are fading.\n"
     .string "Hold position while the chamber stabilizes.$"
 
+
+ViridianCity_Gym_Text_MemoryAct1ObjectiveInit::
+    .string "[OBJECTIVE:C3] Act 1 initialized in Saffron.\n"
+    .string "Act 2 archive purge and Act 3 escort\n"
+    .string "checkpoints are now live.$"
+
+ViridianCity_Gym_Text_MemoryAct3EscortRoute::
+    .string "[OBJECTIVE:C3 ACT3] Escort the scientist\n"
+    .string "group through checkpoint alpha to the\n"
+    .string "evacuation endpoint.$"
+
+ViridianCity_Gym_Text_MemoryAct4DecisionScene::
+    .string "[MEMORY:C3 ACT4] Viridian outskirts decision\n"
+    .string "made: Team Rocket disbands and remaining\n"
+    .string "cells scatter.$"
+
+ViridianCity_Gym_Text_MemoryAct5PresentResume::
+    .string "[MEMORY:C3 ACT5] Present-time Viridian\n"
+    .string "returns. GIOVANNI's final monologue ends;\n"
+    .string "battle protocol begins.$"
+
 ViridianCity_Gym_Text_RocketReport_ObjectiveLive::
     .string "[REPORT:C3] Command ring is still live.\n"
     .string "Final objective remains: hold Viridian\n"
