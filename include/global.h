@@ -792,6 +792,15 @@ struct GiovanniMemoryModeSnapshot
     struct WarpData lastHealLocation;
     struct WarpData escapeWarp;
     struct Coords16 pos;
+    u8 checkpointChapter;
+    u8 checkpointAct;
+    u8 checkpointMapGroup;
+    u8 checkpointMapNum;
+    u16 checkpointX;
+    u16 checkpointY;
+    u8 checkpointStage;
+    bool8 checkpointSaveAllowed;
+    u16 checkpointObjectiveFlags;
     struct GiovanniMemoryModeFlagSnapshot flags;
 };
 
