@@ -90,6 +90,10 @@ struct GiovanniPartyTemplate
     u8 monCount;
 };
 
+// Final Giovanni memory-mode chapter parties.
+// Chapter 1 / 2 intentionally use MOVE_NONE entries so CreateMon keeps each
+// species' vanilla level-up moveset for the configured level.
+
 static const struct GiovanniPartyTemplateMon sGiovanniMemoryParty_Chapter1[] =
 {
     {SPECIES_ONIX, 25, ITEM_NONE, {MOVE_NONE, MOVE_NONE, MOVE_NONE, MOVE_NONE}},
@@ -3854,6 +3858,16 @@ static bool8 IsGiovanniTemplateMonLegal(const struct GiovanniPartyTemplateMon *m
     return TRUE;
 }
 
+static bool8 IsGiovanniTemplateItemLegal(u16 item)
+{
+    return item < ITEMS_COUNT;
+}
+
+static bool8 IsGiovanniTemplateMoveLegal(u16 move)
+{
+    return move < MOVES_COUNT;
+}
+
 static bool8 ValidateGiovanniPartyTemplate(const struct GiovanniPartyTemplate *template)
 {
     u8 i;
@@ -3895,12 +3909,15 @@ static bool8 LoadGiovanniMemoryPartyTemplate(u8 chapterId)
         sanitizedMon = &sanitizedMons[sanitizedCount++];
         sanitizedMon->species = sourceMon->species;
         sanitizedMon->level = sourceMon->level;
-        sanitizedMon->heldItem = (sourceMon->heldItem < ITEMS_COUNT) ? sourceMon->heldItem : ITEM_NONE;
+        // Compatibility fallback:
+        // If design data ever references an invalid item/move ID for the
+        // current battle data tables, degrade only that slot to NONE.
+        sanitizedMon->heldItem = IsGiovanniTemplateItemLegal(sourceMon->heldItem) ? sourceMon->heldItem : ITEM_NONE;
 
         for (j = 0; j < MAX_MON_MOVES; j++)
         {
             u16 move = sourceMon->moves[j];
-            sanitizedMon->moves[j] = (move < MOVES_COUNT) ? move : MOVE_NONE;
+            sanitizedMon->moves[j] = IsGiovanniTemplateMoveLegal(move) ? move : MOVE_NONE;
         }
     }
 
@@ -4127,10 +4144,24 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
 
 u16 SetGiovanniMemoryModePartyForCurrentChapter(void)
 {
+    u8 chapterId;
+    u16 chapterStageVar;
+
     if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
         return FALSE;
 
-    return LoadGiovanniMemoryPartyTemplate(GetGiovanniMemoryModeChapterId());
+    chapterId = GetGiovanniMemoryModeChapterId();
+    if (chapterId < 1 || chapterId > 3)
+        return FALSE;
+
+    // Chapter parties are applied at chapter boundaries only.
+    // Once a chapter has started progressing, keep the current chapter party
+    // composition fixed for the rest of that chapter.
+    chapterStageVar = VAR_ROCKETOPS_CH1_STAGE + chapterId - 1;
+    if (VarGet(chapterStageVar) != 0)
+        return FALSE;
+
+    return LoadGiovanniMemoryPartyTemplate(chapterId);
 }
 
 u16 AbortGiovanniMemoryMode(void)
