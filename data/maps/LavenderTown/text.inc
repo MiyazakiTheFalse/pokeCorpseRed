@@ -12,7 +12,8 @@ LavenderTown_Text_JustImaginingWhiteHand::
 
 LavenderTown_Text_LittleGirlPostDisband::
     .string "The tower is quieter now.\p"
-    .string "Maybe the spirits can finally rest.$"
+    .string "Since TEAM ROCKET disbanded, maybe\n"
+    .string "the spirits can finally rest.$"
 
 LavenderTown_Text_TownKnownAsMonGraveSite::
     .string "This town is known as the grave\n"
@@ -23,7 +24,7 @@ LavenderTown_Text_TownKnownAsMonGraveSite::
 LavenderTown_Text_TownKnownAsMonGraveSite_PostDisband::
     .string "This town is still a resting place\n"
     .string "for POKéMON.\p"
-    .string "Without TEAM ROCKET around, more\n"
+    .string "With TEAM ROCKET disbanded, more\n"
     .string "families can visit in peace.$"
 
 LavenderTown_Text_GhostsAppearedInTower::
@@ -54,6 +55,6 @@ LavenderTown_Text_PokemonTowerSign::
 
 LavenderTown_Text_GhostsAftermath::
     .string "The tower feels calmer now that\n"
-    .string "TEAM ROCKET is gone.\p"
+    .string "TEAM ROCKET disbanded.\p"
     .string "People still come to pray, but\n"
     .string "the anger has faded.$"

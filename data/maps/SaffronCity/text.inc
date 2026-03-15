@@ -30,14 +30,14 @@ SaffronCity_Text_YouBeatTeamRocket::
     .string "That's amazing!$"
 
 SaffronCity_Text_SafeToGoOutAgain::
-    .string "Yeah! TEAM ROCKET is gone!\n"
+    .string "Yeah! TEAM ROCKET is finished!\n"
     .string "It's safe to go out again!$"
 
 SaffronCity_Text_PeopleComingBackToSaffron::
     .string "People fled from here in droves\n"
     .string "when those ROCKETS came.\p"
-    .string "They should be flocking back to\n"
-    .string "SAFFRON now.$"
+    .string "Now that TEAM ROCKET disbanded,\n"
+    .string "they should be flocking back.$"
 
 SaffronCity_Text_FlewHereOnPidgeot::
     .string "I flew here on my PIDGEOT when\n"
@@ -56,8 +56,8 @@ SaffronCity_Text_SawRocketBossEscaping::
 SaffronCity_Text_AftermathWitness::
     .string "I heard that shout when the boss\n"
     .string "ran for it.\p"
-    .string "Now SAFFRON finally feels like\n"
-    .string "it belongs to its people again.$"
+    .string "Now that TEAM ROCKET disbanded,\n"
+    .string "SAFFRON belongs to its people again.$"
 
 SaffronCity_Text_ImASecurityGuard::
     .string "I'm a security guard.\p"
