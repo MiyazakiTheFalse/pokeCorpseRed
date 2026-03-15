@@ -251,10 +251,15 @@ ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFallback::
     .string "Hold position while the chamber stabilizes.$"
 
 
+ViridianCity_Gym_Text_MemoryAct1EmergencyBriefing::
+    .string "[MEMORY:C3 ACT1] Emergency briefing:\n"
+    .string "Silph archive purge, scientist escort,\n"
+    .string "and Viridian fallback orders are live.$"
+
 ViridianCity_Gym_Text_MemoryAct1ObjectiveInit::
-    .string "[OBJECTIVE:C3] Act 1 initialized in Saffron.\n"
-    .string "Act 2 now targets Silph maintenance/\n"
-    .string "research archive nodes for purge.$"
+    .string "[OBJECTIVE:C3 ACT1] Initialization complete.\n"
+    .string "Proceed to Act 2 archive destruction\n"
+    .string "across Silph maintenance/research nodes.$"
 
 ViridianCity_Gym_Text_MemoryAct2ArchivePurge::
     .string "[OBJECTIVE:C3 ACT2] Archive-destruction\n"
@@ -317,9 +322,9 @@ ViridianCity_Gym_Text_RocketOps_EvacEndpoint_C3::
     .string "Chapter extraction cycle can now close.$"
 
 ViridianCity_Gym_Text_RocketReport_ObjectivesIncomplete::
-    .string "[REPORT:C3] Outstanding objectives:\n"
-    .string "Destroy data, escort staff, and complete\n"
-    .string "evacuation before final cadence.$"
+    .string "[REPORT:C3] Outstanding act objectives:\n"
+    .string "Complete briefing, archive purge, escort,\n"
+    .string "decision scene, then hold final defense.$"
 
 ViridianCity_Gym_Text_RocketOps_SecureRoute_C3::
     .string "[ROCKETOPS:C3] Flanking lane sealed.\n"

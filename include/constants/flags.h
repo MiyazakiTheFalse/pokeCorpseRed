@@ -1556,6 +1556,8 @@
 #define FLAG_GIO_MEM_CH2_HIDEOUT_CLEARED                              FLAG_0x8D5
 #define FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON                     FLAG_0x8D6
 #define FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON              FLAG_0x8D7
+#define FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE                        FLAG_0x8D8
+#define FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE                        FLAG_0x8DA
 
 // Giovanni memory mode chapter gate objective aliases.
 #define FLAG_ROCKET_SUPPLY_NETWORK_ESTABLISHED                        FLAG_ROCKETOPS_MILESTONE_CH1_LOGGED
