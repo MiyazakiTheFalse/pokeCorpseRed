@@ -806,6 +806,7 @@ static void ReloadGiovanniMemoryModeNpcObjects(void)
 
 static void RunGiovanniMemoryModeResetHooks(u8 chapterId);
 static u8 GetGiovanniMemoryModeChapterId(void);
+static u8 GetSanitizedGiovanniCheckpointId(u8 chapterId, u8 checkpointId);
 static void ReconcileGiovanniChapter3EscortSegmentState(void);
 
 static void SetGiovanniCampaignProgress(u8 chapterId, u8 actId, u8 checkpointId, u8 campaignState)
@@ -845,9 +846,75 @@ static bool8 IsGiovanniObjectiveInProgress(void)
     return chapterStage < 3;
 }
 
+static bool8 IsGiovanniBetweenActsSaveAllowed(void)
+{
+    u8 chapterId;
+    u8 checkpointId;
+    u16 chapterStage;
+
+    if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
+        return FALSE;
+
+    chapterId = GetGiovanniMemoryModeChapterId();
+    chapterStage = VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1);
+    checkpointId = GetSanitizedGiovanniCheckpointId(chapterId, VarGet(VAR_GIO_CHECKPOINT_ID));
+
+    if (chapterId == 1 || chapterId == 2)
+        return chapterStage >= 3;
+
+    if (chapterStage == 1)
+        return checkpointId >= 1;
+    if (chapterStage == 2)
+        return checkpointId >= 2;
+    if (chapterStage >= 3)
+        return TRUE;
+
+    return FALSE;
+}
+
+static bool8 IsGiovanniBossEncounterInProgress(void)
+{
+    u8 chapterId;
+    u16 chapterStage;
+
+    if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
+        return FALSE;
+
+    chapterId = GetGiovanniMemoryModeChapterId();
+    chapterStage = VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1);
+
+    if (chapterId == 1)
+        return chapterStage >= 3 && !FlagGet(FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED);
+    if (chapterId == 2)
+        return chapterStage >= 3 && !FlagGet(FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON);
+
+    return chapterStage >= 3 && !FlagGet(FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON);
+}
+
 bool8 IsGiovanniMemorySaveBlocked(void)
 {
-    return IsGiovanniObjectiveInProgress();
+    if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
+        return FALSE;
+
+    if (!IsGiovanniBetweenActsSaveAllowed())
+        return TRUE;
+
+    if (IsGiovanniObjectiveInProgress())
+        return TRUE;
+
+    if (FlagGet(FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE))
+        return TRUE;
+
+    if (IsGiovanniBossEncounterInProgress())
+        return TRUE;
+
+    return FALSE;
+}
+
+bool8 IsGiovanniMemorySaveFramingAllowed(void)
+{
+    return FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE)
+        && !IsGiovanniMemorySaveBlocked();
 }
 
 static u8 GetGiovanniActFromChapterStage(u8 chapterId, u8 chapterStage)
@@ -950,6 +1017,19 @@ static void WriteGiovanniActCheckpointFromCurrentState(void)
     SaveGiovanniCheckpointPositionAndStage(chapterId);
 }
 
+static void SyncGiovanniCampaignCheckpointState(u8 chapterId)
+{
+    u8 checkpointId;
+
+    if (chapterId < 1 || chapterId > 3)
+        return;
+
+    checkpointId = GetSanitizedGiovanniCheckpointId(chapterId, VarGet(VAR_GIO_CHECKPOINT_ID));
+    SetGiovanniCampaignProgress(chapterId,
+                                GetGiovanniActFromChapterStage(chapterId, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1)),
+                                checkpointId,
+                                VarGet(VAR_GIO_CAMPAIGN_STATE));
+}
 
 static void UpdateGiovanniCheckpointFromRocketOpsStage(u8 chapterId, u8 chapterStage)
 {
@@ -4131,6 +4211,7 @@ bool8 HandleGiovanniMemoryModeWhiteout(void)
         RunGiovanniMemoryModeResetHooks(chapterId);
         VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
         VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1));
+        SyncGiovanniCampaignCheckpointState(chapterId);
         ReconcileGiovanniChapter3EscortSegmentState();
 
         if (chapterId == 1)
@@ -4227,6 +4308,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
         RunGiovanniMemoryModeResetHooks(chapterId);
         VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
         VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1));
+        SyncGiovanniCampaignCheckpointState(chapterId);
         ReconcileGiovanniChapter3EscortSegmentState();
 
         if (chapterId == 1)

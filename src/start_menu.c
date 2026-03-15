@@ -93,6 +93,7 @@ static bool8 StartCB_Save2(void);
 static void StartMenu_PrepareForSave(void);
 static u8 RunSaveDialogCB(void);
 static void task50_save_game(u8 taskId);
+static u8 SaveDialogCB_PrintGiovanniMemorySaveAvailableText(void);
 static u8 SaveDialogCB_PrintAskSaveText(void);
 static u8 SaveDialogCB_AskSavePrintYesNoMenu(void);
 static u8 SaveDialogCB_AskSaveHandleInput(void);
@@ -579,6 +580,8 @@ static bool8 StartCB_Save1(void)
     BackupHelpContext();
     SetHelpContext(HELPCONTEXT_SAVE);
     StartMenu_PrepareForSave();
+    if (IsGiovanniMemorySaveFramingAllowed())
+        sSaveDialogCB = SaveDialogCB_PrintGiovanniMemorySaveAvailableText;
     sStartMenuCallback = StartCB_Save2;
     return FALSE;
 }
@@ -713,6 +716,12 @@ static bool8 SaveDialog_Wait60FramesThenCheckAButtonHeld(void)
         sSaveDialogDelay--;
         return FALSE;
     }
+}
+
+static u8 SaveDialogCB_PrintGiovanniMemorySaveAvailableText(void)
+{
+    PrintSaveTextWithFollowupFunc(gText_GiovanniMemorySaveAvailable, SaveDialogCB_PrintAskSaveText);
+    return SAVECB_RETURN_CONTINUE;
 }
 
 static u8 SaveDialogCB_PrintAskSaveText(void)
