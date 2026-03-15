@@ -4,23 +4,62 @@ UndergroundPath_NorthSouthTunnel_MapScripts::
 
 UndergroundPath_NorthSouthTunnel_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
-	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
+	goto_if_eq VAR_RESULT, FALSE, UndergroundPath_NorthSouthTunnel_EventScript_SetWorldMap
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, UndergroundPath_NorthSouthTunnel_EventScript_MemoryRoutingCheck
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, UndergroundPath_NorthSouthTunnel_EventScript_SetWorldMap
+	goto UndergroundPath_NorthSouthTunnel_EventScript_MemoryDesyncReturnToHub
+
+UndergroundPath_NorthSouthTunnel_EventScript_MemoryRoutingCheck::
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, UndergroundPath_NorthSouthTunnel_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_CHAPTER_ID, 2, UndergroundPath_NorthSouthTunnel_EventScript_MemoryObjectiveCheckpoint_Ch2
+	goto_if_eq VAR_CHAPTER_ID, 3, UndergroundPath_NorthSouthTunnel_EventScript_MemoryObjectiveCheckpoint_Ch3
+	goto UndergroundPath_NorthSouthTunnel_EventScript_MemoryDesyncReturnToHub
+
+UndergroundPath_NorthSouthTunnel_EventScript_MemoryObjectiveCheckpoint_Ch2::
+	setflag FLAG_GIO_MEM_CH2_STARTED
+	setvar VAR_GIO_CHAPTER, 2
+	setvar VAR_GIO_ACT, 3
+	setvar VAR_GIO_CHECKPOINT_ID, 1
+	goto UndergroundPath_NorthSouthTunnel_EventScript_SetWorldMap
+
+UndergroundPath_NorthSouthTunnel_EventScript_MemoryObjectiveCheckpoint_Ch3::
+	setflag FLAG_GIO_MEM_CH3_STARTED
+	setvar VAR_GIO_CHAPTER, 3
+	setvar VAR_GIO_ACT, 3
+	setvar VAR_GIO_CHECKPOINT_ID, 1
+	special SaveGiovanniMemoryModeCheckpoint
+	goto UndergroundPath_NorthSouthTunnel_EventScript_SetWorldMap
+
+UndergroundPath_NorthSouthTunnel_EventScript_SetWorldMap::
 	setworldmapflag FLAG_WORLD_MAP_UNDERGROUND_PATH_NORTH_SOUTH_TUNNEL
 	end
 
 UndergroundPath_NorthSouthTunnel_EventScript_MemoryDesyncReturnToHub::
+	goto_if_eq VAR_CHAPTER_ID, 3, UndergroundPath_NorthSouthTunnel_EventScript_MemoryDesyncReturnToViridianHub
 	warp MAP_SILPH_CO_11F, 6, 14
 	waitstate
 	end
 
+UndergroundPath_NorthSouthTunnel_EventScript_MemoryDesyncReturnToViridianHub::
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	end
+
 UndergroundPath_NorthSouthTunnel_EventScript_MemoryExitGuard::
-	setvar VAR_0x8004, 2
-	call EventScript_GiovanniSharedWarp_ResolvePrecedence
-	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing
-	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, UndergroundPath_NorthSouthTunnel_EventScript_MemoryDesyncReturnToHub
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, UndergroundPath_NorthSouthTunnel_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_CHAPTER_ID, 2, EventScript_Nothing
+	goto_if_eq VAR_CHAPTER_ID, 3, EventScript_Nothing
 	lockall
 	msgbox UndergroundPath_NorthSouthTunnel_Text_MemoryExitBlocked
+	goto_if_eq VAR_CHAPTER_ID, 3, UndergroundPath_NorthSouthTunnel_EventScript_MemoryExitGuard_WarpViridianHub
 	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	releaseall
+	end
+
+UndergroundPath_NorthSouthTunnel_EventScript_MemoryExitGuard_WarpViridianHub::
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
 	waitstate
 	releaseall
 	end
