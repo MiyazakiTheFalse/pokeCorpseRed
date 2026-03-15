@@ -3815,6 +3815,8 @@ static void ResetRocketOpsState(void)
     FlagClear(FLAG_GIO_MEM_CH2_HIDEOUT_CLEARED);
     FlagClear(FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON);
     FlagClear(FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON);
+    FlagClear(FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE);
+    FlagClear(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
 }
 
 static bool8 IsRocketOpsTriggerTypeValidForCommand(u16 commandId, u16 triggerType)
@@ -4120,7 +4122,9 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
     encounterGateSatisfied = FlagGet(FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON);
     actGateSatisfied = VarGet(VAR_GIO_ACT) >= 4
                     && VarGet(VAR_ROCKETOPS_CH3_STAGE) >= 3
-                    && FlagGet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2);
+                    && FlagGet(FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE)
+                    && FlagGet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2)
+                    && FlagGet(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
 
     if (!objectiveGateSatisfied
      || !encounterGateSatisfied
@@ -4419,6 +4423,8 @@ u16 ReconcileGiovanniMemoryModeOutcome(void)
     FlagClear(FLAG_GIO_MEM_CH2_COMPLETE);
     FlagClear(FLAG_GIO_MEM_CH3_STARTED);
     FlagClear(FLAG_GIO_MEM_CH3_COMPLETE);
+    FlagClear(FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE);
+    FlagClear(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
     RunGiovanniMemoryModeResetHooks(0);
     ResetRocketOpsState();
 
@@ -4714,6 +4720,8 @@ u16 DebugForceGiovanniMemoryModeChapterState(void)
         FlagSet(FLAG_GIO_MEM_CH3_STARTED);
         FlagSet(FLAG_GIO_MEM_CH3_COMPLETE);
         FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE);
+        FlagSet(FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE);
+        FlagSet(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
     }
 
     SetGiovanniCampaignProgress(chapterId, 1, 0, chapterId == 3 ? GIO_CAMPAIGN_STATE_CH3_COMPLETE : (chapterId == 2 ? GIO_CAMPAIGN_STATE_CH2_COMPLETE : GIO_CAMPAIGN_STATE_CH1_ACT1));
