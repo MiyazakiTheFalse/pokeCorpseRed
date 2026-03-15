@@ -5,6 +5,21 @@ CeladonCity_MapScripts::
 CeladonCity_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, CeladonCity_EventScript_MemoryRoutingCheck
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, CeladonCity_EventScript_SetWorldMap
+	goto CeladonCity_EventScript_MemoryDesyncReturnToHub
+
+CeladonCity_EventScript_MemoryRoutingCheck::
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, CeladonCity_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_CHAPTER_ID, 2, CeladonCity_EventScript_SetWorldMap
+	goto CeladonCity_EventScript_MemoryDesyncReturnToHub
+
+CeladonCity_EventScript_MemoryDesyncReturnToHub::
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	end
+
+CeladonCity_EventScript_SetWorldMap::
 	setworldmapflag FLAG_WORLD_MAP_CELADON_CITY
 	call_if_set FLAG_ROCKET_DISBANDED, CeladonCity_EventScript_HideRocketsAfterDisband
 	call_if_unset FLAG_ROCKET_DISBANDED, CeladonCity_EventScript_ShowRocketsBeforeDisband
@@ -130,8 +145,10 @@ CeladonCity_EventScript_GameCornerSign::
 	end
 
 CeladonCity_EventScript_MemoryRouteCheckpoint::
-	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
-	goto_if_ne VAR_CHAPTER_ID, 2, EventScript_Nothing
+	setvar VAR_0x8004, 2
+	call EventScript_GiovanniSharedWarp_ResolvePrecedence
+	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing
+	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, CeladonCity_EventScript_MemoryDesyncReturnToHub
 	setflag FLAG_GIO_MEM_CH2_STARTED
 	setvar VAR_GIO_CHAPTER, 2
 	setvar VAR_GIO_ACT, 1

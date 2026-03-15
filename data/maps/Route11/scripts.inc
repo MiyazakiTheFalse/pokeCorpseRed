@@ -5,6 +5,18 @@ Route11_MapScripts::
 Route11_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, Route11_EventScript_MemoryRoutingCheck
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, EventScript_Return
+	goto Route11_EventScript_MemoryDesyncReturnToHub
+
+Route11_EventScript_MemoryRoutingCheck::
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, Route11_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_CHAPTER_ID, 1, EventScript_Return
+	goto Route11_EventScript_MemoryDesyncReturnToHub
+
+Route11_EventScript_MemoryDesyncReturnToHub::
+	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
 	end
 
 Route11_EventScript_DiglettsCaveSign::
@@ -12,8 +24,10 @@ Route11_EventScript_DiglettsCaveSign::
 	end
 
 Route11_EventScript_MemoryRouteCheckpoint::
-	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
-	goto_if_ne VAR_CHAPTER_ID, 1, EventScript_Nothing
+	setvar VAR_0x8004, 1
+	call EventScript_GiovanniSharedWarp_ResolvePrecedence
+	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing
+	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, Route11_EventScript_MemoryDesyncReturnToHub
 	setflag FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 1

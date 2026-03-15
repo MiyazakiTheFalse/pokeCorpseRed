@@ -244,6 +244,15 @@
       "var": "VAR_TEMP_0",
       "var_value": "0",
       "script": "ViridianCity_EventScript_MemoryRouteCheckpoint"
+    },
+    {
+      "type": "trigger",
+      "x": 36,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "ViridianCity_EventScript_MemoryExitGuard"
     }
   ],
   "bg_events": [
