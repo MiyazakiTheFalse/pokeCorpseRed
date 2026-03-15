@@ -1,5 +1,10 @@
 @ Shared RocketOps terminal flow and chapter command dispatch.
 
+EventScript_GiovanniCampaign_PrintActiveDirective::
+	specialvar VAR_RESULT, Special_LoadGiovanniActiveDirective
+	msgbox gStringVar4, MSGBOX_AUTOCLOSE
+	return
+
 EventScript_RocketOps_Terminal::
 	lockall
 	specialvar VAR_RESULT, Special_RocketOps_OpenTerminal
@@ -80,6 +85,7 @@ EventScript_RocketOps_CommandFinalize::
 	specialvar VAR_RESULT, Special_RocketOps_ApplyCommandEffect
 	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_Close
 	special Special_RocketOps_WritebackState
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_RETURN
 	goto EventScript_GiovanniCampaign_ReturnToHub
 

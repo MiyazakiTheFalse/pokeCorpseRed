@@ -1399,6 +1399,7 @@ Text_TestMsg::
 	.include "data/text/eon_ticket.inc"
 	.include "data/text/berries.inc"
 	.include "data/text/flavor_text.inc"
+	.include "data/text/giovanni_directives.inc"
 	.include "data/scripts/hole.inc"
 	.include "data/text/trainers.inc"
 	.include "data/scripts/move_tutors.inc"
