@@ -14,7 +14,7 @@ ViridianCity_Gym_EventScript_MemoryRoutingCheck::
 	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
 	goto_if_unset FLAG_GIO_MEM_CH1_COMPLETE, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
 	goto_if_unset FLAG_GIO_MEM_CH2_COMPLETE, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
-	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_RestoreGiovanniMemoryModeOnTransition
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_ChapterHubEntry
 
 ViridianCity_Gym_EventScript_SkipMemoryRoutingCheck::
 	end
@@ -27,6 +27,23 @@ ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub::
 ViridianCity_Gym_EventScript_RestoreGiovanniMemoryModeOnTransition::
 	special RestoreGiovanniMemoryModeSnapshot
 	special ClearGiovanniMemoryModeCaptureLock
+	end
+
+ViridianCity_Gym_EventScript_ChapterHubEntry::
+	specialvar VAR_RESULT, Special_GiovanniCampaignDispatch
+	goto_if_eq VAR_RESULT, 2, ViridianCity_Gym_EventScript_ChapterHubReturnScene
+	goto_if_eq VAR_RESULT, 0, ViridianCity_Gym_EventScript_ChapterHubDirective
+	goto_if_eq VAR_RESULT, 3, ViridianCity_Gym_EventScript_ChapterHubDirective
+	end
+
+ViridianCity_Gym_EventScript_ChapterHubReturnScene::
+	msgbox ViridianCity_Gym_Text_MemoryAct4DecisionScene, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_NEXT_OPERATION
+	end
+
+ViridianCity_Gym_EventScript_ChapterHubDirective::
+	msgbox ViridianCity_Gym_Text_MemoryAct1EmergencyBriefing, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_OPERATION
 	end
 
 

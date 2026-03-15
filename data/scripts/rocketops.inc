@@ -80,7 +80,32 @@ EventScript_RocketOps_CommandFinalize::
 	specialvar VAR_RESULT, Special_RocketOps_ApplyCommandEffect
 	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_Close
 	special Special_RocketOps_WritebackState
+	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_RETURN
+	goto EventScript_GiovanniCampaign_ReturnToHub
+
+EventScript_GiovanniCampaign_ReturnToHub::
+	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_GiovanniCampaign_ReturnToHub_Ch1
+	goto_if_eq VAR_ROCKETOPS_CHAPTER, 2, EventScript_GiovanniCampaign_ReturnToHub_Ch2
+	goto_if_eq VAR_ROCKETOPS_CHAPTER, 3, EventScript_GiovanniCampaign_ReturnToHub_Ch3
 	goto EventScript_RocketOps_Close
+
+EventScript_GiovanniCampaign_ReturnToHub_Ch1::
+	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
+	releaseall
+	end
+
+EventScript_GiovanniCampaign_ReturnToHub_Ch2::
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	releaseall
+	end
+
+EventScript_GiovanniCampaign_ReturnToHub_Ch3::
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 20
+	waitstate
+	releaseall
+	end
 
 EventScript_RocketOps_TerminalOffline::
 	msgbox Text_RocketOpsTerminalOffline

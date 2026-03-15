@@ -12,7 +12,7 @@ SilphCo_11F_OnTransition::
 	goto_if_unset FLAG_GIO_MEM_CH1_COMPLETE, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
 	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
-	end
+	goto SilphCo_11F_EventScript_ChapterHubEntry
 
 SilphCo_11F_EventScript_SkipMemoryRoutingCheck::
 	end
@@ -20,6 +20,23 @@ SilphCo_11F_EventScript_SkipMemoryRoutingCheck::
 SilphCo_11F_EventScript_MemoryDesyncReturnToHub::
 	warp MAP_SILPH_CO_11F, 6, 14
 	waitstate
+	end
+
+SilphCo_11F_EventScript_ChapterHubEntry::
+	specialvar VAR_RESULT, Special_GiovanniCampaignDispatch
+	goto_if_eq VAR_RESULT, 2, SilphCo_11F_EventScript_ChapterHubReturnScene
+	goto_if_eq VAR_RESULT, 0, SilphCo_11F_EventScript_ChapterHubDirective
+	goto_if_eq VAR_RESULT, 3, SilphCo_11F_EventScript_ChapterHubDirective
+	end
+
+SilphCo_11F_EventScript_ChapterHubReturnScene::
+	msgbox SilphCo_11F_Text_RocketOps_MilestoneLogged_C2, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_NEXT_OPERATION
+	end
+
+SilphCo_11F_EventScript_ChapterHubDirective::
+	msgbox SilphCo_11F_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_OPERATION
 	end
 
 SilphCo_11F_EventScript_MemorySpaceMarker::
