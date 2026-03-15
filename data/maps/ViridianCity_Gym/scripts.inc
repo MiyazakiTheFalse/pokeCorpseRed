@@ -34,16 +34,22 @@ ViridianCity_Gym_EventScript_ChapterHubEntry::
 	goto_if_eq VAR_RESULT, 2, ViridianCity_Gym_EventScript_ChapterHubReturnScene
 	goto_if_eq VAR_RESULT, 0, ViridianCity_Gym_EventScript_ChapterHubDirective
 	goto_if_eq VAR_RESULT, 3, ViridianCity_Gym_EventScript_ChapterHubDirective
+	goto_if_eq VAR_RESULT, 4, ViridianCity_Gym_EventScript_ChapterHubWatchdog
 	end
 
 ViridianCity_Gym_EventScript_ChapterHubReturnScene::
 	msgbox ViridianCity_Gym_Text_MemoryAct4DecisionScene, MSGBOX_AUTOCLOSE
-	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_NEXT_OPERATION
+	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
 	end
 
 ViridianCity_Gym_EventScript_ChapterHubDirective::
 	call EventScript_GiovanniCampaign_PrintActiveDirective
-	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_OPERATION
+	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
+	end
+
+ViridianCity_Gym_EventScript_ChapterHubWatchdog::
+	call EventScript_GiovanniCampaign_WatchdogHint
+	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
 	end
 
 
@@ -118,18 +124,21 @@ ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked::
 	end
 
 EventScript_RocketOps_Command_SecureRoute_C3::
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
 	special DrawWholeMapView
 	msgbox ViridianCity_Gym_Text_RocketOps_SecureRoute_C3
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DeployAgent_C3::
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
 	special DrawWholeMapView
 	msgbox ViridianCity_Gym_Text_RocketOps_DeployAgent_C3
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DestroyData_C3::
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 0
@@ -140,6 +149,7 @@ EventScript_RocketOps_Command_DestroyData_C3::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_ExtractStaff_C3::
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
 	setflag FLAG_ROCKET_EVACUATION_COMPLETE
 	setflag FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE
