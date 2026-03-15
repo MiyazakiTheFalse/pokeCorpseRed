@@ -63,5 +63,6 @@ u16 Special_RocketOps_WritebackState(void);
 bool8 HandleGiovanniMemoryModeWhiteout(void);
 bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void);
 bool8 IsGiovanniMemorySaveBlocked(void);
+bool8 IsGiovanniMemorySaveFramingAllowed(void);
 
 #endif // GUARD_FIELD_SPECIALS_H
