@@ -42,7 +42,7 @@ ViridianCity_Gym_EventScript_ChapterHubReturnScene::
 	end
 
 ViridianCity_Gym_EventScript_ChapterHubDirective::
-	msgbox ViridianCity_Gym_Text_MemoryAct1EmergencyBriefing, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_OPERATION
 	end
 
@@ -92,6 +92,7 @@ ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpoint::
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1
 	setvar VAR_GIO_ACT, 3
 	setvar VAR_GIO_CHECKPOINT_ID, 1
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	clearflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2
 	clearflag FLAG_GIO_MEM_CH3_EVAC_COMPLETE
 	clearflag FLAG_ROCKETOPS_COMMAND_COOLDOWN
@@ -132,6 +133,7 @@ EventScript_RocketOps_Command_DestroyData_C3::
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 0
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	special SaveGiovanniMemoryModeCheckpoint
 	msgbox ViridianCity_Gym_Text_RocketOps_DestroyData_C3
 	msgbox ViridianCity_Gym_Text_MemoryAct2ArchivePurge, MSGBOX_AUTOCLOSE
@@ -144,6 +146,7 @@ EventScript_RocketOps_Command_ExtractStaff_C3::
 	setflag FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE
 	setvar VAR_GIO_ACT, 4
 	setvar VAR_GIO_CHECKPOINT_ID, 2
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	clearflag FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
 	special SaveGiovanniMemoryModeCheckpoint
 	msgbox ViridianCity_Gym_Text_RocketOps_ExtractStaff_C3

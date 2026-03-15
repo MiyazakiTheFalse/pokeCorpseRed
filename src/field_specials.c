@@ -241,6 +241,53 @@ enum GiovanniCampaignDispatchResult
     GIO_DISPATCH_ROUTE_NEXT_OPERATION,
 };
 
+struct GiovanniDirective
+{
+    u16 directiveId;
+    const u8 *title;
+    const u8 *targetLocation;
+    const u8 *nextAction;
+};
+
+extern const u8 Text_GiovanniDirectiveTemplate[];
+extern const u8 Text_GiovanniDirectiveUnknown[];
+extern const u8 Text_GiovanniDirectiveTitle_Ch1Act1[];
+extern const u8 Text_GiovanniDirectiveTarget_Ch1Act1[];
+extern const u8 Text_GiovanniDirectiveAction_Ch1Act1[];
+extern const u8 Text_GiovanniDirectiveTitle_Ch1Act2[];
+extern const u8 Text_GiovanniDirectiveTarget_Ch1Act2[];
+extern const u8 Text_GiovanniDirectiveAction_Ch1Act2[];
+extern const u8 Text_GiovanniDirectiveTitle_Ch2Act1[];
+extern const u8 Text_GiovanniDirectiveTarget_Ch2Act1[];
+extern const u8 Text_GiovanniDirectiveAction_Ch2Act1[];
+extern const u8 Text_GiovanniDirectiveTitle_Ch2Act2[];
+extern const u8 Text_GiovanniDirectiveTarget_Ch2Act2[];
+extern const u8 Text_GiovanniDirectiveAction_Ch2Act2[];
+extern const u8 Text_GiovanniDirectiveTitle_Ch3Act1[];
+extern const u8 Text_GiovanniDirectiveTarget_Ch3Act1[];
+extern const u8 Text_GiovanniDirectiveAction_Ch3Act1[];
+extern const u8 Text_GiovanniDirectiveTitle_Ch3Act2[];
+extern const u8 Text_GiovanniDirectiveTarget_Ch3Act2[];
+extern const u8 Text_GiovanniDirectiveAction_Ch3Act2[];
+extern const u8 Text_GiovanniDirectiveTitle_Ch3Act3[];
+extern const u8 Text_GiovanniDirectiveTarget_Ch3Act3[];
+extern const u8 Text_GiovanniDirectiveAction_Ch3Act3[];
+extern const u8 Text_GiovanniDirectiveTitle_Ch3Act4[];
+extern const u8 Text_GiovanniDirectiveTarget_Ch3Act4[];
+extern const u8 Text_GiovanniDirectiveAction_Ch3Act4[];
+
+static const struct GiovanniDirective sGiovanniDirectiveTable[] =
+{
+    {101, Text_GiovanniDirectiveTitle_Ch1Act1, Text_GiovanniDirectiveTarget_Ch1Act1, Text_GiovanniDirectiveAction_Ch1Act1},
+    {102, Text_GiovanniDirectiveTitle_Ch1Act2, Text_GiovanniDirectiveTarget_Ch1Act2, Text_GiovanniDirectiveAction_Ch1Act2},
+    {201, Text_GiovanniDirectiveTitle_Ch2Act1, Text_GiovanniDirectiveTarget_Ch2Act1, Text_GiovanniDirectiveAction_Ch2Act1},
+    {202, Text_GiovanniDirectiveTitle_Ch2Act2, Text_GiovanniDirectiveTarget_Ch2Act2, Text_GiovanniDirectiveAction_Ch2Act2},
+    {301, Text_GiovanniDirectiveTitle_Ch3Act1, Text_GiovanniDirectiveTarget_Ch3Act1, Text_GiovanniDirectiveAction_Ch3Act1},
+    {302, Text_GiovanniDirectiveTitle_Ch3Act2, Text_GiovanniDirectiveTarget_Ch3Act2, Text_GiovanniDirectiveAction_Ch3Act2},
+    {303, Text_GiovanniDirectiveTitle_Ch3Act3, Text_GiovanniDirectiveTarget_Ch3Act3, Text_GiovanniDirectiveAction_Ch3Act3},
+    {304, Text_GiovanniDirectiveTitle_Ch3Act4, Text_GiovanniDirectiveTarget_Ch3Act4, Text_GiovanniDirectiveAction_Ch3Act4},
+};
+
 struct GiovanniBeatFlagGate
 {
     u16 flag;
@@ -828,22 +875,100 @@ static void RunGiovanniMemoryModeResetHooks(u8 chapterId);
 static u8 GetGiovanniMemoryModeChapterId(void);
 static u8 GetSanitizedGiovanniCheckpointId(u8 chapterId, u8 checkpointId);
 static void ReconcileGiovanniChapter3EscortSegmentState(void);
+static void RefreshGiovanniActiveDirective(void);
+static void SetGiovanniChapterHubWarpDestination(u8 chapterId);
+static void SetGiovanniChapterHubLocation(struct Location *location, u8 chapterId);
+
+static const struct GiovanniDirective *FindGiovanniDirective(u16 directiveId)
+{
+    u16 i;
+
+    for (i = 0; i < ARRAY_COUNT(sGiovanniDirectiveTable); i++)
+    {
+        if (sGiovanniDirectiveTable[i].directiveId == directiveId)
+            return &sGiovanniDirectiveTable[i];
+    }
+
+    return NULL;
+}
+
+static void RefreshGiovanniActiveDirective(void)
+{
+    u16 chapterId = VarGet(VAR_GIO_CHAPTER);
+    u16 actId = VarGet(VAR_GIO_ACT);
+
+    if (chapterId < 1 || chapterId > 3 || actId == 0)
+    {
+        VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, 0);
+        return;
+    }
+
+    VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, chapterId * 100 + actId);
+}
+
+static void SetGiovanniChapterHubWarpDestination(u8 chapterId)
+{
+    if (chapterId == 1)
+        SetWarpDestination(MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F), MAP_NUM(MAP_ROCKET_HIDEOUT_B4F), WARP_ID_NONE, 19, 6);
+    else if (chapterId == 2)
+        SetWarpDestination(MAP_GROUP(MAP_SILPH_CO_11F), MAP_NUM(MAP_SILPH_CO_11F), WARP_ID_NONE, 6, 14);
+    else
+        SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 17, 20);
+}
+
+static void SetGiovanniChapterHubLocation(struct Location *location, u8 chapterId)
+{
+    if (chapterId == 1)
+    {
+        location->mapGroup = MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F);
+        location->mapNum = MAP_NUM(MAP_ROCKET_HIDEOUT_B4F);
+        location->x = 18;
+        location->y = 6;
+    }
+    else if (chapterId == 2)
+    {
+        location->mapGroup = MAP_GROUP(MAP_SILPH_CO_11F);
+        location->mapNum = MAP_NUM(MAP_SILPH_CO_11F);
+        location->x = 6;
+        location->y = 13;
+    }
+    else
+    {
+        location->mapGroup = MAP_GROUP(MAP_VIRIDIAN_CITY_GYM);
+        location->mapNum = MAP_NUM(MAP_VIRIDIAN_CITY_GYM);
+        location->x = 17;
+        location->y = 20;
+    }
+
+    location->warpId = WARP_ID_NONE;
+}
+
+u16 Special_LoadGiovanniActiveDirective(void)
+{
+    const struct GiovanniDirective *directive;
+
+    RefreshGiovanniActiveDirective();
+    directive = FindGiovanniDirective(VarGet(VAR_GIO_ACTIVE_DIRECTIVE_ID));
+    if (directive == NULL)
+    {
+        StringCopy(gStringVar4, Text_GiovanniDirectiveUnknown);
+        return FALSE;
+    }
+
+    StringCopy(gStringVar1, directive->title);
+    StringCopy(gStringVar2, directive->targetLocation);
+    StringCopy(gStringVar3, directive->nextAction);
+    StringExpandPlaceholders(gStringVar4, Text_GiovanniDirectiveTemplate);
+    return TRUE;
+}
 
 static void SetGiovanniCampaignProgress(u8 chapterId, u8 actId, u8 checkpointId, u8 campaignState)
 {
     VarSet(VAR_GIO_CHAPTER, chapterId);
     VarSet(VAR_GIO_ACT, actId);
     VarSet(VAR_GIO_CHECKPOINT_ID, checkpointId);
-    if (chapterId == 0 || actId == 0)
-    {
-        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
-        VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, 0);
-    }
-    else
-    {
-        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
-        VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, chapterId * 100 + actId);
-    }
+    VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+    RefreshGiovanniActiveDirective();
     VarSet(VAR_GIO_CAMPAIGN_STATE, campaignState);
 }
 
@@ -4112,6 +4237,7 @@ u16 CompleteGiovanniMemoryModeChapter1(void)
                                                 13);
     VarSet(VAR_ROCKETOPS_CHAPTER, 2);
     RunGiovanniMemoryModeResetHooks(2);
+    RefreshGiovanniActiveDirective();
     return LoadGiovanniMemoryPartyTemplate(2);
 }
 
@@ -4146,6 +4272,7 @@ u16 CompleteGiovanniMemoryModeChapter2(void)
     VarSet(VAR_ROCKETOPS_CHAPTER, 3);
     ResetGiovanniChapter3EscortSegmentState();
     RunGiovanniMemoryModeResetHooks(3);
+    RefreshGiovanniActiveDirective();
     return LoadGiovanniMemoryPartyTemplate(3);
 }
 
@@ -4179,6 +4306,7 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
     ResetGiovanniChapter3EscortSegmentState();
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ABORTED);
     RunGiovanniMemoryModeResetHooks(3);
+    RefreshGiovanniActiveDirective();
 
     if (!LoadGiovanniMemoryPartyTemplate(3))
         return FALSE;
@@ -4273,13 +4401,11 @@ u16 RestoreGiovanniMemoryModeSnapshot(void)
 bool8 HandleGiovanniMemoryModeWhiteout(void)
 {
     u8 chapterId;
-    u8 checkpointId;
 
     if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
         return FALSE;
 
     chapterId = GetGiovanniMemoryModeChapterId();
-    checkpointId = GetSanitizedGiovanniCheckpointId(chapterId, VarGet(VAR_GIO_CHECKPOINT_ID));
 
     if (FlagGet(FLAG_GIO_MEM_CH3_COMPLETE))
     {
@@ -4295,19 +4421,15 @@ bool8 HandleGiovanniMemoryModeWhiteout(void)
 
     if (!RestoreGiovanniCheckpointContextForRestart(TRUE))
     {
-        // Emergency desync fallback path; normal restarts should stay in the current act checkpoint.
+        // Emergency desync fallback path; return to chapter hub and reissue active directive.
         RunGiovanniMemoryModeResetHooks(chapterId);
         VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
         VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1));
         SyncGiovanniCampaignCheckpointState(chapterId);
+        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        RefreshGiovanniActiveDirective();
         ReconcileGiovanniChapter3EscortSegmentState();
-
-        if (chapterId == 1)
-            SetGiovanniCheckpointWarpDestination(chapterId, checkpointId);
-        else if (chapterId == 2)
-            SetGiovanniCheckpointWarpDestination(chapterId, checkpointId);
-        else
-            SetGiovanniCheckpointWarpDestination(chapterId, checkpointId);
+        SetGiovanniChapterHubWarpDestination(chapterId);
     }
 
     return TRUE;
@@ -4322,7 +4444,6 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
         return FALSE;
 
     chapterId = GetGiovanniMemoryModeChapterId();
-    checkpointId = GetSanitizedGiovanniCheckpointId(chapterId, VarGet(VAR_GIO_CHECKPOINT_ID));
 
     if (FlagGet(FLAG_GIO_MEM_CH3_COMPLETE))
     {
@@ -4372,6 +4493,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
         }
         else
         {
+            checkpointId = GetSanitizedGiovanniCheckpointId(chapterId, VarGet(VAR_GIO_CHECKPOINT_ID));
             gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(MAP_VIRIDIAN_CITY_GYM);
             gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_VIRIDIAN_CITY_GYM);
             if (checkpointId >= 2)
@@ -4393,50 +4515,15 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
     }
     else
     {
-        // Emergency desync fallback path; normal bootstrap should stay in the current act checkpoint.
+        // Emergency desync fallback path; return to chapter hub and reissue active directive.
         RunGiovanniMemoryModeResetHooks(chapterId);
         VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
         VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1));
         SyncGiovanniCampaignCheckpointState(chapterId);
+        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        RefreshGiovanniActiveDirective();
         ReconcileGiovanniChapter3EscortSegmentState();
-
-        if (chapterId == 1)
-        {
-            gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F);
-            gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_ROCKET_HIDEOUT_B4F);
-            gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
-            gSaveBlock1Ptr->location.x = 18;
-            gSaveBlock1Ptr->location.y = 6;
-        }
-        else if (chapterId == 2)
-        {
-            gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(MAP_SILPH_CO_11F);
-            gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_SILPH_CO_11F);
-            gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
-            gSaveBlock1Ptr->location.x = 6;
-            gSaveBlock1Ptr->location.y = 13;
-        }
-        else
-        {
-            gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(MAP_VIRIDIAN_CITY_GYM);
-            gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_VIRIDIAN_CITY_GYM);
-            gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
-            if (checkpointId >= 2)
-            {
-                gSaveBlock1Ptr->location.x = 11;
-                gSaveBlock1Ptr->location.y = 7;
-            }
-            else if (checkpointId >= 1)
-            {
-                gSaveBlock1Ptr->location.x = 9;
-                gSaveBlock1Ptr->location.y = 15;
-            }
-            else
-            {
-                gSaveBlock1Ptr->location.x = 17;
-                gSaveBlock1Ptr->location.y = 20;
-            }
-        }
+        SetGiovanniChapterHubLocation(&gSaveBlock1Ptr->location, chapterId);
     }
 
     gSaveBlock1Ptr->pos.x = gSaveBlock1Ptr->location.x;
@@ -4713,6 +4800,16 @@ u16 Special_RocketOps_WritebackState(void)
     else
         FlagClear(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
 
+    if (VarGet(chapterStageVar) > previousStage)
+    {
+        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_NEXT_OPERATION);
+        Special_GiovanniCampaignDispatch();
+    }
+    else
+    {
+        RefreshGiovanniActiveDirective();
+    }
+
     FlagClear(FLAG_ROCKETOPS_COMMAND_STATE_DIRTY);
     UpdateGiovanniCheckpointFromRocketOpsStage(chapterId, VarGet(chapterStageVar));
     if (previousStage < 3 && VarGet(chapterStageVar) >= 3)
@@ -4852,7 +4949,7 @@ u16 Special_GiovanniCampaignDispatch(void)
     if (chapterId < 1 || chapterId > 3)
     {
         VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
-        VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, 0);
+        RefreshGiovanniActiveDirective();
         return GIO_DISPATCH_ROUTE_HUB_BRIEFING;
     }
 
@@ -4870,11 +4967,11 @@ u16 Special_GiovanniCampaignDispatch(void)
         actId++;
         VarSet(VAR_GIO_ACT, actId);
         VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
-        VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, chapterId * 100 + actId);
+        RefreshGiovanniActiveDirective();
         return GIO_DISPATCH_ROUTE_NEXT_OPERATION;
     }
 
-    VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, chapterId * 100 + actId);
+    RefreshGiovanniActiveDirective();
 
     switch (segment)
     {

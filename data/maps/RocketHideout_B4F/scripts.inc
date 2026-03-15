@@ -37,7 +37,7 @@ RocketHideout_B4F_EventScript_ChapterHubReturnScene::
 	end
 
 RocketHideout_B4F_EventScript_ChapterHubDirective::
-	msgbox RocketHideout_B4F_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_OPERATION
 	end
 
@@ -47,7 +47,7 @@ RocketHideout_B4F_EventScript_MemorySpaceMarker::
 	setvar VAR_GIO_ACT, 1
 	setvar VAR_GIO_CHECKPOINT_ID, 0
 	special SaveGiovanniMemoryModeCheckpoint
-	msgbox RocketHideout_B4F_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	end
 
 RocketHideout_B4F_EventScript_MemorySpaceMarkerComplete::

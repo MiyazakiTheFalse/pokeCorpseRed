@@ -35,14 +35,14 @@ SilphCo_11F_EventScript_ChapterHubReturnScene::
 	end
 
 SilphCo_11F_EventScript_ChapterHubDirective::
-	msgbox SilphCo_11F_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_OPERATION
 	end
 
 SilphCo_11F_EventScript_MemorySpaceMarker::
 	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_MemoryChapterMismatchMarker
 	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_MemorySpaceMarkerComplete
-	msgbox SilphCo_11F_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	end
 
 SilphCo_11F_EventScript_MemorySpaceMarkerComplete::
