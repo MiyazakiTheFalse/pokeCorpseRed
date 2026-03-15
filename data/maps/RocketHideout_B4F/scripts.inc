@@ -83,6 +83,7 @@ RocketHideout_B4F_EventScript_MemoryExtractStaffTerminal::
 EventScript_RocketOps_Command_SecureRoute_C1::
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
+	setflag FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL
 	call RocketHideout_B4F_EventScript_RemoveBarrier
 	special DrawWholeMapView
 	msgbox RocketHideout_B4F_Text_RocketOps_SecureRoute_C1
@@ -114,8 +115,12 @@ RocketHideout_B4F_OnLoad::
 	setvar NUM_DOOR_GRUNTS_DEFEATED, 0
 	call_if_defeated TRAINER_TEAM_ROCKET_GRUNT_16, RocketHideout_B4F_EventScript_CountGruntDefeated
 	call_if_defeated TRAINER_TEAM_ROCKET_GRUNT_17, RocketHideout_B4F_EventScript_CountGruntDefeated
-	goto_if_set FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR, RocketHideout_B4F_OnLoad_End
+	goto_if_set FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR, RocketHideout_B4F_OnLoad_CheckMemoryVisual
 	call_if_ne NUM_DOOR_GRUNTS_DEFEATED, 2, RocketHideout_B4F_EventScript_SetBarrier
+RocketHideout_B4F_OnLoad_CheckMemoryVisual::
+	call_if_set FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL, RocketHideout_B4F_EventScript_RemoveBarrier
+	goto RocketHideout_B4F_OnLoad_End
+
 RocketHideout_B4F_OnLoad_End::
 	end
 

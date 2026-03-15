@@ -1529,6 +1529,16 @@
 #define FLAG_0x8FF                                                  (SYS_FLAGS + 0xFF)
 
 // RocketOps runtime flags.
+#define FLAG_GIO_MEM_CH1_DIGLETT_SWARM_VISUAL                        FLAG_0x8C8
+#define FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL                         FLAG_0x8C9
+#define FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL                   FLAG_0x8CA
+#define FLAG_GIO_MEM_CH2_ALARM_ESCALATED_VISUAL                      FLAG_0x8CB
+#define FLAG_GIO_MEM_CH2_SERVER_DESTROYED_VISUAL                     FLAG_0x8CC
+#define FLAG_GIO_MEM_CH2_ROUTE_UNSEALED_VISUAL                       FLAG_0x8CD
+#define FLAG_GIO_MEM_CH3_ARCHIVE_EXPLOSION_VISUAL                    FLAG_0x8CE
+#define FLAG_GIO_MEM_CH3_POWER_OUTAGE_VISUAL                         FLAG_0x8CF
+#define FLAG_GIO_MEM_CH3_EVAC_COLLAPSE_VISUAL                        FLAG_0x8DE
+
 #define FLAG_ROCKETOPS_TERMINAL_UNLOCKED                             FLAG_0x8E5
 #define FLAG_ROCKETOPS_COMMAND_COOLDOWN                              FLAG_0x8E6
 #define FLAG_ROCKETOPS_ROUTE_SECURED                                 FLAG_0x8E7

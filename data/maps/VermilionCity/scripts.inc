@@ -288,6 +288,15 @@ VermilionCity_EventScript_MemoryRouteCheckpoint::
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, VermilionCity_EventScript_MemoryDesyncReturnToHub
 	setflag FLAG_GIO_MEM_CH1_CONVOY_COMPLETE
+	goto_if_set FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL, VermilionCity_EventScript_MemoryRouteCheckpoint_ConvoyVisualDone
+	playse SE_TRUCK_MOVE
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 4
+	setvar VAR_0x8007, 2
+	special ShakeScreen
+	setflag FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL
+VermilionCity_EventScript_MemoryRouteCheckpoint_ConvoyVisualDone::
 	setvar VAR_GIO_ACT, 3
 	setvar VAR_GIO_CHECKPOINT_ID, 2
 	special SaveGiovanniMemoryModeCheckpoint

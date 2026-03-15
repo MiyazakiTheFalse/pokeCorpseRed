@@ -79,6 +79,7 @@ SilphCo_11F_EventScript_MemoryExtractStaffTerminal::
 EventScript_RocketOps_Command_SecureRoute_C2::
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
+	setflag FLAG_GIO_MEM_CH2_ROUTE_UNSEALED_VISUAL
 	setflag FLAG_SILPH_11F_DOOR
 	call EventScript_Open11FDoor
 	special DrawWholeMapView
@@ -88,6 +89,15 @@ EventScript_RocketOps_Command_SecureRoute_C2::
 EventScript_RocketOps_Command_DeployAgent_C2::
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
+	goto_if_set FLAG_GIO_MEM_CH2_ALARM_ESCALATED_VISUAL, EventScript_RocketOps_Command_DeployAgent_C2_SkipAlarmFx
+	playse SE_BOO
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 3
+	setvar VAR_0x8007, 2
+	special ShakeScreen
+	setflag FLAG_GIO_MEM_CH2_ALARM_ESCALATED_VISUAL
+EventScript_RocketOps_Command_DeployAgent_C2_SkipAlarmFx::
 	removeobject LOCALID_SILPH_CO_11F_GRUNT1
 	removeobject LOCALID_SILPH_CO_11F_GRUNT2
 	special DrawWholeMapView
@@ -97,6 +107,15 @@ EventScript_RocketOps_Command_DeployAgent_C2::
 EventScript_RocketOps_Command_DestroyData_C2::
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
+	goto_if_set FLAG_GIO_MEM_CH2_SERVER_DESTROYED_VISUAL, EventScript_RocketOps_Command_DestroyData_C2_SkipServerFx
+	playse SE_TRUCK_MOVE
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 3
+	setvar VAR_0x8006, 4
+	setvar VAR_0x8007, 2
+	special ShakeScreen
+	setflag FLAG_GIO_MEM_CH2_SERVER_DESTROYED_VISUAL
+EventScript_RocketOps_Command_DestroyData_C2_SkipServerFx::
 	special DrawWholeMapView
 	msgbox SilphCo_11F_Text_RocketOps_DestroyData_C2
 	goto EventScript_RocketOps_CommandFinalize
@@ -109,6 +128,7 @@ EventScript_RocketOps_Command_ExtractStaff_C2::
 	goto EventScript_RocketOps_CommandFinalize
 
 SilphCo_11F_OnLoad::
+	goto_if_set FLAG_GIO_MEM_CH2_ROUTE_UNSEALED_VISUAL, SilphCo_11F_OnLoad_OpenDoor
 	goto_if_set FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR, SilphCo_11F_OnLoad_OpenDoor
 	call_if_unset FLAG_SILPH_11F_DOOR, EventScript_Close11FDoor
 	goto SilphCo_11F_OnLoad_End

@@ -140,6 +140,16 @@ EventScript_RocketOps_Command_DeployAgent_C3::
 EventScript_RocketOps_Command_DestroyData_C3::
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
+	goto_if_set FLAG_GIO_MEM_CH3_ARCHIVE_EXPLOSION_VISUAL, EventScript_RocketOps_Command_DestroyData_C3_SkipArchiveFx
+	playse SE_TRUCK_MOVE
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 3
+	setvar VAR_0x8006, 5
+	setvar VAR_0x8007, 2
+	special ShakeScreen
+	setflag FLAG_GIO_MEM_CH3_ARCHIVE_EXPLOSION_VISUAL
+EventScript_RocketOps_Command_DestroyData_C3_SkipArchiveFx::
+	setflag FLAG_GIO_MEM_CH3_POWER_OUTAGE_VISUAL
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 0
 	call EventScript_GiovanniCampaign_PrintActiveDirective
@@ -151,6 +161,15 @@ EventScript_RocketOps_Command_DestroyData_C3::
 EventScript_RocketOps_Command_ExtractStaff_C3::
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
+	goto_if_set FLAG_GIO_MEM_CH3_EVAC_COLLAPSE_VISUAL, EventScript_RocketOps_Command_ExtractStaff_C3_SkipEvacFx
+	playse SE_BOO
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 4
+	setvar VAR_0x8007, 2
+	special ShakeScreen
+	setflag FLAG_GIO_MEM_CH3_EVAC_COLLAPSE_VISUAL
+EventScript_RocketOps_Command_ExtractStaff_C3_SkipEvacFx::
 	setflag FLAG_ROCKET_EVACUATION_COMPLETE
 	setflag FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE
 	setvar VAR_GIO_ACT, 4

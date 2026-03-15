@@ -36,6 +36,13 @@ Route11_EventScript_MemoryRouteCheckpoint::
 	dowildbattle
 	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
 	msgbox Route11_Text_MemoryDiglettSwarmClear, MSGBOX_AUTOCLOSE
+	playse SE_M_DIG
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 3
+	setvar VAR_0x8007, 2
+	special ShakeScreen
+	setflag FLAG_GIO_MEM_CH1_DIGLETT_SWARM_VISUAL
 	releaseall
 
 Route11_EventScript_MemoryRouteCheckpoint_Save::
@@ -44,6 +51,7 @@ Route11_EventScript_MemoryRouteCheckpoint_Save::
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, Route11_EventScript_MemoryDesyncReturnToHub
 	setflag FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED
+	setflag FLAG_GIO_MEM_CH1_DIGLETT_SWARM_VISUAL
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 1
 	special SaveGiovanniMemoryModeCheckpoint
