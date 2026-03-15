@@ -141,7 +141,12 @@ CeladonCity_EventScript_PrizeExchangeSign::
 	end
 
 CeladonCity_EventScript_GameCornerSign::
+	goto_if_set FLAG_ROCKET_DISBANDED, CeladonCity_EventScript_GameCornerSign_PostDisband
 	msgbox CeladonCity_Text_GameCornerSign, MSGBOX_SIGN
+	end
+
+CeladonCity_EventScript_GameCornerSign_PostDisband::
+	msgbox CeladonCity_Text_GameCornerSign_PostDisband, MSGBOX_SIGN
 	end
 
 CeladonCity_EventScript_MemoryRouteCheckpoint::

@@ -53,6 +53,12 @@ SaffronCity_Text_SawRocketBossEscaping::
     .string "compromised!\p"
     .string "Fall back!$"
 
+SaffronCity_Text_AftermathWitness::
+    .string "I heard that shout when the boss\n"
+    .string "ran for it.\p"
+    .string "Now SAFFRON finally feels like\n"
+    .string "it belongs to its people again.$"
+
 SaffronCity_Text_ImASecurityGuard::
     .string "I'm a security guard.\p"
     .string "Suspicious kids I don't allow in!$"

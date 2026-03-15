@@ -10,6 +10,10 @@ LavenderTown_Text_JustImaginingWhiteHand::
     .string "That white hand on your shoulder…\n"
     .string "I'm just imagining it.$"
 
+LavenderTown_Text_LittleGirlPostDisband::
+    .string "The tower is quieter now.\p"
+    .string "Maybe the spirits can finally rest.$"
+
 LavenderTown_Text_TownKnownAsMonGraveSite::
     .string "This town is known as the grave\n"
     .string "site of POKéMON.\p"

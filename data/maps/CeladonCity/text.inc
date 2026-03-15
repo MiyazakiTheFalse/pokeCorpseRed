@@ -86,6 +86,10 @@ CeladonCity_Text_GameCornerSign::
     .string "ROCKET GAME CORNER\n"
     .string "The playground for grown-ups!$"
 
+CeladonCity_Text_GameCornerSign_PostDisband::
+    .string "CELADON GAME CORNER\n"
+    .string "Now under new management.$"
+
 CeladonCity_Text_ScaldedTongueOnTea::
     .string "Aaaagh, ow…\n"
     .string "I scalded my tongue!\p"
