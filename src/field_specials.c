@@ -3782,6 +3782,9 @@ static void ResetRocketOpsState(void)
     VarSet(VAR_ROCKETOPS_CH1_STAGE, 0);
     VarSet(VAR_ROCKETOPS_CH2_STAGE, 0);
     VarSet(VAR_ROCKETOPS_CH3_STAGE, 0);
+    VarSet(VAR_ROCKETOPS_COMMAND_STATE, 0);
+    VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, 0);
+    VarSet(VAR_ROCKETOPS_MILESTONE_STATE, 0);
     VarSet(VAR_GIO_CHECKPOINT_MAP_GROUP, 0);
     VarSet(VAR_GIO_CHECKPOINT_MAP_NUM, 0);
     VarSet(VAR_GIO_CHECKPOINT_X, 0);
@@ -3796,6 +3799,8 @@ static void ResetRocketOpsState(void)
     FlagClear(FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR);
     FlagClear(FLAG_ROCKETOPS_ORDER_HOLD_POSITION);
     FlagClear(FLAG_ROCKETOPS_ORDER_OPEN_ROUTE);
+    FlagClear(FLAG_ROCKETOPS_COMMAND_STATE_DIRTY);
+    FlagClear(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
     FlagClear(FLAG_GIO_MEM_CH3_EVAC_COMPLETE);
     ResetGiovanniChapter3EscortSegmentState();
     FlagClear(FLAG_ROCKETOPS_MILESTONE_CH1_LOGGED);
@@ -4033,7 +4038,9 @@ u16 CompleteGiovanniMemoryModeChapter1(void)
     bool8 objectiveGateSatisfied;
     bool8 encounterGateSatisfied;
 
-    objectiveGateSatisfied = FlagGet(FLAG_ROCKET_SUPPLY_NETWORK_ESTABLISHED);
+    objectiveGateSatisfied = FlagGet(FLAG_ROCKET_SUPPLY_NETWORK_ESTABLISHED)
+                         && FlagGet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED)
+                         && VarGet(VAR_ROCKETOPS_OBJECTIVE_STATE) >= 3;
     encounterGateSatisfied = FlagGet(FLAG_GIO_MEM_CH1_CONVOY_COMPLETE)
                           && FlagGet(FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED);
 
@@ -4058,7 +4065,9 @@ u16 CompleteGiovanniMemoryModeChapter2(void)
     bool8 objectiveGateSatisfied;
     bool8 encounterGateSatisfied;
 
-    objectiveGateSatisfied = FlagGet(FLAG_SILPH_INFILTRATION_PREPARED);
+    objectiveGateSatisfied = FlagGet(FLAG_SILPH_INFILTRATION_PREPARED)
+                         && FlagGet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED)
+                         && VarGet(VAR_ROCKETOPS_OBJECTIVE_STATE) >= 3;
     encounterGateSatisfied = FlagGet(FLAG_GIO_MEM_CH2_HIDEOUT_CLEARED)
                           && FlagGet(FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON);
 
@@ -4088,7 +4097,9 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
     bool8 actGateSatisfied;
 
     objectiveGateSatisfied = FlagGet(FLAG_ROCKET_DATA_DESTROYED)
-                          && FlagGet(FLAG_ROCKET_EVACUATION_COMPLETE);
+                          && FlagGet(FLAG_ROCKET_EVACUATION_COMPLETE)
+                          && FlagGet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED)
+                          && VarGet(VAR_ROCKETOPS_OBJECTIVE_STATE) >= 3;
     encounterGateSatisfied = FlagGet(FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON);
     actGateSatisfied = VarGet(VAR_GIO_ACT) >= 4
                     && VarGet(VAR_ROCKETOPS_CH3_STAGE) >= 3
@@ -4442,9 +4453,14 @@ u16 Special_RocketOps_OpenTerminal(void)
         FlagClear(FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR);
         FlagClear(FLAG_ROCKETOPS_ORDER_HOLD_POSITION);
         FlagClear(FLAG_ROCKETOPS_ORDER_OPEN_ROUTE);
+        FlagClear(FLAG_ROCKETOPS_COMMAND_STATE_DIRTY);
+        FlagClear(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
     }
 
     VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
+    VarSet(VAR_ROCKETOPS_COMMAND_STATE, 0);
+    VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, VarGet(chapterStageVar));
+    VarSet(VAR_ROCKETOPS_MILESTONE_STATE, chapterId - 1);
     FlagSet(FLAG_ROCKETOPS_TERMINAL_UNLOCKED);
     FlagClear(FLAG_ROCKETOPS_COMMAND_COOLDOWN);
     return TRUE;
@@ -4457,6 +4473,7 @@ u16 Special_RocketOps_ValidateCommandContext(void)
     u16 triggerType = gSpecialVar_0x8005;
     u16 chapterStageVar;
     u16 chapterStage;
+    bool8 isValid = FALSE;
 
     if (!FlagGet(FLAG_ROCKETOPS_TERMINAL_UNLOCKED))
         return FALSE;
@@ -4475,36 +4492,58 @@ u16 Special_RocketOps_ValidateCommandContext(void)
     if (chapterId == 1)
     {
         if (commandId == ROCKETOPS_COMMAND_SECURE_ROUTE)
-            return chapterStage == 0;
-        if (commandId == ROCKETOPS_COMMAND_DEPLOY_AGENT)
-            return chapterStage == 1;
-        if (commandId == ROCKETOPS_COMMAND_EXTRACT_STAFF)
-            return chapterStage == 2;
-        return FALSE;
+            isValid = chapterStage == 0;
+        else if (commandId == ROCKETOPS_COMMAND_DEPLOY_AGENT)
+            isValid = chapterStage == 1;
+        else if (commandId == ROCKETOPS_COMMAND_EXTRACT_STAFF)
+            isValid = chapterStage == 2;
     }
-
-    if (chapterId == 2)
+    else if (chapterId == 2)
     {
         if (commandId == ROCKETOPS_COMMAND_SECURE_ROUTE)
-            return chapterStage == 0;
-        if (commandId == ROCKETOPS_COMMAND_DESTROY_DATA)
-            return chapterStage == 1;
-        if (commandId == ROCKETOPS_COMMAND_EXTRACT_STAFF)
-            return chapterStage == 2;
-        return FALSE;
+            isValid = chapterStage == 0;
+        else if (commandId == ROCKETOPS_COMMAND_DESTROY_DATA)
+            isValid = chapterStage == 1;
+        else if (commandId == ROCKETOPS_COMMAND_EXTRACT_STAFF)
+            isValid = chapterStage == 2;
+    }
+    else
+    {
+        if (commandId == ROCKETOPS_COMMAND_EXTRACT_STAFF
+         && !FlagGet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2))
+            return FALSE;
+
+        if (commandId == ROCKETOPS_COMMAND_DEPLOY_AGENT)
+            isValid = chapterStage == 0;
+        else if (commandId == ROCKETOPS_COMMAND_DESTROY_DATA)
+            isValid = chapterStage == 1;
+        else if (commandId == ROCKETOPS_COMMAND_EXTRACT_STAFF)
+            isValid = chapterStage == 2;
     }
 
-    if (commandId == ROCKETOPS_COMMAND_EXTRACT_STAFF
-     && !FlagGet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2))
+    if (!isValid)
         return FALSE;
 
-    if (commandId == ROCKETOPS_COMMAND_DEPLOY_AGENT)
-        return chapterStage == 0;
-    if (commandId == ROCKETOPS_COMMAND_DESTROY_DATA)
-        return chapterStage == 1;
-    if (commandId == ROCKETOPS_COMMAND_EXTRACT_STAFF)
-        return chapterStage == 2;
-    return FALSE;
+    VarSet(VAR_ROCKETOPS_COMMAND_STATE, commandId + 1);
+    FlagSet(FLAG_ROCKETOPS_COMMAND_STATE_DIRTY);
+    return TRUE;
+}
+
+u16 Special_RocketOps_ApplyCommandEffect(void)
+{
+    u16 commandState;
+
+    if (!FlagGet(FLAG_ROCKETOPS_TERMINAL_UNLOCKED))
+        return FALSE;
+    if (!FlagGet(FLAG_ROCKETOPS_COMMAND_STATE_DIRTY))
+        return FALSE;
+
+    commandState = VarGet(VAR_ROCKETOPS_COMMAND_STATE);
+    if (commandState == 0 || commandState > ROCKETOPS_COMMAND_COUNT)
+        return FALSE;
+
+    VarSet(VAR_ROCKETOPS_COMMAND_STATE, commandState | (VarGet(VAR_ROCKETOPS_CHAPTER) << 8));
+    return TRUE;
 }
 
 u16 Special_RocketOps_WritebackState(void)
@@ -4571,6 +4610,15 @@ u16 Special_RocketOps_WritebackState(void)
     }
 
     VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(chapterStageVar));
+    VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, VarGet(chapterStageVar));
+    VarSet(VAR_ROCKETOPS_MILESTONE_STATE, chapterId - 1);
+
+    if (VarGet(chapterStageVar) >= 3)
+        FlagSet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
+    else
+        FlagClear(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
+
+    FlagClear(FLAG_ROCKETOPS_COMMAND_STATE_DIRTY);
     UpdateGiovanniCheckpointFromRocketOpsStage(chapterId, VarGet(chapterStageVar));
     FlagSet(FLAG_ROCKETOPS_COMMAND_COOLDOWN);
     SyncGiovanniMemoryModeNpcState();

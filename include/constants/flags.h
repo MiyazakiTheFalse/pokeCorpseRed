@@ -1539,6 +1539,7 @@
 #define FLAG_ROCKETOPS_MILESTONE_CH1_LOGGED                          FLAG_0x8E0
 #define FLAG_ROCKETOPS_MILESTONE_CH2_LOGGED                          FLAG_0x8E1
 #define FLAG_ROCKETOPS_MILESTONE_CH3_LOGGED                          FLAG_0x8E2
+#define FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED                     FLAG_0x8ED
 #define FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE                        FLAG_0x8E3
 #define FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1                          FLAG_0x8E4
 #define FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2                          FLAG_0x8EC
@@ -1547,6 +1548,7 @@
 #define FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR                          FLAG_0x8D0
 #define FLAG_ROCKETOPS_ORDER_HOLD_POSITION                            FLAG_0x8D1
 #define FLAG_ROCKETOPS_ORDER_OPEN_ROUTE                               FLAG_0x8D2
+#define FLAG_ROCKETOPS_COMMAND_STATE_DIRTY                            FLAG_0x8D9
 
 // Giovanni memory mode chapter gate encounter flags.
 #define FLAG_GIO_MEM_CH1_CONVOY_COMPLETE                              FLAG_0x8D3
