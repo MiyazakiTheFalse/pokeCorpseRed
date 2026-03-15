@@ -1,2 +1,28 @@
 SaffronCity_Connection_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SaffronCity_Connection_OnTransition
 	.byte 0
+
+SaffronCity_Connection_OnTransition::
+	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
+	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SaffronCity_Connection_EventScript_MemoryRoutingCheck
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, EventScript_Return
+	goto SaffronCity_Connection_EventScript_MemoryDesyncReturnToHub
+
+SaffronCity_Connection_EventScript_MemoryRoutingCheck::
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, SaffronCity_Connection_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_CHAPTER_ID, 2, SaffronCity_Connection_EventScript_MemoryObjectiveCheckpoint
+	goto SaffronCity_Connection_EventScript_MemoryDesyncReturnToHub
+
+SaffronCity_Connection_EventScript_MemoryObjectiveCheckpoint::
+	setflag FLAG_GIO_MEM_CH2_STARTED
+	setvar VAR_GIO_CHAPTER, 2
+	setvar VAR_GIO_ACT, 4
+	setvar VAR_GIO_CHECKPOINT_ID, 0
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+SaffronCity_Connection_EventScript_MemoryDesyncReturnToHub::
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	end

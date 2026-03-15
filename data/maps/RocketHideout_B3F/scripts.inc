@@ -1,5 +1,32 @@
 RocketHideout_B3F_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, RocketHideout_B3F_OnTransition
 	.byte 0
+
+RocketHideout_B3F_OnTransition::
+	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
+	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, RocketHideout_B3F_EventScript_MemoryRoutingCheck
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, EventScript_Return
+	goto RocketHideout_B3F_EventScript_MemoryDesyncReturnToHub
+
+RocketHideout_B3F_EventScript_MemoryRoutingCheck::
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, RocketHideout_B3F_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_CHAPTER_ID, 2, RocketHideout_B3F_EventScript_MemoryObjectiveCheckpoint
+	goto RocketHideout_B3F_EventScript_MemoryDesyncReturnToHub
+
+RocketHideout_B3F_EventScript_MemoryObjectiveCheckpoint::
+	setflag FLAG_GIO_MEM_CH2_STARTED
+	setvar VAR_GIO_CHAPTER, 2
+	setvar VAR_GIO_ACT, 2
+	setvar VAR_GIO_CHECKPOINT_ID, 1
+	setflag FLAG_GIO_MEM_CH2_HIDEOUT_CLEARED
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+RocketHideout_B3F_EventScript_MemoryDesyncReturnToHub::
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	end
 
 RocketHideout_B3F_EventScript_Grunt1::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_14, RocketHideout_B3F_Text_Grunt1Intro, RocketHideout_B3F_Text_Grunt1Defeat

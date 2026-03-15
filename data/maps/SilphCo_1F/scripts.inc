@@ -3,6 +3,31 @@ SilphCo_1F_MapScripts::
 	.byte 0
 
 SilphCo_1F_OnTransition::
+	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
+	goto_if_eq VAR_RESULT, FALSE, SilphCo_1F_EventScript_SetWorldMap
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_1F_EventScript_MemoryRoutingCheck
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, SilphCo_1F_EventScript_SetWorldMap
+	goto SilphCo_1F_EventScript_MemoryDesyncReturnToHub
+
+SilphCo_1F_EventScript_MemoryRoutingCheck::
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, SilphCo_1F_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_CHAPTER_ID, 3, SilphCo_1F_EventScript_MemoryObjectiveCheckpoint
+	goto SilphCo_1F_EventScript_MemoryDesyncReturnToHub
+
+SilphCo_1F_EventScript_MemoryObjectiveCheckpoint::
+	setflag FLAG_GIO_MEM_CH3_STARTED
+	setvar VAR_GIO_CHAPTER, 3
+	setvar VAR_GIO_ACT, 2
+	setvar VAR_GIO_CHECKPOINT_ID, 0
+	special SaveGiovanniMemoryModeCheckpoint
+	goto SilphCo_1F_EventScript_SetWorldMap
+
+SilphCo_1F_EventScript_MemoryDesyncReturnToHub::
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	end
+
+SilphCo_1F_EventScript_SetWorldMap::
 	setworldmapflag FLAG_WORLD_MAP_SILPH_CO_1F
 	end
 

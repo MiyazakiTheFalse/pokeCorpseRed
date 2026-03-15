@@ -3,5 +3,29 @@ UndergroundPath_EastWestTunnel_MapScripts::
 	.byte 0
 
 UndergroundPath_EastWestTunnel_OnTransition::
+	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
+	goto_if_eq VAR_RESULT, FALSE, UndergroundPath_EastWestTunnel_EventScript_SetWorldMap
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, UndergroundPath_EastWestTunnel_EventScript_MemoryRoutingCheck
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, UndergroundPath_EastWestTunnel_EventScript_SetWorldMap
+	goto UndergroundPath_EastWestTunnel_EventScript_MemoryDesyncReturnToHub
+
+UndergroundPath_EastWestTunnel_EventScript_MemoryRoutingCheck::
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, UndergroundPath_EastWestTunnel_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_CHAPTER_ID, 2, UndergroundPath_EastWestTunnel_EventScript_MemoryObjectiveCheckpoint
+	goto UndergroundPath_EastWestTunnel_EventScript_MemoryDesyncReturnToHub
+
+UndergroundPath_EastWestTunnel_EventScript_MemoryObjectiveCheckpoint::
+	setflag FLAG_GIO_MEM_CH2_STARTED
+	setvar VAR_GIO_CHAPTER, 2
+	setvar VAR_GIO_ACT, 3
+	setvar VAR_GIO_CHECKPOINT_ID, 0
+	goto UndergroundPath_EastWestTunnel_EventScript_SetWorldMap
+
+UndergroundPath_EastWestTunnel_EventScript_MemoryDesyncReturnToHub::
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	end
+
+UndergroundPath_EastWestTunnel_EventScript_SetWorldMap::
 	setworldmapflag FLAG_WORLD_MAP_UNDERGROUND_PATH_EAST_WEST_TUNNEL
 	end
