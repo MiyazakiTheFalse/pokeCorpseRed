@@ -77,6 +77,8 @@ EventScript_RocketOps_CommandChapterMismatch::
 	goto EventScript_RocketOps_Close
 
 EventScript_RocketOps_CommandFinalize::
+	specialvar VAR_RESULT, Special_RocketOps_ApplyCommandEffect
+	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_Close
 	special Special_RocketOps_WritebackState
 	goto EventScript_RocketOps_Close
 

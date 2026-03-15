@@ -478,5 +478,6 @@ gSpecials::
 	def_special SaveGiovanniMemoryModeCheckpoint
 	def_special Special_RocketOps_OpenTerminal
 	def_special Special_RocketOps_ValidateCommandContext
+	def_special Special_RocketOps_ApplyCommandEffect
 	def_special Special_RocketOps_WritebackState
 gSpecialsEnd::
