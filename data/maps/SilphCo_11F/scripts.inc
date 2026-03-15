@@ -27,16 +27,22 @@ SilphCo_11F_EventScript_ChapterHubEntry::
 	goto_if_eq VAR_RESULT, 2, SilphCo_11F_EventScript_ChapterHubReturnScene
 	goto_if_eq VAR_RESULT, 0, SilphCo_11F_EventScript_ChapterHubDirective
 	goto_if_eq VAR_RESULT, 3, SilphCo_11F_EventScript_ChapterHubDirective
+	goto_if_eq VAR_RESULT, 4, SilphCo_11F_EventScript_ChapterHubWatchdog
 	end
 
 SilphCo_11F_EventScript_ChapterHubReturnScene::
 	msgbox SilphCo_11F_Text_RocketOps_MilestoneLogged_C2, MSGBOX_AUTOCLOSE
-	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_NEXT_OPERATION
+	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
 	end
 
 SilphCo_11F_EventScript_ChapterHubDirective::
 	call EventScript_GiovanniCampaign_PrintActiveDirective
-	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_OPERATION
+	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
+	end
+
+SilphCo_11F_EventScript_ChapterHubWatchdog::
+	call EventScript_GiovanniCampaign_WatchdogHint
+	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
 	end
 
 SilphCo_11F_EventScript_MemorySpaceMarker::
@@ -71,6 +77,7 @@ SilphCo_11F_EventScript_MemoryExtractStaffTerminal::
 	goto EventScript_RocketOps_Terminal
 
 EventScript_RocketOps_Command_SecureRoute_C2::
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
 	setflag FLAG_SILPH_11F_DOOR
 	call EventScript_Open11FDoor
@@ -79,6 +86,7 @@ EventScript_RocketOps_Command_SecureRoute_C2::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DeployAgent_C2::
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
 	removeobject LOCALID_SILPH_CO_11F_GRUNT1
 	removeobject LOCALID_SILPH_CO_11F_GRUNT2
@@ -87,12 +95,14 @@ EventScript_RocketOps_Command_DeployAgent_C2::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DestroyData_C2::
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
 	special DrawWholeMapView
 	msgbox SilphCo_11F_Text_RocketOps_DestroyData_C2
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_ExtractStaff_C2::
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
 	special DrawWholeMapView
 	msgbox SilphCo_11F_Text_RocketOps_ExtractStaff_C2

@@ -10,6 +10,7 @@ EventScript_RocketOps_Terminal::
 	specialvar VAR_RESULT, Special_RocketOps_OpenTerminal
 	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_TerminalOffline
 	msgbox Text_RocketOpsTerminalBoot, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_2
 	call EventScript_RocketOps_AssignImmediateCommand
 	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_TriggerLinkMismatch
 	specialvar VAR_RESULT, Special_RocketOps_ValidateCommandContext
@@ -18,6 +19,7 @@ EventScript_RocketOps_Terminal::
 	goto EventScript_RocketOps_Close
 
 EventScript_RocketOps_CommandDispatch::
+	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
 	goto_if_eq VAR_0x8004, 0, EventScript_RocketOps_Command_SecureRoute
 	goto_if_eq VAR_0x8004, 1, EventScript_RocketOps_Command_DeployAgent
 	goto_if_eq VAR_0x8004, 2, EventScript_RocketOps_Command_DestroyData
@@ -112,11 +114,12 @@ EventScript_RocketOps_CommandChapterMismatch::
 	goto EventScript_RocketOps_Close
 
 EventScript_RocketOps_CommandFinalize::
+	setvar VAR_GIO_SEGMENT, 4 @ GIO_SEGMENT_5
 	specialvar VAR_RESULT, Special_RocketOps_ApplyCommandEffect
 	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_Close
 	special Special_RocketOps_WritebackState
 	call EventScript_GiovanniCampaign_PrintActiveDirective
-	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_RETURN
+	setvar VAR_GIO_SEGMENT, 4 @ GIO_SEGMENT_5
 	goto EventScript_GiovanniCampaign_ReturnToHub
 
 EventScript_GiovanniCampaign_ReturnToHub::
@@ -142,6 +145,25 @@ EventScript_GiovanniCampaign_ReturnToHub_Ch3::
 	waitstate
 	releaseall
 	end
+
+EventScript_GiovanniCampaign_WatchdogHint::
+	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_GiovanniCampaign_WatchdogHint_C1
+	goto_if_eq VAR_ROCKETOPS_CHAPTER, 2, EventScript_GiovanniCampaign_WatchdogHint_C2
+	goto_if_eq VAR_ROCKETOPS_CHAPTER, 3, EventScript_GiovanniCampaign_WatchdogHint_C3
+	msgbox Text_RocketOpsWatchdogHint_Generic, MSGBOX_AUTOCLOSE
+	return
+
+EventScript_GiovanniCampaign_WatchdogHint_C1::
+	msgbox Text_RocketOpsWatchdogHint_C1, MSGBOX_AUTOCLOSE
+	return
+
+EventScript_GiovanniCampaign_WatchdogHint_C2::
+	msgbox Text_RocketOpsWatchdogHint_C2, MSGBOX_AUTOCLOSE
+	return
+
+EventScript_GiovanniCampaign_WatchdogHint_C3::
+	msgbox Text_RocketOpsWatchdogHint_C3, MSGBOX_AUTOCLOSE
+	return
 
 EventScript_RocketOps_TerminalOffline::
 	msgbox Text_RocketOpsTerminalOffline
@@ -179,3 +201,19 @@ Text_RocketOpsFailDestroyData::
 Text_RocketOpsFailExtractStaff::
 	.string "Extraction window closed. Hostiles\n"
 	.string "too close.$"
+
+Text_RocketOpsWatchdogHint_Generic::
+	.string "[ROCKETOPS] Progress stalled. Return to\n"
+	.string "a command terminal for new orders.$"
+
+Text_RocketOpsWatchdogHint_C1::
+	.string "[ROCKETOPS:C1] Operation stalled. Route\n"
+	.string "through a control/surveillance/evac node.$"
+
+Text_RocketOpsWatchdogHint_C2::
+	.string "[ROCKETOPS:C2] Momentum dropped. Push\n"
+	.string "secure route, purge data, then extract.$"
+
+Text_RocketOpsWatchdogHint_C3::
+	.string "[ROCKETOPS:C3] Escort chain stalled. Lock\n"
+	.string "checkpoint two and execute extraction.$"

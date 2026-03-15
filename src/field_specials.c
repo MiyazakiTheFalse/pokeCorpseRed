@@ -227,10 +227,13 @@ enum RocketOpsTriggerType
 
 enum GiovanniCampaignSegment
 {
-    GIO_SEGMENT_HUB,
-    GIO_SEGMENT_OPERATION,
-    GIO_SEGMENT_RETURN,
-    GIO_SEGMENT_NEXT_OPERATION,
+    GIO_SEGMENT_1,
+    GIO_SEGMENT_2,
+    GIO_SEGMENT_3,
+    GIO_SEGMENT_4,
+    GIO_SEGMENT_5,
+    GIO_SEGMENT_6,
+    GIO_SEGMENT_7,
 };
 
 enum GiovanniCampaignDispatchResult
@@ -239,7 +242,21 @@ enum GiovanniCampaignDispatchResult
     GIO_DISPATCH_ROUTE_OPERATION,
     GIO_DISPATCH_ROUTE_RETURN,
     GIO_DISPATCH_ROUTE_NEXT_OPERATION,
+    GIO_DISPATCH_ROUTE_WATCHDOG_HINT,
 };
+
+enum RocketOpsSegmentFlag
+{
+    ROCKETOPS_SEGMENT_1 = (1 << 0),
+    ROCKETOPS_SEGMENT_2 = (1 << 1),
+    ROCKETOPS_SEGMENT_3 = (1 << 2),
+    ROCKETOPS_SEGMENT_4 = (1 << 3),
+    ROCKETOPS_SEGMENT_5 = (1 << 4),
+    ROCKETOPS_SEGMENT_6 = (1 << 5),
+    ROCKETOPS_SEGMENT_7 = (1 << 6),
+};
+
+#define ROCKETOPS_SEGMENT_FLAGS_ALL (ROCKETOPS_SEGMENT_1 | ROCKETOPS_SEGMENT_2 | ROCKETOPS_SEGMENT_3 | ROCKETOPS_SEGMENT_4 | ROCKETOPS_SEGMENT_5 | ROCKETOPS_SEGMENT_6 | ROCKETOPS_SEGMENT_7)
 
 struct GiovanniDirective
 {
@@ -878,6 +895,31 @@ static void ReconcileGiovanniChapter3EscortSegmentState(void);
 static void RefreshGiovanniActiveDirective(void);
 static void SetGiovanniChapterHubWarpDestination(u8 chapterId);
 static void SetGiovanniChapterHubLocation(struct Location *location, u8 chapterId);
+static void LogRocketOpsSegmentTransition(u16 previousSegment, u16 nextSegment);
+static void SetGiovanniCampaignSegment(u16 segment);
+
+static void LogRocketOpsSegmentTransition(u16 previousSegment, u16 nextSegment)
+{
+    u16 segmentFlags = VarGet(VAR_ROCKETOPS_MILESTONE_STATE) & ROCKETOPS_SEGMENT_FLAGS_ALL;
+
+    if (nextSegment >= GIO_SEGMENT_1 && nextSegment <= GIO_SEGMENT_7)
+        segmentFlags |= (1 << nextSegment);
+
+    VarSet(VAR_ROCKETOPS_MILESTONE_STATE, segmentFlags);
+}
+
+static void SetGiovanniCampaignSegment(u16 segment)
+{
+    u16 previousSegment = VarGet(VAR_GIO_SEGMENT);
+
+    if (segment > GIO_SEGMENT_7)
+        segment = GIO_SEGMENT_1;
+
+    if (previousSegment != segment)
+        LogRocketOpsSegmentTransition(previousSegment, segment);
+
+    VarSet(VAR_GIO_SEGMENT, segment);
+}
 
 static const struct GiovanniDirective *FindGiovanniDirective(u16 directiveId)
 {
@@ -967,7 +1009,7 @@ static void SetGiovanniCampaignProgress(u8 chapterId, u8 actId, u8 checkpointId,
     VarSet(VAR_GIO_CHAPTER, chapterId);
     VarSet(VAR_GIO_ACT, actId);
     VarSet(VAR_GIO_CHECKPOINT_ID, checkpointId);
-    VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+    SetGiovanniCampaignSegment(GIO_SEGMENT_1);
     RefreshGiovanniActiveDirective();
     VarSet(VAR_GIO_CAMPAIGN_STATE, campaignState);
 }
@@ -1224,7 +1266,7 @@ static bool8 RestoreGiovanniCheckpointContextForRestart(bool8 setWarp)
     SetGiovanniCampaignProgress(chapterId, GetGiovanniActFromChapterStage(chapterId, VarGet(chapterStageVar)), checkpointId, VarGet(VAR_GIO_CAMPAIGN_STATE));
     RunGiovanniMemoryModeResetHooks(chapterId);
     VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
-    VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(chapterStageVar));
+    VarSet(VAR_ROCKETOPS_CHAIN_STATE, (VarGet(VAR_ROCKETOPS_CHAIN_STATE) & 0xFF00) | (VarGet(chapterStageVar) & 0xFF));
     FlagClear(FLAG_ROCKETOPS_COMMAND_COOLDOWN);
     ReconcileGiovanniChapter3EscortSegmentState();
 
@@ -4424,9 +4466,9 @@ bool8 HandleGiovanniMemoryModeWhiteout(void)
         // Emergency desync fallback path; return to chapter hub and reissue active directive.
         RunGiovanniMemoryModeResetHooks(chapterId);
         VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
-        VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1));
+        VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1) & 0xFF);
         SyncGiovanniCampaignCheckpointState(chapterId);
-        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        SetGiovanniCampaignSegment(GIO_SEGMENT_1);
         RefreshGiovanniActiveDirective();
         ReconcileGiovanniChapter3EscortSegmentState();
         SetGiovanniChapterHubWarpDestination(chapterId);
@@ -4518,9 +4560,9 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
         // Emergency desync fallback path; return to chapter hub and reissue active directive.
         RunGiovanniMemoryModeResetHooks(chapterId);
         VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
-        VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1));
+        VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1) & 0xFF);
         SyncGiovanniCampaignCheckpointState(chapterId);
-        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        SetGiovanniCampaignSegment(GIO_SEGMENT_1);
         RefreshGiovanniActiveDirective();
         ReconcileGiovanniChapter3EscortSegmentState();
         SetGiovanniChapterHubLocation(&gSaveBlock1Ptr->location, chapterId);
@@ -4640,7 +4682,6 @@ u16 Special_RocketOps_OpenTerminal(void)
     VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
     VarSet(VAR_ROCKETOPS_COMMAND_STATE, 0);
     VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, VarGet(chapterStageVar));
-    VarSet(VAR_ROCKETOPS_MILESTONE_STATE, chapterId - 1);
     FlagSet(FLAG_ROCKETOPS_TERMINAL_UNLOCKED);
     FlagClear(FLAG_ROCKETOPS_COMMAND_COOLDOWN);
     return TRUE;
@@ -4791,9 +4832,8 @@ u16 Special_RocketOps_WritebackState(void)
         break;
     }
 
-    VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(chapterStageVar));
+    VarSet(VAR_ROCKETOPS_CHAIN_STATE, (VarGet(VAR_ROCKETOPS_CHAIN_STATE) & 0xFF00) | (VarGet(chapterStageVar) & 0xFF));
     VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, VarGet(chapterStageVar));
-    VarSet(VAR_ROCKETOPS_MILESTONE_STATE, chapterId - 1);
 
     if (VarGet(chapterStageVar) >= 3)
         FlagSet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
@@ -4802,7 +4842,7 @@ u16 Special_RocketOps_WritebackState(void)
 
     if (VarGet(chapterStageVar) > previousStage)
     {
-        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_NEXT_OPERATION);
+        SetGiovanniCampaignSegment(GIO_SEGMENT_7);
         Special_GiovanniCampaignDispatch();
     }
     else
@@ -4945,10 +4985,14 @@ u16 Special_GiovanniCampaignDispatch(void)
     u16 chapterId = VarGet(VAR_GIO_CHAPTER);
     u16 actId = VarGet(VAR_GIO_ACT);
     u16 segment = VarGet(VAR_GIO_SEGMENT);
+    u16 chapterStageVar;
+    u16 chapterStage;
+    u16 chainState;
+    u16 stallCount;
 
     if (chapterId < 1 || chapterId > 3)
     {
-        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        SetGiovanniCampaignSegment(GIO_SEGMENT_1);
         RefreshGiovanniActiveDirective();
         return GIO_DISPATCH_ROUTE_HUB_BRIEFING;
     }
@@ -4956,17 +5000,41 @@ u16 Special_GiovanniCampaignDispatch(void)
     if (actId == 0)
         actId = 1;
 
-    if (segment > GIO_SEGMENT_NEXT_OPERATION)
+    chapterStageVar = VAR_ROCKETOPS_CH1_STAGE + chapterId - 1;
+    chapterStage = VarGet(chapterStageVar);
+    chainState = VarGet(VAR_ROCKETOPS_CHAIN_STATE);
+    stallCount = chainState >> 8;
+
+    if ((chainState & 0xFF) == chapterStage)
     {
-        segment = GIO_SEGMENT_HUB;
-        VarSet(VAR_GIO_SEGMENT, segment);
+        if (chapterStage < 3 && stallCount < 0xFF)
+            stallCount++;
+    }
+    else
+    {
+        stallCount = 0;
     }
 
-    if (segment == GIO_SEGMENT_NEXT_OPERATION)
+    VarSet(VAR_ROCKETOPS_CHAIN_STATE, (stallCount << 8) | (chapterStage & 0xFF));
+
+    if (stallCount >= 5 && chapterStage < 3)
+    {
+        SetGiovanniCampaignSegment(GIO_SEGMENT_6);
+        RefreshGiovanniActiveDirective();
+        return GIO_DISPATCH_ROUTE_WATCHDOG_HINT;
+    }
+
+    if (segment > GIO_SEGMENT_7)
+    {
+        segment = GIO_SEGMENT_1;
+        SetGiovanniCampaignSegment(segment);
+    }
+
+    if (segment == GIO_SEGMENT_7)
     {
         actId++;
         VarSet(VAR_GIO_ACT, actId);
-        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        SetGiovanniCampaignSegment(GIO_SEGMENT_1);
         RefreshGiovanniActiveDirective();
         return GIO_DISPATCH_ROUTE_NEXT_OPERATION;
     }
@@ -4975,13 +5043,18 @@ u16 Special_GiovanniCampaignDispatch(void)
 
     switch (segment)
     {
-    case GIO_SEGMENT_HUB:
+    case GIO_SEGMENT_1:
+    case GIO_SEGMENT_2:
         return GIO_DISPATCH_ROUTE_HUB_BRIEFING;
-    case GIO_SEGMENT_OPERATION:
+    case GIO_SEGMENT_3:
+    case GIO_SEGMENT_4:
         return GIO_DISPATCH_ROUTE_OPERATION;
-    case GIO_SEGMENT_RETURN:
+    case GIO_SEGMENT_5:
         return GIO_DISPATCH_ROUTE_RETURN;
+    case GIO_SEGMENT_6:
+        return GIO_DISPATCH_ROUTE_WATCHDOG_HINT;
     }
 
     return GIO_DISPATCH_ROUTE_HUB_BRIEFING;
 }
+
