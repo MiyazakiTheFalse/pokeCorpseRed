@@ -5,7 +5,21 @@ ViridianCity_MapScripts::
 ViridianCity_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
-	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_EventScript_MemoryOverlayOnTransition
+	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_EventScript_MemoryRoutingCheck
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, ViridianCity_EventScript_NormalOnTransition
+	goto ViridianCity_EventScript_MemoryDesyncReturnToHub
+
+ViridianCity_EventScript_MemoryRoutingCheck::
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, ViridianCity_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_CHAPTER_ID, 3, ViridianCity_EventScript_MemoryOverlayOnTransition
+	goto ViridianCity_EventScript_MemoryDesyncReturnToHub
+
+ViridianCity_EventScript_MemoryDesyncReturnToHub::
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	end
+
+ViridianCity_EventScript_NormalOnTransition::
 	setworldmapflag FLAG_WORLD_MAP_VIRIDIAN_CITY
 	call_if_eq VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 0, ViridianCity_EventScript_SetOldManBlockingRoad
 	call_if_eq VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 1, ViridianCity_EventScript_SetOldManStandingByRoad
@@ -254,8 +268,13 @@ ViridianCity_EventScript_DoTutorialBattle::
 	return
 
 ViridianCity_EventScript_MemoryRouteCheckpoint::
-	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
-	goto_if_ne VAR_CHAPTER_ID, 3, EventScript_Nothing
+	goto ViridianCity_EventScript_MemoryExitGuard
+
+ViridianCity_EventScript_MemoryExitGuard::
+	setvar VAR_0x8004, 3
+	call EventScript_GiovanniSharedWarp_ResolvePrecedence
+	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing
+	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, ViridianCity_EventScript_MemoryDesyncReturnToHub
 	setflag FLAG_GIO_MEM_CH3_STARTED
 	setvar VAR_GIO_CHAPTER, 3
 	setvar VAR_GIO_ACT, 1
