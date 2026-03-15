@@ -56,6 +56,7 @@ u16 DebugForceGiovanniMemoryModeChapterState(void);
 u16 ValidateGiovanniMemoryModeRocketFlags(void);
 u16 ValidateGiovanniInteractionOverlayForCurrentMap(void);
 u16 SyncGiovanniMemoryModeNpcState(void);
+u16 SaveGiovanniMemoryModeCheckpoint(void);
 u16 Special_RocketOps_OpenTerminal(void);
 u16 Special_RocketOps_ValidateCommandContext(void);
 u16 Special_RocketOps_WritebackState(void);

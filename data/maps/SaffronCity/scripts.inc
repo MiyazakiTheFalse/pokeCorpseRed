@@ -203,6 +203,7 @@ SaffronCity_EventScript_MemoryRouteCheckpoint_Ch2::
 	setflag FLAG_GIO_MEM_CH2_HIDEOUT_CLEARED
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 1
+	special SaveGiovanniMemoryModeCheckpoint
 	end
 
 SaffronCity_EventScript_MemoryRouteCheckpoint_Ch3::
@@ -210,4 +211,5 @@ SaffronCity_EventScript_MemoryRouteCheckpoint_Ch3::
 	setvar VAR_GIO_CHAPTER, 3
 	setvar VAR_GIO_ACT, 1
 	setvar VAR_GIO_CHECKPOINT_ID, 0
+	special SaveGiovanniMemoryModeCheckpoint
 	end

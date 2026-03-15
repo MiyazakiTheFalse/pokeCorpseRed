@@ -31,4 +31,5 @@ Route11_EventScript_MemoryRouteCheckpoint::
 	setflag FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 1
+	special SaveGiovanniMemoryModeCheckpoint
 	end

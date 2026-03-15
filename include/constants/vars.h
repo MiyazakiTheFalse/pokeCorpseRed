@@ -206,11 +206,11 @@
 #define VAR_ROCKETOPS_CH2_STAGE    0x4098
 #define VAR_ROCKETOPS_CH3_STAGE    0x4099
 #define VAR_GIO_CAMPAIGN_STATE     0x409A
-#define VAR_0x409B                 0x409B
-#define VAR_0x409C                 0x409C
-#define VAR_0x409D                 0x409D
-#define VAR_0x409E                 0x409E
-#define VAR_0x409F                 0x409F
+#define VAR_GIO_CHECKPOINT_MAP_GROUP 0x409B
+#define VAR_GIO_CHECKPOINT_MAP_NUM 0x409C
+#define VAR_GIO_CHECKPOINT_X       0x409D
+#define VAR_GIO_CHECKPOINT_Y       0x409E
+#define VAR_GIO_CHECKPOINT_STAGE   0x409F
 #define VAR_0x40A0                 0x40A0
 #define VAR_0x40A1                 0x40A1
 #define VAR_0x40A2                 0x40A2

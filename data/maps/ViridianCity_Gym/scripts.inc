@@ -78,6 +78,7 @@ ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpoint::
 	clearflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2
 	clearflag FLAG_GIO_MEM_CH3_EVAC_COMPLETE
 	clearflag FLAG_ROCKETOPS_COMMAND_COOLDOWN
+	special SaveGiovanniMemoryModeCheckpoint
 	msgbox ViridianCity_Gym_Text_RocketOps_StaffCheckpoint_C3, MSGBOX_AUTOCLOSE
 	msgbox ViridianCity_Gym_Text_MemoryAct3EscortRoute, MSGBOX_AUTOCLOSE
 	end
@@ -114,6 +115,7 @@ EventScript_RocketOps_Command_DestroyData_C3::
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 0
+	special SaveGiovanniMemoryModeCheckpoint
 	msgbox ViridianCity_Gym_Text_RocketOps_DestroyData_C3
 	msgbox ViridianCity_Gym_Text_MemoryAct2ArchivePurge, MSGBOX_AUTOCLOSE
 	msgbox ViridianCity_Gym_Text_RocketOps_StatusReport_OpenRoute_C3, MSGBOX_AUTOCLOSE
@@ -125,6 +127,7 @@ EventScript_RocketOps_Command_ExtractStaff_C3::
 	setvar VAR_GIO_ACT, 4
 	setvar VAR_GIO_CHECKPOINT_ID, 2
 	clearflag FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
+	special SaveGiovanniMemoryModeCheckpoint
 	msgbox ViridianCity_Gym_Text_RocketOps_ExtractStaff_C3
 	msgbox ViridianCity_Gym_Text_RocketOps_EvacEndpoint_C3, MSGBOX_AUTOCLOSE
 	msgbox ViridianCity_Gym_Text_MemoryAct4DecisionScene, MSGBOX_AUTOCLOSE
@@ -187,6 +190,7 @@ ViridianCity_Gym_EventScript_MemorySpaceMarker::
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_MemorySpaceMarkerComplete
 	setvar VAR_GIO_ACT, 1
 	setvar VAR_GIO_CHECKPOINT_ID, 0
+	special SaveGiovanniMemoryModeCheckpoint
 	msgbox ViridianCity_Gym_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
 	msgbox ViridianCity_Gym_Text_MemoryAct1ObjectiveInit, MSGBOX_AUTOCLOSE
 	return
@@ -223,6 +227,7 @@ ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence::
 ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter::
 	msgbox ViridianCity_Gym_Text_MemoryFinalDefenseEncounter, MSGBOX_AUTOCLOSE
 	setflag FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON
+	special SaveGiovanniMemoryModeCheckpoint
 	goto ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence
 
 ViridianCity_Gym_EventScript_GiovanniMemoryObjectivesIncomplete::
