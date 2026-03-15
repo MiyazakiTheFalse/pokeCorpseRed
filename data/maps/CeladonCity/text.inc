@@ -36,7 +36,7 @@ CeladonCity_Text_KeepOutOfTeamRocketsWay::
 
 CeladonCity_Text_FormerRocketGrunt1::
     .string "No orders, no hideout, no BOSS...\p"
-    .string "TEAM ROCKET's done.\n"
+    .string "TEAM ROCKET disbanded.\n"
     .string "I'm just passing through CELADON.$"
 
 CeladonCity_Text_FormerRocketGrunt2::
@@ -129,5 +129,5 @@ CeladonCity_Text_SomeoneStoleSilphScope::
 
 CeladonCity_Text_SilphScopeRecovered::
     .string "The SILPH SCOPE made it back to us.\p"
-    .string "With TEAM ROCKET scattered, our\n"
+    .string "With TEAM ROCKET disbanded, our\n"
     .string "couriers can breathe again.$"

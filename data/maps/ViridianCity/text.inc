@@ -7,8 +7,8 @@ ViridianCity_Text_CanCarryMonsAnywhere::
 ViridianCity_Text_CanCarryMonsAnywhere_PostDisband::
     .string "It feels safer to walk around with\n"
     .string "POKéMON by your side now.\p"
-    .string "VIRIDIAN finally has room to\n"
-    .string "breathe again.$"
+    .string "After TEAM ROCKET disbanded,\n"
+    .string "VIRIDIAN can finally breathe again.$"
 
 ViridianCity_Text_GymClosedWonderWhoLeaderIs::
     .string "This POKéMON GYM is always closed.\p"
@@ -19,7 +19,7 @@ ViridianCity_Text_ViridiansGymLeaderReturned::
 
 ViridianCity_Text_GymLeaderReturnedRocketGone::
     .string "VIRIDIAN GYM's LEADER returned...\n"
-    .string "then TEAM ROCKET fell apart.\p"
+    .string "then TEAM ROCKET disbanded.\p"
     .string "Maybe this city can finally settle\n"
     .string "down again.$"
 
@@ -134,4 +134,3 @@ ViridianCity_Text_GymSign::
 
 ViridianCity_Text_GymDoorsAreLocked::
     .string "VIRIDIAN GYM's doors are locked…$"
-
