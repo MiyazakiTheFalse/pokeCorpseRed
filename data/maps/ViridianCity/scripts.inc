@@ -96,7 +96,12 @@ ViridianCity_EventScript_GymDoor::
 	end
 
 ViridianCity_EventScript_Boy::
+	goto_if_set FLAG_ROCKET_DISBANDED, ViridianCity_EventScript_Boy_PostDisband
 	msgbox ViridianCity_Text_CanCarryMonsAnywhere, MSGBOX_NPC
+	end
+
+ViridianCity_EventScript_Boy_PostDisband::
+	msgbox ViridianCity_Text_CanCarryMonsAnywhere_PostDisband, MSGBOX_NPC
 	end
 
 @ Other old man, not the tutorial old man

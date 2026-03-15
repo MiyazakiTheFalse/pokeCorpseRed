@@ -150,7 +150,12 @@ SaffronCity_EventScript_Pidgeot::
 	end
 
 SaffronCity_EventScript_Man::
+	goto_if_set FLAG_ROCKET_DISBANDED, SaffronCity_EventScript_Man_PostDisband
 	msgbox SaffronCity_Text_SawRocketBossEscaping, MSGBOX_NPC
+	end
+
+SaffronCity_EventScript_Man_PostDisband::
+	msgbox SaffronCity_Text_AftermathWitness, MSGBOX_NPC
 	end
 
 SaffronCity_EventScript_CitySign::

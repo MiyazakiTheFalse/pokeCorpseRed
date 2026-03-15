@@ -4,6 +4,12 @@ ViridianCity_Text_CanCarryMonsAnywhere::
     .string "It's great that you can carry and\n"
     .string "use POKéMON anytime, anywhere.$"
 
+ViridianCity_Text_CanCarryMonsAnywhere_PostDisband::
+    .string "It feels safer to walk around with\n"
+    .string "POKéMON by your side now.\p"
+    .string "VIRIDIAN finally has room to\n"
+    .string "breathe again.$"
+
 ViridianCity_Text_GymClosedWonderWhoLeaderIs::
     .string "This POKéMON GYM is always closed.\p"
     .string "I wonder who the LEADER is?$"
