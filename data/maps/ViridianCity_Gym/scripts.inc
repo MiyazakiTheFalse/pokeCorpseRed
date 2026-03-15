@@ -119,14 +119,14 @@ ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked::
 
 EventScript_RocketOps_Command_SecureRoute_C3::
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
+	special DrawWholeMapView
 	msgbox ViridianCity_Gym_Text_RocketOps_SecureRoute_C3
-	msgbox ViridianCity_Gym_Text_RocketOps_StatusReport_SecureCorridor_C3, MSGBOX_AUTOCLOSE
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DeployAgent_C3::
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
+	special DrawWholeMapView
 	msgbox ViridianCity_Gym_Text_RocketOps_DeployAgent_C3
-	msgbox ViridianCity_Gym_Text_RocketOps_StatusReport_HoldPosition_C3, MSGBOX_AUTOCLOSE
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DestroyData_C3::
@@ -135,9 +135,8 @@ EventScript_RocketOps_Command_DestroyData_C3::
 	setvar VAR_GIO_CHECKPOINT_ID, 0
 	call EventScript_GiovanniCampaign_PrintActiveDirective
 	special SaveGiovanniMemoryModeCheckpoint
+	special DrawWholeMapView
 	msgbox ViridianCity_Gym_Text_RocketOps_DestroyData_C3
-	msgbox ViridianCity_Gym_Text_MemoryAct2ArchivePurge, MSGBOX_AUTOCLOSE
-	msgbox ViridianCity_Gym_Text_RocketOps_StatusReport_OpenRoute_C3, MSGBOX_AUTOCLOSE
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_ExtractStaff_C3::
@@ -149,9 +148,8 @@ EventScript_RocketOps_Command_ExtractStaff_C3::
 	call EventScript_GiovanniCampaign_PrintActiveDirective
 	clearflag FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
 	special SaveGiovanniMemoryModeCheckpoint
+	special DrawWholeMapView
 	msgbox ViridianCity_Gym_Text_RocketOps_ExtractStaff_C3
-	msgbox ViridianCity_Gym_Text_RocketOps_EvacEndpoint_C3, MSGBOX_AUTOCLOSE
-	msgbox ViridianCity_Gym_Text_MemoryAct4DecisionScene, MSGBOX_AUTOCLOSE
 	setflag FLAG_ROCKET_DISBANDED
 	goto EventScript_RocketOps_CommandFinalize
 
