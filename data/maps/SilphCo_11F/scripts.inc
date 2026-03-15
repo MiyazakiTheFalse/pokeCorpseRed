@@ -284,6 +284,12 @@ SilphCo_11F_EventScript_Grunt1PostBattleReportDone::
 	end
 
 SilphCo_11F_EventScript_Grunt2::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_11F_EventScript_Grunt2_Battle
+	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_Grunt2_Battle
+	msgbox SilphCo_11F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+SilphCo_11F_EventScript_Grunt2_Battle::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_41, SilphCo_11F_Text_Grunt2Intro, SilphCo_11F_Text_Grunt2Defeat
 	msgbox SilphCo_11F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end

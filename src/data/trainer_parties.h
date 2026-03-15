@@ -4102,17 +4102,12 @@ static const struct TrainerMonNoItemDefaultMoves sParty_ScientistIvan[] = {
 static const struct TrainerMonNoItemDefaultMoves sParty_BossGiovanni[] = {
     {
         .iv = 250,
-        .lvl = 25,
-        .species = SPECIES_ONIX,
-    },
-    {
-        .iv = 250,
-        .lvl = 24,
+        .lvl = 26,
         .species = SPECIES_RHYHORN,
     },
     {
         .iv = 250,
-        .lvl = 29,
+        .lvl = 30,
         .species = SPECIES_KANGASKHAN,
     },
 };
@@ -4120,22 +4115,17 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BossGiovanni[] = {
 static const struct TrainerMonNoItemDefaultMoves sParty_BossGiovanni2[] = {
     {
         .iv = 250,
-        .lvl = 37,
-        .species = SPECIES_NIDORINO,
-    },
-    {
-        .iv = 250,
-        .lvl = 35,
+        .lvl = 38,
         .species = SPECIES_KANGASKHAN,
     },
     {
         .iv = 250,
-        .lvl = 37,
+        .lvl = 39,
         .species = SPECIES_RHYHORN,
     },
     {
         .iv = 250,
-        .lvl = 41,
+        .lvl = 42,
         .species = SPECIES_NIDOQUEEN,
     },
 };
@@ -4143,43 +4133,35 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BossGiovanni2[] = {
 static const struct TrainerMonItemCustomMovesAbility sParty_LeaderGiovanni[] = {
     {
         .iv = 0,
-        .lvl = 45,
-        .species = SPECIES_RHYHORN,
-        .heldItem = ITEM_NONE,
-        .ability = 0,
-        .moves = {MOVE_TAKE_DOWN, MOVE_ROCK_BLAST, MOVE_SCARY_FACE, MOVE_EARTHQUAKE},
-    },
-    {
-        .iv = 0,
-        .lvl = 42,
+        .lvl = 44,
         .species = SPECIES_DUGTRIO,
         .heldItem = ITEM_NONE,
         .ability = 0,
-        .moves = {MOVE_SLASH, MOVE_SAND_TOMB, MOVE_MUD_SLAP, MOVE_EARTHQUAKE},
-    },
-    {
-        .iv = 0,
-        .lvl = 44,
-        .species = SPECIES_NIDOQUEEN,
-        .heldItem = ITEM_NONE,
-        .ability = 0,
-        .moves = {MOVE_BODY_SLAM, MOVE_DOUBLE_KICK, MOVE_POISON_STING, MOVE_EARTHQUAKE},
+        .moves = {MOVE_EARTHQUAKE, MOVE_SLASH, MOVE_SAND_TOMB, MOVE_MUD_SLAP},
     },
     {
         .iv = 0,
         .lvl = 45,
-        .species = SPECIES_NIDOKING,
+        .species = SPECIES_NIDOQUEEN,
         .heldItem = ITEM_NONE,
         .ability = 0,
-        .moves = {MOVE_THRASH, MOVE_DOUBLE_KICK, MOVE_POISON_STING, MOVE_EARTHQUAKE},
+        .moves = {MOVE_EARTHQUAKE, MOVE_BODY_SLAM, MOVE_DOUBLE_KICK, MOVE_ROAR},
     },
     {
         .iv = 0,
-        .lvl = 50,
-        .species = SPECIES_RHYHORN,
+        .lvl = 46,
+        .species = SPECIES_NIDOKING,
         .heldItem = ITEM_NONE,
         .ability = 0,
-        .moves = {MOVE_TAKE_DOWN, MOVE_ROCK_BLAST, MOVE_SCARY_FACE, MOVE_EARTHQUAKE},
+        .moves = {MOVE_EARTHQUAKE, MOVE_THRASH, MOVE_DOUBLE_KICK, MOVE_ROCK_TOMB},
+    },
+    {
+        .iv = 0,
+        .lvl = 48,
+        .species = SPECIES_RHYDON,
+        .heldItem = ITEM_NONE,
+        .ability = 0,
+        .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_BLAST, MOVE_MEGAHORN, MOVE_SCARY_FACE},
     },
 };
 

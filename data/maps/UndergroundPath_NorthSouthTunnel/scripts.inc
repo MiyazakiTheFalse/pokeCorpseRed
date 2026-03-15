@@ -27,6 +27,22 @@ UndergroundPath_NorthSouthTunnel_EventScript_MemoryObjectiveCheckpoint_Ch3::
 	setvar VAR_GIO_CHAPTER, 3
 	setvar VAR_GIO_ACT, 3
 	setvar VAR_GIO_CHECKPOINT_ID, 1
+	goto_if_set FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE, UndergroundPath_NorthSouthTunnel_EventScript_MemoryObjectiveCheckpoint_Ch3_Save
+	lockall
+	msgbox UndergroundPath_NorthSouthTunnel_Text_MemoryTunnelDefenseStart, MSGBOX_AUTOCLOSE
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	setwildbattle SPECIES_ZUBAT, 42
+	dowildbattle
+	setwildbattle SPECIES_GOLBAT, 43
+	dowildbattle
+	setwildbattle SPECIES_RATICATE, 44
+	dowildbattle
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	setflag FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE
+	msgbox UndergroundPath_NorthSouthTunnel_Text_MemoryTunnelDefenseClear, MSGBOX_AUTOCLOSE
+	releaseall
+
+UndergroundPath_NorthSouthTunnel_EventScript_MemoryObjectiveCheckpoint_Ch3_Save::
 	special SaveGiovanniMemoryModeCheckpoint
 	goto UndergroundPath_NorthSouthTunnel_EventScript_SetWorldMap
 

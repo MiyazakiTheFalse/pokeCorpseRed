@@ -24,6 +24,21 @@ Route11_EventScript_DiglettsCaveSign::
 	end
 
 Route11_EventScript_MemoryRouteCheckpoint::
+	goto_if_set FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED, Route11_EventScript_MemoryRouteCheckpoint_Save
+	lockall
+	msgbox Route11_Text_MemoryDiglettSwarmStart, MSGBOX_AUTOCLOSE
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	setwildbattle SPECIES_DIGLETT, 24
+	dowildbattle
+	setwildbattle SPECIES_DIGLETT, 25
+	dowildbattle
+	setwildbattle SPECIES_DUGTRIO, 28
+	dowildbattle
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	msgbox Route11_Text_MemoryDiglettSwarmClear, MSGBOX_AUTOCLOSE
+	releaseall
+
+Route11_EventScript_MemoryRouteCheckpoint_Save::
 	setvar VAR_0x8004, 1
 	call EventScript_GiovanniSharedWarp_ResolvePrecedence
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing

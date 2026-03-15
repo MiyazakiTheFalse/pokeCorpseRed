@@ -178,6 +178,12 @@ RocketHideout_B4F_EventScript_SilphScope::
 	end
 
 RocketHideout_B4F_EventScript_Grunt1::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, RocketHideout_B4F_EventScript_Grunt1_Battle
+	goto_if_ne VAR_CHAPTER_ID, 1, RocketHideout_B4F_EventScript_Grunt1_Battle
+	msgbox RocketHideout_B4F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+RocketHideout_B4F_EventScript_Grunt1_Battle::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_18, RocketHideout_B4F_Text_Grunt1Intro, RocketHideout_B4F_Text_Grunt1Defeat, RocketHideout_B4F_EventScript_DefeatedGrunt1
 	msgbox RocketHideout_B4F_Text_Grunt1PostBattle
 	release
@@ -226,6 +232,12 @@ RocketHideout_B4F_EventScript_DefeatedGrunt2::
 	end
 
 RocketHideout_B4F_EventScript_Grunt3::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, RocketHideout_B4F_EventScript_Grunt3_Battle
+	goto_if_ne VAR_CHAPTER_ID, 1, RocketHideout_B4F_EventScript_Grunt3_Battle
+	msgbox RocketHideout_B4F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+RocketHideout_B4F_EventScript_Grunt3_Battle::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_17, RocketHideout_B4F_Text_Grunt3Intro, RocketHideout_B4F_Text_Grunt3Defeat, RocketHideout_B4F_EventScript_DefeatedGrunt3
 	msgbox RocketHideout_B4F_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
 	end
