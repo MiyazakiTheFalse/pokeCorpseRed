@@ -290,4 +290,5 @@ VermilionCity_EventScript_MemoryRouteCheckpoint::
 	setflag FLAG_GIO_MEM_CH1_CONVOY_COMPLETE
 	setvar VAR_GIO_ACT, 3
 	setvar VAR_GIO_CHECKPOINT_ID, 2
+	special SaveGiovanniMemoryModeCheckpoint
 	end

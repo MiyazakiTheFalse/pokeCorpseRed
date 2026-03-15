@@ -173,6 +173,7 @@ SilphCo_11F_EventScript_SetMemorySaffronOutcome::
 	call_if_set FLAG_SILPH_INFILTRATION_PREPARED, SilphCo_11F_EventScript_RocketOpsMilestoneConfirm
 	setvar VAR_GIO_ACT, 1
 	setvar VAR_GIO_CHECKPOINT_ID, 0
+	special SaveGiovanniMemoryModeCheckpoint
 	msgbox SilphCo_11F_Text_MemoryChapter3EmergencyBriefing, MSGBOX_AUTOCLOSE
 	msgbox SilphCo_11F_Text_MemoryChapter3ObjectiveInit, MSGBOX_AUTOCLOSE
 	msgbox SilphCo_11F_Text_MemoryChapterOutro, MSGBOX_AUTOCLOSE
