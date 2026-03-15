@@ -225,6 +225,22 @@ enum RocketOpsTriggerType
     ROCKETOPS_TRIGGER_EXTRACTION_NODE,
 };
 
+enum GiovanniCampaignSegment
+{
+    GIO_SEGMENT_HUB,
+    GIO_SEGMENT_OPERATION,
+    GIO_SEGMENT_RETURN,
+    GIO_SEGMENT_NEXT_OPERATION,
+};
+
+enum GiovanniCampaignDispatchResult
+{
+    GIO_DISPATCH_ROUTE_HUB_BRIEFING,
+    GIO_DISPATCH_ROUTE_OPERATION,
+    GIO_DISPATCH_ROUTE_RETURN,
+    GIO_DISPATCH_ROUTE_NEXT_OPERATION,
+};
+
 struct GiovanniBeatFlagGate
 {
     u16 flag;
@@ -818,6 +834,16 @@ static void SetGiovanniCampaignProgress(u8 chapterId, u8 actId, u8 checkpointId,
     VarSet(VAR_GIO_CHAPTER, chapterId);
     VarSet(VAR_GIO_ACT, actId);
     VarSet(VAR_GIO_CHECKPOINT_ID, checkpointId);
+    if (chapterId == 0 || actId == 0)
+    {
+        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, 0);
+    }
+    else
+    {
+        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, chapterId * 100 + actId);
+    }
     VarSet(VAR_GIO_CAMPAIGN_STATE, campaignState);
 }
 
@@ -4815,4 +4841,50 @@ u16 ValidateGiovanniInteractionOverlayForCurrentMap(void)
     ApplyGiovanniOverlayForCurrentMap(overlay);
     ApplyGiovanniOverlayNpcSet(overlay);
     return TRUE;
+}
+
+u16 Special_GiovanniCampaignDispatch(void)
+{
+    u16 chapterId = VarGet(VAR_GIO_CHAPTER);
+    u16 actId = VarGet(VAR_GIO_ACT);
+    u16 segment = VarGet(VAR_GIO_SEGMENT);
+
+    if (chapterId < 1 || chapterId > 3)
+    {
+        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, 0);
+        return GIO_DISPATCH_ROUTE_HUB_BRIEFING;
+    }
+
+    if (actId == 0)
+        actId = 1;
+
+    if (segment > GIO_SEGMENT_NEXT_OPERATION)
+    {
+        segment = GIO_SEGMENT_HUB;
+        VarSet(VAR_GIO_SEGMENT, segment);
+    }
+
+    if (segment == GIO_SEGMENT_NEXT_OPERATION)
+    {
+        actId++;
+        VarSet(VAR_GIO_ACT, actId);
+        VarSet(VAR_GIO_SEGMENT, GIO_SEGMENT_HUB);
+        VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, chapterId * 100 + actId);
+        return GIO_DISPATCH_ROUTE_NEXT_OPERATION;
+    }
+
+    VarSet(VAR_GIO_ACTIVE_DIRECTIVE_ID, chapterId * 100 + actId);
+
+    switch (segment)
+    {
+    case GIO_SEGMENT_HUB:
+        return GIO_DISPATCH_ROUTE_HUB_BRIEFING;
+    case GIO_SEGMENT_OPERATION:
+        return GIO_DISPATCH_ROUTE_OPERATION;
+    case GIO_SEGMENT_RETURN:
+        return GIO_DISPATCH_ROUTE_RETURN;
+    }
+
+    return GIO_DISPATCH_ROUTE_HUB_BRIEFING;
 }

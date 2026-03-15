@@ -14,7 +14,7 @@ RocketHideout_B4F_OnTransition::
 	goto_if_set FLAG_GIO_MEM_CH1_COMPLETE, RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub
 	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub
-	end
+	goto RocketHideout_B4F_EventScript_ChapterHubEntry
 
 RocketHideout_B4F_EventScript_SkipMemoryRoutingCheck::
 	end
@@ -22,6 +22,23 @@ RocketHideout_B4F_EventScript_SkipMemoryRoutingCheck::
 RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub::
 	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
 	waitstate
+	end
+
+RocketHideout_B4F_EventScript_ChapterHubEntry::
+	specialvar VAR_RESULT, Special_GiovanniCampaignDispatch
+	goto_if_eq VAR_RESULT, 2, RocketHideout_B4F_EventScript_ChapterHubReturnScene
+	goto_if_eq VAR_RESULT, 0, RocketHideout_B4F_EventScript_ChapterHubDirective
+	goto_if_eq VAR_RESULT, 3, RocketHideout_B4F_EventScript_ChapterHubDirective
+	end
+
+RocketHideout_B4F_EventScript_ChapterHubReturnScene::
+	msgbox RocketHideout_B4F_Text_RocketOps_MilestoneLogged_C1, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_NEXT_OPERATION
+	end
+
+RocketHideout_B4F_EventScript_ChapterHubDirective::
+	msgbox RocketHideout_B4F_Text_MemoryChapterIntro, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_OPERATION
 	end
 
 RocketHideout_B4F_EventScript_MemorySpaceMarker::

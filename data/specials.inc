@@ -474,6 +474,7 @@ gSpecials::
 	def_special DebugForceGiovanniMemoryModeChapterState
 	def_special ValidateGiovanniMemoryModeRocketFlags
 	def_special ValidateGiovanniInteractionOverlayForCurrentMap
+	def_special Special_GiovanniCampaignDispatch
 	def_special SyncGiovanniMemoryModeNpcState
 	def_special SaveGiovanniMemoryModeCheckpoint
 	def_special Special_RocketOps_OpenTerminal
