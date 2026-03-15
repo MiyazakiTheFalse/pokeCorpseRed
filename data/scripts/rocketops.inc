@@ -9,49 +9,79 @@ EventScript_RocketOps_Terminal::
 	lockall
 	specialvar VAR_RESULT, Special_RocketOps_OpenTerminal
 	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_TerminalOffline
-	msgbox Text_RocketOpsTerminalBoot
+	msgbox Text_RocketOpsTerminalBoot, MSGBOX_AUTOCLOSE
+	call EventScript_RocketOps_AssignImmediateCommand
+	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_TriggerLinkMismatch
+	specialvar VAR_RESULT, Special_RocketOps_ValidateCommandContext
+	goto_if_eq VAR_RESULT, TRUE, EventScript_RocketOps_CommandDispatch
+	call EventScript_RocketOps_CommandDenied
+	goto EventScript_RocketOps_Close
 
-EventScript_RocketOps_MenuLoop::
-	multichoice 0, 0, MULTICHOICE_ROCKETOPS_COMMANDS, FALSE
-	switch VAR_RESULT
-	case 0, EventScript_RocketOps_SelectSecureRoute
-	case 1, EventScript_RocketOps_SelectDeployAgent
-	case 2, EventScript_RocketOps_SelectDestroyData
-	case 3, EventScript_RocketOps_SelectExtractStaff
-	case 4, EventScript_RocketOps_Close
+EventScript_RocketOps_CommandDispatch::
+	goto_if_eq VAR_0x8004, 0, EventScript_RocketOps_Command_SecureRoute
+	goto_if_eq VAR_0x8004, 1, EventScript_RocketOps_Command_DeployAgent
+	goto_if_eq VAR_0x8004, 2, EventScript_RocketOps_Command_DestroyData
+	goto_if_eq VAR_0x8004, 3, EventScript_RocketOps_Command_ExtractStaff
+	goto EventScript_RocketOps_TriggerLinkMismatch
 
-EventScript_RocketOps_SelectSecureRoute::
+EventScript_RocketOps_AssignImmediateCommand::
+	switch VAR_0x8005
+	case 1, EventScript_RocketOps_AssignImmediateCommand_SecureRoute
+	case 2, EventScript_RocketOps_AssignImmediateCommand_DeployAgent
+	case 3, EventScript_RocketOps_AssignImmediateCommand_DestroyData
+	case 4, EventScript_RocketOps_AssignImmediateCommand_ExtractStaff
+	setvar VAR_RESULT, FALSE
+	return
+
+EventScript_RocketOps_AssignImmediateCommand_SecureRoute::
 	setvar VAR_0x8004, 0
-	specialvar VAR_RESULT, Special_RocketOps_ValidateCommandContext
-	goto_if_eq VAR_RESULT, TRUE, EventScript_RocketOps_Command_SecureRoute
-	msgbox Text_RocketOpsFailSecureRoute
-	goto EventScript_RocketOps_MenuReturn
+	setvar VAR_RESULT, TRUE
+	return
 
-EventScript_RocketOps_SelectDeployAgent::
+EventScript_RocketOps_AssignImmediateCommand_DeployAgent::
 	setvar VAR_0x8004, 1
-	specialvar VAR_RESULT, Special_RocketOps_ValidateCommandContext
-	goto_if_eq VAR_RESULT, TRUE, EventScript_RocketOps_Command_DeployAgent
-	msgbox Text_RocketOpsFailDeployAgent
-	goto EventScript_RocketOps_MenuReturn
+	setvar VAR_RESULT, TRUE
+	return
 
-EventScript_RocketOps_SelectDestroyData::
+EventScript_RocketOps_AssignImmediateCommand_DestroyData::
 	setvar VAR_0x8004, 2
-	specialvar VAR_RESULT, Special_RocketOps_ValidateCommandContext
-	goto_if_eq VAR_RESULT, TRUE, EventScript_RocketOps_Command_DestroyData
+	setvar VAR_RESULT, TRUE
+	return
+
+EventScript_RocketOps_AssignImmediateCommand_ExtractStaff::
+	setvar VAR_0x8004, 3
+	setvar VAR_RESULT, TRUE
+	return
+
+EventScript_RocketOps_CommandDenied::
+	goto_if_eq VAR_0x8004, 0, EventScript_RocketOps_CommandDenied_SecureRoute
+	goto_if_eq VAR_0x8004, 1, EventScript_RocketOps_CommandDenied_DeployAgent
+	goto_if_eq VAR_0x8004, 2, EventScript_RocketOps_CommandDenied_DestroyData
+	goto_if_eq VAR_0x8004, 3, EventScript_RocketOps_CommandDenied_ExtractStaff
+	msgbox Text_RocketOpsTriggerLinkMismatch
+	return
+
+EventScript_RocketOps_CommandDenied_SecureRoute::
+	msgbox Text_RocketOpsFailSecureRoute
+	return
+
+EventScript_RocketOps_CommandDenied_DeployAgent::
+	msgbox Text_RocketOpsFailDeployAgent
+	return
+
+EventScript_RocketOps_CommandDenied_DestroyData::
 	msgbox Text_RocketOpsFailDestroyData
 	addvar VAR_ROCKETOPS_ALERT, 1
-	goto EventScript_RocketOps_MenuReturn
+	return
 
-EventScript_RocketOps_SelectExtractStaff::
-	setvar VAR_0x8004, 3
-	specialvar VAR_RESULT, Special_RocketOps_ValidateCommandContext
-	goto_if_eq VAR_RESULT, TRUE, EventScript_RocketOps_Command_ExtractStaff
+EventScript_RocketOps_CommandDenied_ExtractStaff::
 	msgbox Text_RocketOpsFailExtractStaff
 	addvar VAR_ROCKETOPS_ALERT, 1
-	goto EventScript_RocketOps_MenuReturn
+	return
 
-EventScript_RocketOps_MenuReturn::
-	goto EventScript_RocketOps_MenuLoop
+EventScript_RocketOps_TriggerLinkMismatch::
+	msgbox Text_RocketOpsTriggerLinkMismatch
+	goto EventScript_RocketOps_Close
 
 EventScript_RocketOps_Command_SecureRoute::
 	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_RocketOps_Command_SecureRoute_C1
@@ -121,8 +151,12 @@ EventScript_RocketOps_Close::
 	end
 
 Text_RocketOpsTerminalBoot::
-	.string "[ROCKETOPS] Link established. Select\n"
-	.string "an operation command.$"
+	.string "[ROCKETOPS] Link established. Routing\n"
+	.string "node command now.$"
+
+Text_RocketOpsTriggerLinkMismatch::
+	.string "[ROCKETOPS] Node handshake failed.\n"
+	.string "No command package found.$"
 
 Text_RocketOpsTerminalOffline::
 	.string "The terminal does not respond outside\n"
