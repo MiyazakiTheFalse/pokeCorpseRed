@@ -258,9 +258,19 @@ ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence::
 	end
 
 ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter::
+	lockall
 	msgbox ViridianCity_Gym_Text_MemoryFinalDefenseEncounter, MSGBOX_AUTOCLOSE
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	setwildbattle SPECIES_GOLBAT, 45
+	dowildbattle
+	setwildbattle SPECIES_MAROWAK, 46
+	dowildbattle
+	setwildbattle SPECIES_HYPNO, 46
+	dowildbattle
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
 	setflag FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON
 	special SaveGiovanniMemoryModeCheckpoint
+	releaseall
 	goto ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence
 
 ViridianCity_Gym_EventScript_GiovanniMemoryObjectivesIncomplete::
@@ -404,6 +414,13 @@ ViridianCity_Gym_EventScript_Jason::
 	setvar VAR_0x8004, 4
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Jason_Battle
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Jason_Battle
+	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Jason_Battle
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+ViridianCity_Gym_EventScript_Jason_Battle::
 	trainerbattle_single TRAINER_TAMER_JASON, ViridianCity_Gym_Text_JasonIntro, ViridianCity_Gym_Text_JasonDefeat
 	msgbox ViridianCity_Gym_Text_JasonPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -412,6 +429,13 @@ ViridianCity_Gym_EventScript_Cole::
 	setvar VAR_0x8004, 4
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Cole_Battle
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Cole_Battle
+	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Cole_Battle
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+ViridianCity_Gym_EventScript_Cole_Battle::
 	trainerbattle_single TRAINER_TAMER_COLE, ViridianCity_Gym_Text_ColeIntro, ViridianCity_Gym_Text_ColeDefeat
 	msgbox ViridianCity_Gym_Text_ColePostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -420,6 +444,13 @@ ViridianCity_Gym_EventScript_Atsushi::
 	setvar VAR_0x8004, 4
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Atsushi_Battle
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Atsushi_Battle
+	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Atsushi_Battle
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+ViridianCity_Gym_EventScript_Atsushi_Battle::
 	trainerbattle_single TRAINER_BLACK_BELT_ATSUSHI, ViridianCity_Gym_Text_AtsushiIntro, ViridianCity_Gym_Text_AtsushiDefeat
 	msgbox ViridianCity_Gym_Text_AtsushiPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -428,6 +459,13 @@ ViridianCity_Gym_EventScript_Kiyo::
 	setvar VAR_0x8004, 4
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Kiyo_Battle
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Kiyo_Battle
+	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Kiyo_Battle
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+ViridianCity_Gym_EventScript_Kiyo_Battle::
 	trainerbattle_single TRAINER_BLACK_BELT_KIYO, ViridianCity_Gym_Text_KiyoIntro, ViridianCity_Gym_Text_KiyoDefeat
 	msgbox ViridianCity_Gym_Text_KiyoPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -436,6 +474,13 @@ ViridianCity_Gym_EventScript_Takashi::
 	setvar VAR_0x8004, 4
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Takashi_Battle
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Takashi_Battle
+	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Takashi_Battle
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+ViridianCity_Gym_EventScript_Takashi_Battle::
 	trainerbattle_single TRAINER_BLACK_BELT_TAKASHI, ViridianCity_Gym_Text_TakashiIntro, ViridianCity_Gym_Text_TakashiDefeat
 	msgbox ViridianCity_Gym_Text_TakashiPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -444,6 +489,13 @@ ViridianCity_Gym_EventScript_Samuel::
 	setvar VAR_0x8004, 4
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Samuel_Battle
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Samuel_Battle
+	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Samuel_Battle
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+ViridianCity_Gym_EventScript_Samuel_Battle::
 	trainerbattle_single TRAINER_COOLTRAINER_SAMUEL, ViridianCity_Gym_Text_SamuelIntro, ViridianCity_Gym_Text_SamuelDefeat
 	msgbox ViridianCity_Gym_Text_SamuelPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -452,6 +504,13 @@ ViridianCity_Gym_EventScript_Yuji::
 	setvar VAR_0x8004, 4
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Yuji_Battle
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Yuji_Battle
+	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Yuji_Battle
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+ViridianCity_Gym_EventScript_Yuji_Battle::
 	trainerbattle_single TRAINER_COOLTRAINER_YUJI, ViridianCity_Gym_Text_YujiIntro, ViridianCity_Gym_Text_YujiDefeat
 	msgbox ViridianCity_Gym_Text_YujiPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -460,6 +519,13 @@ ViridianCity_Gym_EventScript_Warren::
 	setvar VAR_0x8004, 4
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Warren_Battle
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Warren_Battle
+	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Warren_Battle
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	end
+
+ViridianCity_Gym_EventScript_Warren_Battle::
 	trainerbattle_single TRAINER_COOLTRAINER_WARREN, ViridianCity_Gym_Text_WarrenIntro, ViridianCity_Gym_Text_WarrenDefeat
 	msgbox ViridianCity_Gym_Text_WarrenPostBattle, MSGBOX_AUTOCLOSE
 	end

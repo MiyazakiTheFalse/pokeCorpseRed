@@ -111,3 +111,11 @@ Route11_Text_DavePostBattle::
 Route11_Text_DiglettsCave::
     .string "DIGLETT'S CAVE$"
 
+
+Route11_Text_MemoryDiglettSwarmStart::
+    .string "[MEMORY:C1] Diglett swarm spike detected.\n"
+    .string "Hold this route and clear the burst.$"
+
+Route11_Text_MemoryDiglettSwarmClear::
+    .string "[MEMORY:C1] Swarm dispersed.\n"
+    .string "Route pressure normalized.$"
