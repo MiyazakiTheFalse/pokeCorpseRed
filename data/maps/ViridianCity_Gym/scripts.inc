@@ -99,6 +99,9 @@ ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpoint::
 	goto_if_set FLAG_GIO_MEM_CH3_STAFF_EXTRACTED, ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpointDone
 	setflag FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1
+	clearflag FLAG_GIO_CH3_ACT2
+	setflag FLAG_GIO_CH3_ACT3
+	clearflag FLAG_GIO_CH3_ACT4
 	setvar VAR_GIO_ACT, 3
 	setvar VAR_GIO_CHECKPOINT_ID, 1
 	call EventScript_GiovanniCampaign_PrintActiveDirective
@@ -153,6 +156,10 @@ EventScript_RocketOps_Command_DestroyData_C3::
 	setflag FLAG_GIO_MEM_CH3_ARCHIVE_EXPLOSION_VISUAL
 EventScript_RocketOps_Command_DestroyData_C3_SkipArchiveFx::
 	setflag FLAG_GIO_MEM_CH3_POWER_OUTAGE_VISUAL
+	clearflag FLAG_GIO_CH3_ACT1
+	setflag FLAG_GIO_CH3_ACT2
+	clearflag FLAG_GIO_CH3_ACT3
+	clearflag FLAG_GIO_CH3_ACT4
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 0
 	call EventScript_GiovanniCampaign_PrintActiveDirective
@@ -176,6 +183,8 @@ EventScript_RocketOps_Command_ExtractStaff_C3::
 EventScript_RocketOps_Command_ExtractStaff_C3_SkipEvacFx::
 	setflag FLAG_ROCKET_EVACUATION_COMPLETE
 	setflag FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE
+	clearflag FLAG_GIO_CH3_ACT3
+	setflag FLAG_GIO_CH3_ACT4
 	setvar VAR_GIO_ACT, 4
 	setvar VAR_GIO_CHECKPOINT_ID, 2
 	call EventScript_GiovanniCampaign_PrintActiveDirective
@@ -242,6 +251,10 @@ ViridianCity_Gym_EventScript_MemorySpaceMarker::
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_MemorySpaceMarkerComplete
 	setvar VAR_ROCKETOPS_CH3_STAGE, 0
 	setflag FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE
+	setflag FLAG_GIO_CH3_ACT1
+	clearflag FLAG_GIO_CH3_ACT2
+	clearflag FLAG_GIO_CH3_ACT3
+	clearflag FLAG_GIO_CH3_ACT4
 	setvar VAR_GIO_ACT, 1
 	setvar VAR_GIO_CHECKPOINT_ID, 0
 	special SaveGiovanniMemoryModeCheckpoint
@@ -258,6 +271,20 @@ ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch::
 	msgbox ViridianCity_Gym_Text_MemoryChapterMismatch, MSGBOX_AUTOCLOSE
 	return
 
+
+ViridianCity_Gym_EventScript_MemoryChapterCompleteChain::
+	specialvar VAR_RESULT, CompleteGiovanniMemoryModeChapter1
+	goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_MemoryChapterCompleteChain_Chapter2
+
+ViridianCity_Gym_EventScript_MemoryChapterCompleteChain_Chapter2::
+	specialvar VAR_RESULT, CompleteGiovanniMemoryModeChapter2
+	goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_MemoryChapterCompleteChain_Chapter3
+
+ViridianCity_Gym_EventScript_MemoryChapterCompleteChain_Chapter3::
+	specialvar VAR_RESULT, SetGiovanniMemoryModeChapter3Complete
+	goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_GiovanniMemoryObjectivesIncomplete
+	return
+
 ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence::
 	goto_if_unset FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE, ViridianCity_Gym_EventScript_GiovanniMemoryObjectivesIncomplete
 	goto_if_unset FLAG_ROCKET_DATA_DESTROYED, ViridianCity_Gym_EventScript_GiovanniMemoryObjectivesIncomplete
@@ -269,8 +296,7 @@ ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence::
 	fadescreen FADE_TO_BLACK
 	warp MAP_VIRIDIAN_CITY_GYM, 17, 20
 	waitstate
-	specialvar VAR_RESULT, SetGiovanniMemoryModeChapter3Complete
-	goto_if_eq VAR_RESULT, FALSE, ViridianCity_Gym_EventScript_GiovanniMemoryObjectivesIncomplete
+	call ViridianCity_Gym_EventScript_MemoryChapterCompleteChain
 	special RestoreGiovanniMemoryModeSnapshot
 	special ClearGiovanniMemoryModeCaptureLock
 	fadescreen FADE_FROM_BLACK
