@@ -59,6 +59,8 @@ u16 Special_GiovanniCampaignDispatch(void);
 u16 Special_LoadGiovanniActiveDirective(void);
 u16 SyncGiovanniMemoryModeNpcState(void);
 u16 SaveGiovanniMemoryModeCheckpoint(void);
+bool8 IsGiovanniAuthorityPacingForcedRunActive(void);
+u16 ValidateGiovanniAuthorityPacingState(void);
 u16 Special_RocketOps_OpenTerminal(void);
 u16 Special_RocketOps_ValidateCommandContext(void);
 u16 Special_RocketOps_ApplyCommandEffect(void);
