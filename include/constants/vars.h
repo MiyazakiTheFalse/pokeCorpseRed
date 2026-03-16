@@ -218,8 +218,8 @@
 #define VAR_GIO_ACTIVE_DIRECTIVE_ID 0x40A4
 #define VAR_GIO_AUTHORITY_PACING   0x40A5
 #define VAR_GIO_DEBUG_VALIDATION_MASK 0x40A6
-#define VAR_0x40A7                 0x40A7
-#define VAR_0x40A8                 0x40A8
+#define VAR_GIO_ACT_BEAT_INDEX     0x40A7
+#define VAR_GIO_ACT_TIMER_BUCKET   0x40A8
 #define VAR_0x40A9                 0x40A9
 
 #define VAR_QLBAK_TRAINER_REMATCHES 0x40AA // array of 4

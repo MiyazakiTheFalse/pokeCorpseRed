@@ -929,6 +929,13 @@ static void ReloadGiovanniMemoryModeNpcObjects(void)
 #define GIO_CHECKPOINT_BRANCH_DESTROY_DATA (1 << 8)
 #define GIO_CHECKPOINT_BRANCH_EXTRACT_STAFF (1 << 9)
 
+#define GIO_ACT_BEAT_COMMAND (1 << 0)
+#define GIO_ACT_BEAT_BATTLE_SETPIECE (1 << 1)
+#define GIO_ACT_BEAT_WORLD_STATE_CHANGE (1 << 2)
+#define GIO_ACT_BEAT_REQUIREMENTS (GIO_ACT_BEAT_COMMAND | GIO_ACT_BEAT_BATTLE_SETPIECE | GIO_ACT_BEAT_WORLD_STATE_CHANGE)
+
+#define GIO_ACT_PACING_STALL_HINT_THRESHOLD 5
+
 static void RunGiovanniMemoryModeResetHooks(u8 chapterId);
 static void SyncGiovanniLegacyCampaignState(void);
 static u16 GetGiovanniCampaignValidationErrorMask(void);
@@ -949,6 +956,98 @@ static u16 GetGiovanniCheckpointObjectiveFlags(void);
 static void ApplyGiovanniCheckpointObjectiveFlags(u16 objectiveFlags);
 static void SnapshotGiovanniActCheckpointState(bool8 saveAllowedAtCheckpoint);
 static bool8 RestoreGiovanniActCheckpointStateFromSnapshot(void);
+static u8 CountSetBits(u16 value);
+static u16 GetGiovanniActBattleSetpieceBeatMask(u8 chapterId);
+static u16 GetGiovanniActWorldStateBeatMask(u8 chapterId);
+static u16 GetGiovanniActBeatMask(u8 chapterId, bool8 commandExecuted);
+static void UpdateGiovanniActPacingProgress(u8 chapterId, bool8 commandExecuted, u16 timerBucket);
+static bool8 IsGiovanniActPacingComplete(u8 chapterId, bool8 commandExecuted);
+
+static u8 CountSetBits(u16 value)
+{
+    u8 count = 0;
+
+    while (value != 0)
+    {
+        count += value & 1;
+        value >>= 1;
+    }
+
+    return count;
+}
+
+static u16 GetGiovanniActBattleSetpieceBeatMask(u8 chapterId)
+{
+    switch (chapterId)
+    {
+    case 1:
+        if (FlagGet(FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED) || FlagGet(FLAG_GIO_MEM_CH1_CONVOY_COMPLETE))
+            return GIO_ACT_BEAT_BATTLE_SETPIECE;
+        break;
+    case 2:
+        if (FlagGet(FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON) || FlagGet(FLAG_GIO_MEM_CH2_HIDEOUT_CLEARED))
+            return GIO_ACT_BEAT_BATTLE_SETPIECE;
+        break;
+    case 3:
+        if (FlagGet(FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON) || FlagGet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2))
+            return GIO_ACT_BEAT_BATTLE_SETPIECE;
+        break;
+    }
+
+    return 0;
+}
+
+static u16 GetGiovanniActWorldStateBeatMask(u8 chapterId)
+{
+    switch (chapterId)
+    {
+    case 1:
+        if (FlagGet(FLAG_GIO_MEM_CH1_DIGLETT_SWARM_VISUAL)
+         || FlagGet(FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL)
+         || FlagGet(FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL))
+            return GIO_ACT_BEAT_WORLD_STATE_CHANGE;
+        break;
+    case 2:
+        if (FlagGet(FLAG_GIO_MEM_CH2_ALARM_ESCALATED_VISUAL)
+         || FlagGet(FLAG_GIO_MEM_CH2_SERVER_DESTROYED_VISUAL)
+         || FlagGet(FLAG_GIO_MEM_CH2_ROUTE_UNSEALED_VISUAL))
+            return GIO_ACT_BEAT_WORLD_STATE_CHANGE;
+        break;
+    case 3:
+        if (FlagGet(FLAG_GIO_MEM_CH3_ARCHIVE_EXPLOSION_VISUAL)
+         || FlagGet(FLAG_GIO_MEM_CH3_POWER_OUTAGE_VISUAL)
+         || FlagGet(FLAG_GIO_MEM_CH3_EVAC_COLLAPSE_VISUAL))
+            return GIO_ACT_BEAT_WORLD_STATE_CHANGE;
+        break;
+    }
+
+    return 0;
+}
+
+static u16 GetGiovanniActBeatMask(u8 chapterId, bool8 commandExecuted)
+{
+    u16 mask = 0;
+
+    if (commandExecuted)
+        mask |= GIO_ACT_BEAT_COMMAND;
+
+    mask |= GetGiovanniActBattleSetpieceBeatMask(chapterId);
+    mask |= GetGiovanniActWorldStateBeatMask(chapterId);
+    return mask;
+}
+
+static void UpdateGiovanniActPacingProgress(u8 chapterId, bool8 commandExecuted, u16 timerBucket)
+{
+    u16 beatMask = GetGiovanniActBeatMask(chapterId, commandExecuted);
+
+    VarSet(VAR_GIO_ACT_BEAT_INDEX, CountSetBits(beatMask));
+    VarSet(VAR_GIO_ACT_TIMER_BUCKET, timerBucket);
+}
+
+static bool8 IsGiovanniActPacingComplete(u8 chapterId, bool8 commandExecuted)
+{
+    return (GetGiovanniActBeatMask(chapterId, commandExecuted) & GIO_ACT_BEAT_REQUIREMENTS) == GIO_ACT_BEAT_REQUIREMENTS;
+}
 
 static void LogRocketOpsSegmentTransition(u16 previousSegment, u16 nextSegment)
 {
@@ -1103,6 +1202,8 @@ static void SetGiovanniCampaignProgress(u8 chapterId, u8 actId, u8 checkpointId,
     VarSet(VAR_GIO_CHAPTER, chapterId);
     VarSet(VAR_GIO_ACT, actId);
     VarSet(VAR_GIO_CHECKPOINT_ID, checkpointId);
+    VarSet(VAR_GIO_ACT_BEAT_INDEX, 0);
+    VarSet(VAR_GIO_ACT_TIMER_BUCKET, 0);
     SetGiovanniCampaignSegment(GIO_SEGMENT_1);
     RefreshGiovanniActiveDirective();
     VarSet(VAR_GIO_CAMPAIGN_STATE, campaignState);
@@ -4231,6 +4332,8 @@ static void ResetRocketOpsState(void)
     VarSet(VAR_GIO_CHECKPOINT_X, 0);
     VarSet(VAR_GIO_CHECKPOINT_Y, 0);
     VarSet(VAR_GIO_CHECKPOINT_STAGE, 0);
+    VarSet(VAR_GIO_ACT_BEAT_INDEX, 0);
+    VarSet(VAR_GIO_ACT_TIMER_BUCKET, 0);
     FlagClear(FLAG_ROCKETOPS_TERMINAL_UNLOCKED);
     FlagClear(FLAG_ROCKETOPS_COMMAND_COOLDOWN);
     FlagClear(FLAG_ROCKETOPS_ROUTE_SECURED);
@@ -5158,15 +5261,24 @@ u16 Special_RocketOps_WritebackState(void)
     VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, VarGet(chapterStageVar));
     SetGiovanniCampaignSegment(GIO_SEGMENT_5);
 
-    if (VarGet(chapterStageVar) >= 3)
+    UpdateGiovanniActPacingProgress(chapterId, TRUE, 0);
+
+    if (VarGet(chapterStageVar) >= 3 && IsGiovanniActPacingComplete(chapterId, TRUE))
         FlagSet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
     else
         FlagClear(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
 
     if (VarGet(chapterStageVar) > previousStage)
     {
-        SetGiovanniCampaignSegment(GIO_SEGMENT_7);
-        Special_GiovanniCampaignDispatch();
+        if (VarGet(chapterStageVar) >= 3 && !IsGiovanniActPacingComplete(chapterId, TRUE))
+        {
+            SetGiovanniCampaignSegment(GIO_SEGMENT_6);
+        }
+        else
+        {
+            SetGiovanniCampaignSegment(GIO_SEGMENT_7);
+            Special_GiovanniCampaignDispatch();
+        }
     }
     else
     {
@@ -5336,6 +5448,8 @@ u16 Special_GiovanniCampaignDispatch(void)
 
     if (chapterId < 1 || chapterId > 3)
     {
+        VarSet(VAR_GIO_ACT_BEAT_INDEX, 0);
+        VarSet(VAR_GIO_ACT_TIMER_BUCKET, 0);
         SetGiovanniCampaignSegment(GIO_SEGMENT_1);
         RefreshGiovanniActiveDirective();
         return GIO_DISPATCH_ROUTE_HUB_BRIEFING;
@@ -5361,7 +5475,9 @@ u16 Special_GiovanniCampaignDispatch(void)
 
     VarSet(VAR_ROCKETOPS_CHAIN_STATE, (stallCount << 8) | (chapterStage & 0xFF));
 
-    if (stallCount >= 5 && chapterStage < 3)
+    UpdateGiovanniActPacingProgress(chapterId, FALSE, stallCount);
+
+    if (stallCount >= GIO_ACT_PACING_STALL_HINT_THRESHOLD && chapterStage < 3)
     {
         SetGiovanniCampaignSegment(GIO_SEGMENT_6);
         RefreshGiovanniActiveDirective();
@@ -5378,6 +5494,8 @@ u16 Special_GiovanniCampaignDispatch(void)
     {
         actId++;
         VarSet(VAR_GIO_ACT, actId);
+        VarSet(VAR_GIO_ACT_BEAT_INDEX, 0);
+        VarSet(VAR_GIO_ACT_TIMER_BUCKET, 0);
         SetGiovanniCampaignSegment(GIO_SEGMENT_1);
         RefreshGiovanniActiveDirective();
         return GIO_DISPATCH_ROUTE_NEXT_OPERATION;

@@ -173,23 +173,31 @@ EventScript_GiovanniCampaign_ReturnToHub_Ch2::
 EventScript_GiovanniCampaign_ReturnToHub_Ch3::
 	goto EventScript_GiovanniHub_WarpChapter3
 
-EventScript_GiovanniCampaign_WatchdogHint::
+EventScript_GiovanniCampaign_PacingRedirect::
 	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_GiovanniCampaign_WatchdogHint_C1
 	goto_if_eq VAR_GIO_CHAPTER, 2, EventScript_GiovanniCampaign_WatchdogHint_C2
 	goto_if_eq VAR_GIO_CHAPTER, 3, EventScript_GiovanniCampaign_WatchdogHint_C3
 	msgbox Text_RocketOpsWatchdogHint_Generic, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	return
+
+EventScript_GiovanniCampaign_WatchdogHint::
+	call EventScript_GiovanniCampaign_PacingRedirect
 	return
 
 EventScript_GiovanniCampaign_WatchdogHint_C1::
 	msgbox Text_RocketOpsWatchdogHint_C1, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	return
 
 EventScript_GiovanniCampaign_WatchdogHint_C2::
 	msgbox Text_RocketOpsWatchdogHint_C2, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	return
 
 EventScript_GiovanniCampaign_WatchdogHint_C3::
 	msgbox Text_RocketOpsWatchdogHint_C3, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	return
 
 EventScript_RocketOps_UseControlNodeTerminal::
