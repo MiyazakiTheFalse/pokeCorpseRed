@@ -72,20 +72,16 @@ RocketHideout_B4F_EventScript_MemoryChapterMismatchMarker::
 	end
 
 RocketHideout_B4F_EventScript_MemoryMedicTerminal::
-	setvar VAR_0x8005, 1 @ ROCKETOPS_TRIGGER_CONTROL_NODE
-	goto EventScript_RocketOps_Terminal
+	goto EventScript_RocketOps_UseControlNodeTerminal
 
 RocketHideout_B4F_EventScript_MemoryDeployAgentTerminal::
-	setvar VAR_0x8005, 2 @ ROCKETOPS_TRIGGER_SURVEILLANCE_NODE
-	goto EventScript_RocketOps_Terminal
+	goto EventScript_RocketOps_UseSurveillanceNodeTerminal
 
 RocketHideout_B4F_EventScript_MemoryDestroyDataTerminal::
-	setvar VAR_0x8005, 3 @ ROCKETOPS_TRIGGER_ARCHIVE_NODE
-	goto EventScript_RocketOps_Terminal
+	goto EventScript_RocketOps_UseArchiveNodeTerminal
 
 RocketHideout_B4F_EventScript_MemoryExtractStaffTerminal::
-	setvar VAR_0x8005, 4 @ ROCKETOPS_TRIGGER_EXTRACTION_NODE
-	goto EventScript_RocketOps_Terminal
+	goto EventScript_RocketOps_UseExtractionNodeTerminal
 
 EventScript_RocketOps_Command_SecureRoute_C1::
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4

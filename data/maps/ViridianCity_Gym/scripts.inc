@@ -85,16 +85,13 @@ ViridianCity_Gym_EventScript_MemoryRecoveryStation::
 
 
 ViridianCity_Gym_EventScript_MemorySecureRouteConsole::
-	setvar VAR_0x8005, 1 @ ROCKETOPS_TRIGGER_CONTROL_NODE
-	goto EventScript_RocketOps_Terminal
+	goto EventScript_RocketOps_UseControlNodeTerminal
 
 ViridianCity_Gym_EventScript_MemoryDeployAgentConsole::
-	setvar VAR_0x8005, 2 @ ROCKETOPS_TRIGGER_SURVEILLANCE_NODE
-	goto EventScript_RocketOps_Terminal
+	goto EventScript_RocketOps_UseSurveillanceNodeTerminal
 
 ViridianCity_Gym_EventScript_MemoryDestroyDataConsole::
-	setvar VAR_0x8005, 3 @ ROCKETOPS_TRIGGER_ARCHIVE_NODE
-	goto EventScript_RocketOps_Terminal
+	goto EventScript_RocketOps_UseArchiveNodeTerminal
 
 ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpoint::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
@@ -122,8 +119,7 @@ ViridianCity_Gym_EventScript_MemoryEvacEndpoint::
 	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_unset FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1, ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2
-	setvar VAR_0x8005, 4 @ ROCKETOPS_TRIGGER_EXTRACTION_NODE
-	goto EventScript_RocketOps_Terminal
+	goto EventScript_RocketOps_UseExtractionNodeTerminal
 
 ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked::
 	msgbox ViridianCity_Gym_Text_RocketOps_EvacEndpointLocked_C3, MSGBOX_AUTOCLOSE
