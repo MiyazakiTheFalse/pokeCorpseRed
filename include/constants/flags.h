@@ -1599,6 +1599,11 @@
 #define FLAG_SYS_GIOVANNI_MEMORY_MODE_VALIDATED                     FLAG_0x8FE
 #define FLAG_SYS_GIOVANNI_MEMORY_MODE_VALIDATION_FAILED             FLAG_0x8FF
 
+// Canonical Giovanni campaign branch state flags.
+#define FLAG_GIO_BRANCH_CH1_AUTHORITY_ROUTE                         FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
+#define FLAG_GIO_BRANCH_CH2_INFILTRATION_ROUTE                      FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
+#define FLAG_GIO_BRANCH_CH3_ESCORT_ROUTE                            FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
+
 // Canonical post-League world state flags.
 #define FLAG_ROCKET_DISBANDED                                       FLAG_0x8ED
 

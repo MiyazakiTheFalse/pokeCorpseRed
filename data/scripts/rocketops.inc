@@ -86,27 +86,27 @@ EventScript_RocketOps_TriggerLinkMismatch::
 	goto EventScript_RocketOps_Close
 
 EventScript_RocketOps_Command_SecureRoute::
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_RocketOps_Command_SecureRoute_C1
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 2, EventScript_RocketOps_Command_SecureRoute_C2
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 3, EventScript_RocketOps_Command_SecureRoute_C3
+	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_RocketOps_Command_SecureRoute_C1
+	goto_if_eq VAR_GIO_CHAPTER, 2, EventScript_RocketOps_Command_SecureRoute_C2
+	goto_if_eq VAR_GIO_CHAPTER, 3, EventScript_RocketOps_Command_SecureRoute_C3
 	goto EventScript_RocketOps_CommandChapterMismatch
 
 EventScript_RocketOps_Command_DeployAgent::
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_RocketOps_Command_DeployAgent_C1
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 2, EventScript_RocketOps_Command_DeployAgent_C2
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 3, EventScript_RocketOps_Command_DeployAgent_C3
+	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_RocketOps_Command_DeployAgent_C1
+	goto_if_eq VAR_GIO_CHAPTER, 2, EventScript_RocketOps_Command_DeployAgent_C2
+	goto_if_eq VAR_GIO_CHAPTER, 3, EventScript_RocketOps_Command_DeployAgent_C3
 	goto EventScript_RocketOps_CommandChapterMismatch
 
 EventScript_RocketOps_Command_DestroyData::
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_RocketOps_Command_DestroyData_C1
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 2, EventScript_RocketOps_Command_DestroyData_C2
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 3, EventScript_RocketOps_Command_DestroyData_C3
+	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_RocketOps_Command_DestroyData_C1
+	goto_if_eq VAR_GIO_CHAPTER, 2, EventScript_RocketOps_Command_DestroyData_C2
+	goto_if_eq VAR_GIO_CHAPTER, 3, EventScript_RocketOps_Command_DestroyData_C3
 	goto EventScript_RocketOps_CommandChapterMismatch
 
 EventScript_RocketOps_Command_ExtractStaff::
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_RocketOps_Command_ExtractStaff_C1
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 2, EventScript_RocketOps_Command_ExtractStaff_C2
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 3, EventScript_RocketOps_Command_ExtractStaff_C3
+	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_RocketOps_Command_ExtractStaff_C1
+	goto_if_eq VAR_GIO_CHAPTER, 2, EventScript_RocketOps_Command_ExtractStaff_C2
+	goto_if_eq VAR_GIO_CHAPTER, 3, EventScript_RocketOps_Command_ExtractStaff_C3
 	goto EventScript_RocketOps_CommandChapterMismatch
 
 EventScript_RocketOps_CommandChapterMismatch::
@@ -123,9 +123,9 @@ EventScript_RocketOps_CommandFinalize::
 	goto EventScript_GiovanniCampaign_ReturnToHub
 
 EventScript_GiovanniCampaign_ReturnToHub::
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_GiovanniCampaign_ReturnToHub_Ch1
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 2, EventScript_GiovanniCampaign_ReturnToHub_Ch2
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 3, EventScript_GiovanniCampaign_ReturnToHub_Ch3
+	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_GiovanniCampaign_ReturnToHub_Ch1
+	goto_if_eq VAR_GIO_CHAPTER, 2, EventScript_GiovanniCampaign_ReturnToHub_Ch2
+	goto_if_eq VAR_GIO_CHAPTER, 3, EventScript_GiovanniCampaign_ReturnToHub_Ch3
 	goto EventScript_RocketOps_Close
 
 EventScript_GiovanniCampaign_ReturnToHub_Ch1::
@@ -138,9 +138,9 @@ EventScript_GiovanniCampaign_ReturnToHub_Ch3::
 	goto EventScript_GiovanniHub_WarpChapter3
 
 EventScript_GiovanniCampaign_WatchdogHint::
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_GiovanniCampaign_WatchdogHint_C1
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 2, EventScript_GiovanniCampaign_WatchdogHint_C2
-	goto_if_eq VAR_ROCKETOPS_CHAPTER, 3, EventScript_GiovanniCampaign_WatchdogHint_C3
+	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_GiovanniCampaign_WatchdogHint_C1
+	goto_if_eq VAR_GIO_CHAPTER, 2, EventScript_GiovanniCampaign_WatchdogHint_C2
+	goto_if_eq VAR_GIO_CHAPTER, 3, EventScript_GiovanniCampaign_WatchdogHint_C3
 	msgbox Text_RocketOpsWatchdogHint_Generic, MSGBOX_AUTOCLOSE
 	return
 

@@ -6,12 +6,12 @@ CeladonCity_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
 	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, CeladonCity_EventScript_MemoryRoutingCheck
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, CeladonCity_EventScript_SetWorldMap
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, CeladonCity_EventScript_SetWorldMap
 	goto CeladonCity_EventScript_MemoryDesyncReturnToHub
 
 CeladonCity_EventScript_MemoryRoutingCheck::
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, CeladonCity_EventScript_MemoryDesyncReturnToHub
-	goto_if_eq VAR_CHAPTER_ID, 2, CeladonCity_EventScript_SetWorldMap
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, CeladonCity_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_GIO_CHAPTER, 2, CeladonCity_EventScript_SetWorldMap
 	goto CeladonCity_EventScript_MemoryDesyncReturnToHub
 
 CeladonCity_EventScript_MemoryDesyncReturnToHub::

@@ -243,17 +243,6 @@ enum RocketOpsTriggerType
     ROCKETOPS_TRIGGER_EXTRACTION_NODE,
 };
 
-enum GiovanniCampaignSegment
-{
-    GIO_SEGMENT_1,
-    GIO_SEGMENT_2,
-    GIO_SEGMENT_3,
-    GIO_SEGMENT_4,
-    GIO_SEGMENT_5,
-    GIO_SEGMENT_6,
-    GIO_SEGMENT_7,
-};
-
 enum GiovanniCampaignDispatchResult
 {
     GIO_DISPATCH_ROUTE_HUB_BRIEFING,
@@ -383,20 +372,20 @@ static const struct GiovanniBeatFlagGate sGiovanniBeatProhibited_Ch3Entry[] =
 
 static const struct GiovanniBeatVarGate sGiovanniBeatRequiredVars_Ch1LocalDialogue[] =
 {
-    {VAR_MODE_GIOVANNI_MEMORY, TRUE},
-    {VAR_CHAPTER_ID, 1},
+    {VAR_GIO_CAMPAIGN_ACTIVE, TRUE},
+    {VAR_GIO_CHAPTER, 1},
 };
 
 static const struct GiovanniBeatVarGate sGiovanniBeatRequiredVars_Ch2LocalDialogue[] =
 {
-    {VAR_MODE_GIOVANNI_MEMORY, TRUE},
-    {VAR_CHAPTER_ID, 2},
+    {VAR_GIO_CAMPAIGN_ACTIVE, TRUE},
+    {VAR_GIO_CHAPTER, 2},
 };
 
 static const struct GiovanniBeatVarGate sGiovanniBeatRequiredVars_Ch3LocalDialogue[] =
 {
-    {VAR_MODE_GIOVANNI_MEMORY, TRUE},
-    {VAR_CHAPTER_ID, 3},
+    {VAR_GIO_CAMPAIGN_ACTIVE, TRUE},
+    {VAR_GIO_CHAPTER, 3},
 };
 
 static const struct GiovanniBeatGate sGiovanniBeatGates[GIO_BEAT_COUNT] =
@@ -929,12 +918,6 @@ static void ReloadGiovanniMemoryModeNpcObjects(void)
     }
 }
 
-#define GIO_CAMPAIGN_STATE_NONE 0
-#define GIO_CAMPAIGN_STATE_CH1_ACT1 1
-#define GIO_CAMPAIGN_STATE_CH1_COMPLETE 2
-#define GIO_CAMPAIGN_STATE_CH2_COMPLETE 3
-#define GIO_CAMPAIGN_STATE_CH3_COMPLETE 4
-
 #define GIO_CHECKPOINT_OBJECTIVE_CHAPTER_CLEARED (1 << 0)
 #define GIO_CHECKPOINT_OBJECTIVE_ESCORT_ACTIVE (1 << 1)
 #define GIO_CHECKPOINT_OBJECTIVE_ESCORT_CP1 (1 << 2)
@@ -943,6 +926,8 @@ static void ReloadGiovanniMemoryModeNpcObjects(void)
 #define GIO_CHECKPOINT_OBJECTIVE_ACT4_DECISION (1 << 5)
 
 static void RunGiovanniMemoryModeResetHooks(u8 chapterId);
+static void SyncGiovanniLegacyCampaignState(void);
+static u16 GetGiovanniCampaignValidationErrorMask(void);
 static bool8 ShouldForceGiovanniAuthorityPacing(void);
 static void SetGiovanniAuthorityPacing(bool8 enabled);
 static u8 GetGiovanniMemoryModeChapterId(void);
@@ -1395,7 +1380,7 @@ static bool8 RestoreGiovanniCheckpointContextForRestart(bool8 setWarp)
 
     SetGiovanniCampaignProgress(chapterId, GetGiovanniActFromChapterStage(chapterId, VarGet(chapterStageVar)), checkpointId, VarGet(VAR_GIO_CAMPAIGN_STATE));
     RunGiovanniMemoryModeResetHooks(chapterId);
-    VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
+    VarSet(VAR_GIO_CHAPTER_RUNTIME, chapterId);
     VarSet(VAR_ROCKETOPS_CHAIN_STATE, (VarGet(VAR_ROCKETOPS_CHAIN_STATE) & 0xFF00) | (VarGet(chapterStageVar) & 0xFF));
     FlagClear(FLAG_ROCKETOPS_COMMAND_COOLDOWN);
     ReconcileGiovanniChapter3EscortSegmentState();
@@ -1453,11 +1438,64 @@ static void RunGiovanniMemoryModeResetHooks(u8 chapterId)
 {
     bool8 giovanniMemoryModeActive = chapterId != 0;
 
-    VarSet(VAR_MODE_GIOVANNI_MEMORY, giovanniMemoryModeActive);
-    VarSet(VAR_CHAPTER_ID, chapterId);
+    VarSet(VAR_GIO_CAMPAIGN_ACTIVE, giovanniMemoryModeActive);
+    VarSet(VAR_GIO_CHAPTER_LEGACY, chapterId);
     SetGiovanniAuthorityPacing(ShouldForceGiovanniAuthorityPacing());
     ApplyGiovanniMemoryModeNpcFlags(chapterId);
     ReloadGiovanniMemoryModeNpcObjects();
+    SyncGiovanniLegacyCampaignState();
+}
+
+static void SyncGiovanniLegacyCampaignState(void)
+{
+    bool8 isActive = FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE);
+    u16 chapterId = VarGet(VAR_GIO_CHAPTER);
+    u16 legacyChapter = VarGet(VAR_GIO_CHAPTER_LEGACY);
+    u16 runtimeChapter = VarGet(VAR_GIO_CHAPTER_RUNTIME);
+
+    if (chapterId < GIO_CHAPTER_1 || chapterId > GIO_CHAPTER_3)
+    {
+        if (isActive)
+        {
+            if (legacyChapter >= GIO_CHAPTER_1 && legacyChapter <= GIO_CHAPTER_3)
+                chapterId = legacyChapter;
+            else if (runtimeChapter >= GIO_CHAPTER_1 && runtimeChapter <= GIO_CHAPTER_3)
+                chapterId = runtimeChapter;
+            else
+                chapterId = GIO_CHAPTER_1;
+        }
+        else
+        {
+            chapterId = GIO_CHAPTER_NONE;
+        }
+        VarSet(VAR_GIO_CHAPTER, chapterId);
+    }
+
+    VarSet(VAR_GIO_CAMPAIGN_ACTIVE, isActive ? TRUE : FALSE);
+    VarSet(VAR_GIO_CHAPTER_LEGACY, chapterId);
+    VarSet(VAR_GIO_CHAPTER_RUNTIME, chapterId);
+}
+
+static u16 GetGiovanniCampaignValidationErrorMask(void)
+{
+    u16 mask = 0;
+    bool8 isActive = FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE);
+    bool8 isModeVarSet = (VarGet(VAR_GIO_CAMPAIGN_ACTIVE) == TRUE);
+    u16 chapterId = VarGet(VAR_GIO_CHAPTER);
+
+    if (isActive && !isModeVarSet)
+        mask |= GIO_VALIDATION_ERR_ACTIVE_WITHOUT_MODE;
+    if (!isActive && isModeVarSet)
+        mask |= GIO_VALIDATION_ERR_MODE_WITHOUT_ACTIVE;
+    if (isActive && (chapterId < GIO_CHAPTER_1 || chapterId > GIO_CHAPTER_3))
+        mask |= GIO_VALIDATION_ERR_INVALID_CHAPTER;
+    if (VarGet(VAR_GIO_CAMPAIGN_STATE) == GIO_CAMPAIGN_STATE_CH3_COMPLETE
+     && !FlagGet(FLAG_GIO_MEM_CH3_COMPLETE))
+        mask |= GIO_VALIDATION_ERR_COMPLETE_WITHOUT_CHAPTER3;
+    if (isActive && FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_RESTORED))
+        mask |= GIO_VALIDATION_ERR_RESTORED_WHILE_ACTIVE;
+
+    return mask;
 }
 
 static u8 GetGiovanniMemoryModeChapterId(void)
@@ -1669,7 +1707,7 @@ u8 GetCorpseRunFieldBlockReason(void)
 {
     bool8 corpseRunBlocked = CorpseRun_IsActive();
     bool8 giovanniMemoryFacilityBlocked = FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE)
-        && VarGet(VAR_MODE_GIOVANNI_MEMORY) == TRUE;
+        && VarGet(VAR_GIO_CAMPAIGN_ACTIVE) == TRUE;
 
     if (!corpseRunBlocked && !giovanniMemoryFacilityBlocked)
         return CORPSE_RUN_FIELD_BLOCK_NONE;
@@ -4142,7 +4180,7 @@ static void Task_WingFlapSound(u8 taskId)
 
 static void ResetRocketOpsState(void)
 {
-    VarSet(VAR_ROCKETOPS_CHAPTER, 0);
+    VarSet(VAR_GIO_CHAPTER_RUNTIME, 0);
     VarSet(VAR_ROCKETOPS_ALERT, 0);
     VarSet(VAR_ROCKETOPS_PROGRESS, 0);
     VarSet(VAR_ROCKETOPS_AGENT_TARGET, 0);
@@ -4384,8 +4422,8 @@ u16 StartGiovanniMemoryMode(void)
     SnapshotGiovanniRocketProgressFlags(&GetGiovanniMemoryModeSnapshot()->flags);
 
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE);
-    VarSet(VAR_MODE_GIOVANNI_MEMORY, TRUE);
-    VarSet(VAR_CHAPTER_ID, 1);
+    VarSet(VAR_GIO_CAMPAIGN_ACTIVE, TRUE);
+    VarSet(VAR_GIO_CHAPTER_LEGACY, 1);
     FlagSet(FLAG_GIO_MEM_SEQUENCE_VIEWED);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_RESTORED);
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER1_STARTED);
@@ -4403,6 +4441,7 @@ u16 StartGiovanniMemoryMode(void)
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_VALIDATED);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_VALIDATION_FAILED);
     SetGiovanniCampaignProgress(1, 1, 0, GIO_CAMPAIGN_STATE_CH1_ACT1);
+    SyncGiovanniLegacyCampaignState();
     SaveGiovanniCheckpointPositionAndStageAtMap(1,
                                                 MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F),
                                                 MAP_NUM(MAP_ROCKET_HIDEOUT_B4F),
@@ -4412,7 +4451,7 @@ u16 StartGiovanniMemoryMode(void)
     SetWarpDestination(MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F), MAP_NUM(MAP_ROCKET_HIDEOUT_B4F), WARP_ID_NONE, 19, 6);
     SetDynamicWarpWithCoords(0, MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F), MAP_NUM(MAP_ROCKET_HIDEOUT_B4F), WARP_ID_NONE, 19, 6);
     ResetRocketOpsState();
-    VarSet(VAR_ROCKETOPS_CHAPTER, 1);
+    VarSet(VAR_GIO_CHAPTER_RUNTIME, 1);
 
     if (!LoadGiovanniMemoryPartyTemplate(1))
         return FALSE;
@@ -4452,13 +4491,15 @@ u16 CompleteGiovanniMemoryModeChapter1(void)
     FlagSet(FLAG_GIO_MEM_CH2_STARTED);
     FlagSet(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS);
     SetGiovanniCampaignProgress(2, 1, 0, GIO_CAMPAIGN_STATE_CH1_COMPLETE);
+    SyncGiovanniLegacyCampaignState();
     SaveGiovanniCheckpointPositionAndStageAtMap(2,
                                                 MAP_GROUP(MAP_SILPH_CO_11F),
                                                 MAP_NUM(MAP_SILPH_CO_11F),
                                                 6,
                                                 13,
                                                 TRUE);
-    VarSet(VAR_ROCKETOPS_CHAPTER, 2);
+    VarSet(VAR_GIO_CHAPTER_RUNTIME, 2);
+    SyncGiovanniLegacyCampaignState();
     RunGiovanniMemoryModeResetHooks(2);
     RefreshGiovanniActiveDirective();
     return LoadGiovanniMemoryPartyTemplate(2);
@@ -4487,13 +4528,15 @@ u16 CompleteGiovanniMemoryModeChapter2(void)
     FlagSet(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS);
     FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS);
     SetGiovanniCampaignProgress(3, 1, 0, GIO_CAMPAIGN_STATE_CH2_COMPLETE);
+    SyncGiovanniLegacyCampaignState();
     SaveGiovanniCheckpointPositionAndStageAtMap(3,
                                                 MAP_GROUP(MAP_VIRIDIAN_CITY_GYM),
                                                 MAP_NUM(MAP_VIRIDIAN_CITY_GYM),
                                                 17,
                                                 20,
                                                 TRUE);
-    VarSet(VAR_ROCKETOPS_CHAPTER, 3);
+    VarSet(VAR_GIO_CHAPTER_RUNTIME, 3);
+    SyncGiovanniLegacyCampaignState();
     ResetGiovanniChapter3EscortSegmentState();
     RunGiovanniMemoryModeResetHooks(3);
     RefreshGiovanniActiveDirective();
@@ -4523,6 +4566,7 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
         return FALSE;
 
     SetGiovanniCampaignProgress(3, 4, 3, GIO_CAMPAIGN_STATE_CH3_COMPLETE);
+    SyncGiovanniLegacyCampaignState();
     WriteGiovanniActCheckpointFromCurrentState();
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE);
     FlagSet(FLAG_GIO_MEM_CH3_STARTED);
@@ -4565,6 +4609,7 @@ u16 AbortGiovanniMemoryMode(void)
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ABORTED);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
     SetGiovanniCampaignProgress(0, 0, 0, GIO_CAMPAIGN_STATE_NONE);
+    SyncGiovanniLegacyCampaignState();
     ResetRocketOpsState();
     SetGiovanniAuthorityPacing(FALSE);
     RunGiovanniMemoryModeResetHooks(0);
@@ -4618,6 +4663,7 @@ u16 RestoreGiovanniMemoryModeSnapshot(void)
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
     SetGiovanniCampaignProgress(0, 0, 0, IsGiovanniCampaignComplete() ? GIO_CAMPAIGN_STATE_CH3_COMPLETE : GIO_CAMPAIGN_STATE_NONE);
+    SyncGiovanniLegacyCampaignState();
     ResetRocketOpsState();
     GetGiovanniMemoryModeSnapshot()->valid = FALSE;
     SetGiovanniAuthorityPacing(FALSE);
@@ -4655,7 +4701,7 @@ bool8 HandleGiovanniMemoryModeWhiteout(void)
     {
         // Emergency desync fallback path; return to chapter hub and reissue active directive.
         RunGiovanniMemoryModeResetHooks(chapterId);
-        VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
+        VarSet(VAR_GIO_CHAPTER_RUNTIME, chapterId);
         VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1) & 0xFF);
         SyncGiovanniCampaignCheckpointState(chapterId);
         SetGiovanniCampaignSegment(GIO_SEGMENT_1);
@@ -4752,7 +4798,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
     {
         // Emergency desync fallback path; return to chapter hub and reissue active directive.
         RunGiovanniMemoryModeResetHooks(chapterId);
-        VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
+        VarSet(VAR_GIO_CHAPTER_RUNTIME, chapterId);
         VarSet(VAR_ROCKETOPS_CHAIN_STATE, VarGet(VAR_ROCKETOPS_CH1_STAGE + chapterId - 1) & 0xFF);
         SyncGiovanniCampaignCheckpointState(chapterId);
         SetGiovanniCampaignSegment(GIO_SEGMENT_1);
@@ -4811,6 +4857,7 @@ u16 ReconcileGiovanniMemoryModeOutcome(void)
 
     if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE))
         SetGiovanniCampaignProgress(0, 0, 0, GIO_CAMPAIGN_STATE_NONE);
+    SyncGiovanniLegacyCampaignState();
 
     return TRUE;
 }
@@ -4861,10 +4908,10 @@ u16 Special_RocketOps_OpenTerminal(void)
     if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
         return FALSE;
 
-    if (VarGet(VAR_MODE_GIOVANNI_MEMORY) != TRUE)
+    if (VarGet(VAR_GIO_CAMPAIGN_ACTIVE) != TRUE)
         return FALSE;
 
-    chapterId = VarGet(VAR_CHAPTER_ID);
+    chapterId = VarGet(VAR_GIO_CHAPTER);
     if (chapterId < 1 || chapterId > 3)
         return FALSE;
 
@@ -4878,7 +4925,7 @@ u16 Special_RocketOps_OpenTerminal(void)
         FlagClear(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
     }
 
-    VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
+    VarSet(VAR_GIO_CHAPTER_RUNTIME, chapterId);
     VarSet(VAR_ROCKETOPS_COMMAND_STATE, 0);
     VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, VarGet(chapterStageVar));
     FlagSet(FLAG_ROCKETOPS_TERMINAL_UNLOCKED);
@@ -4888,7 +4935,7 @@ u16 Special_RocketOps_OpenTerminal(void)
 
 u16 Special_RocketOps_ValidateCommandContext(void)
 {
-    u16 chapterId = VarGet(VAR_ROCKETOPS_CHAPTER);
+    u16 chapterId = VarGet(VAR_GIO_CHAPTER_RUNTIME);
     u16 commandId = gSpecialVar_0x8004;
     u16 triggerType = gSpecialVar_0x8005;
     u16 chapterStageVar;
@@ -4962,14 +5009,14 @@ u16 Special_RocketOps_ApplyCommandEffect(void)
     if (commandState == 0 || commandState > ROCKETOPS_COMMAND_COUNT)
         return FALSE;
 
-    VarSet(VAR_ROCKETOPS_COMMAND_STATE, commandState | (VarGet(VAR_ROCKETOPS_CHAPTER) << 8));
+    VarSet(VAR_ROCKETOPS_COMMAND_STATE, commandState | (VarGet(VAR_GIO_CHAPTER_RUNTIME) << 8));
     return TRUE;
 }
 
 u16 Special_RocketOps_WritebackState(void)
 {
     s32 alert;
-    u16 chapterId = VarGet(VAR_ROCKETOPS_CHAPTER);
+    u16 chapterId = VarGet(VAR_GIO_CHAPTER_RUNTIME);
     u16 commandId = gSpecialVar_0x8004;
     u16 chapterStageVar;
     u16 previousStage;
@@ -5127,6 +5174,12 @@ u16 DebugForceGiovanniMemoryModeChapterState(void)
 
 u16 ValidateGiovanniMemoryModeRocketFlags(void)
 {
+    u16 errors = GetGiovanniCampaignValidationErrorMask();
+
+    VarSet(VAR_GIO_DEBUG_VALIDATION_MASK, errors);
+    if (errors != 0)
+        return FALSE;
+
     if (FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_VALIDATION_FAILED))
         return FALSE;
 
@@ -5134,6 +5187,22 @@ u16 ValidateGiovanniMemoryModeRocketFlags(void)
         return TRUE;
 
     return FALSE;
+}
+
+u16 DebugValidateGiovanniCampaignState(void)
+{
+    u16 errors = GetGiovanniCampaignValidationErrorMask();
+
+    VarSet(VAR_GIO_DEBUG_VALIDATION_MASK, errors);
+    return errors == 0;
+}
+
+u16 DebugGetGiovanniCampaignValidationMask(void)
+{
+    u16 errors = GetGiovanniCampaignValidationErrorMask();
+
+    VarSet(VAR_GIO_DEBUG_VALIDATION_MASK, errors);
+    return errors;
 }
 
 u16 ValidateGiovanniInteractionOverlayForCurrentMap(void)
@@ -5149,8 +5218,7 @@ u16 ValidateGiovanniInteractionOverlayForCurrentMap(void)
     if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
         return TRUE;
 
-    VarSet(VAR_MODE_GIOVANNI_MEMORY, TRUE);
-    VarSet(VAR_CHAPTER_ID, chapterId);
+    SyncGiovanniLegacyCampaignState();
 
     if (chapterId != overlay->chapterId)
     {

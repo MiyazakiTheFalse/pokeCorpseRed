@@ -6,13 +6,13 @@ DiglettsCave_B1F_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, DiglettsCave_B1F_OnTransition_SetWorldMap
 	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, DiglettsCave_B1F_EventScript_MemoryRoutingCheck
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, DiglettsCave_B1F_OnTransition_SetWorldMap
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, DiglettsCave_B1F_OnTransition_SetWorldMap
 	goto DiglettsCave_B1F_EventScript_MemoryDesyncReturnToHub
 
 DiglettsCave_B1F_EventScript_MemoryRoutingCheck::
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, DiglettsCave_B1F_EventScript_MemoryDesyncReturnToHub
-	goto_if_eq VAR_CHAPTER_ID, 1, DiglettsCave_B1F_EventScript_MemoryObjectiveCheckpoint_Ch1
-	goto_if_eq VAR_CHAPTER_ID, 2, DiglettsCave_B1F_EventScript_MemoryObjectiveCheckpoint_Ch2
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, DiglettsCave_B1F_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_GIO_CHAPTER, 1, DiglettsCave_B1F_EventScript_MemoryObjectiveCheckpoint_Ch1
+	goto_if_eq VAR_GIO_CHAPTER, 2, DiglettsCave_B1F_EventScript_MemoryObjectiveCheckpoint_Ch2
 	goto DiglettsCave_B1F_EventScript_MemoryDesyncReturnToHub
 
 DiglettsCave_B1F_OnTransition_SetWorldMap::
@@ -20,7 +20,7 @@ DiglettsCave_B1F_OnTransition_SetWorldMap::
 	end
 
 DiglettsCave_B1F_EventScript_MemoryDesyncReturnToHub::
-	goto_if_eq VAR_CHAPTER_ID, 2, DiglettsCave_B1F_EventScript_MemoryDesyncReturnToSilphHub
+	goto_if_eq VAR_GIO_CHAPTER, 2, DiglettsCave_B1F_EventScript_MemoryDesyncReturnToSilphHub
 	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
 	waitstate
 	end
