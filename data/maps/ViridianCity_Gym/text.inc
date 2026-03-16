@@ -238,14 +238,43 @@ ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH1Only::
     .string "One chapter closed, yet the city still\n"
     .string "echoes in every order I gave.$"
 
+ViridianCity_Gym_Text_GiovanniMemoryBeat_SurgeMention::
+    .string "[CAMEO] Lt. Surge called the authority\n"
+    .string "route decisive and ruthless. He said the\n"
+    .string "operation looked too much like a war.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryBeat_SurgeFallback::
+    .string "[CAMEO] Surge's channel remains silent.\n"
+    .string "That thread never aligned in this path.$"
+
 ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH1CH2::
     .string "[GIOVANNI] Celadon and Silph are both\n"
     .string "behind us. Two chapters complete, and\n"
     .string "the last debt waits in this room.$"
 
+ViridianCity_Gym_Text_GiovanniMemoryBeat_SabrinaObservation::
+    .string "[CAMEO] Sabrina noted the Silph branch\n"
+    .string "before I did. She said every choice left\n"
+    .string "an imprint she could not ignore.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryBeat_SabrinaFallback::
+    .string "[CAMEO] Sabrina offers no observation\n"
+    .string "from this fragment. The branch never\n"
+    .string "reached her line of sight.$"
+
 ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH3::
     .string "[GIOVANNI] All three chapters stand\n"
     .string "resolved. What remains is judgment.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryBeat_WarReference::
+    .string "[CAMEO] The final reports read like war\n"
+    .string "dispatches: assets burned, convoys moved,\n"
+    .string "and no one left untouched.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryBeat_WarFallback::
+    .string "[CAMEO] No war-reference thread resolves\n"
+    .string "here. This memory path closed before that\n"
+    .string "language was earned.$"
 
 ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFull::
     .string "[MEMORY] The chamber settles into the\n"
