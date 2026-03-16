@@ -122,6 +122,8 @@ ViridianCity_Gym_EventScript_MemoryEvacEndpoint::
 	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_unset FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1, ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2
+	setvar VAR_GIO_CHECKPOINT_ID, 2
+	special SaveGiovanniMemoryModeCheckpoint
 	goto EventScript_RocketOps_UseExtractionNodeTerminal
 
 ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked::
