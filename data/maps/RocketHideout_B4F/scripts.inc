@@ -50,6 +50,7 @@ RocketHideout_B4F_EventScript_ChapterHubWatchdog::
 RocketHideout_B4F_EventScript_MemorySpaceMarker::
 	goto_if_ne VAR_CHAPTER_ID, 1, RocketHideout_B4F_EventScript_MemoryChapterMismatchMarker
 	goto_if_set FLAG_GIO_MEM_CH1_COMPLETE, RocketHideout_B4F_EventScript_MemorySpaceMarkerComplete
+	setvar VAR_ROCKETOPS_CH1_STAGE, 0
 	setvar VAR_GIO_ACT, 1
 	setvar VAR_GIO_CHECKPOINT_ID, 0
 	special SaveGiovanniMemoryModeCheckpoint
@@ -285,9 +286,27 @@ RocketHideout_B4F_EventScript_MemoryExitGuard::
 	call EventScript_GiovanniSharedWarp_ResolvePrecedence
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub
+	goto_if_lt VAR_ROCKETOPS_CH1_STAGE, 2, RocketHideout_B4F_EventScript_MemoryExitGuard_ReturnEntry
+	goto_if_lt VAR_ROCKETOPS_CH1_STAGE, 3, RocketHideout_B4F_EventScript_MemoryExitGuard_ReturnFork
 	lockall
 	msgbox RocketHideout_B4F_Text_MemoryExitBlocked
 	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
+	releaseall
+	end
+
+RocketHideout_B4F_EventScript_MemoryExitGuard_ReturnEntry::
+	lockall
+	msgbox RocketHideout_B4F_Text_MemoryExitBlocked
+	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
+	releaseall
+	end
+
+RocketHideout_B4F_EventScript_MemoryExitGuard_ReturnFork::
+	lockall
+	msgbox RocketHideout_B4F_Text_MemoryExitBlocked
+	warp MAP_ROCKET_HIDEOUT_B4F, 18, 12
 	waitstate
 	releaseall
 	end
