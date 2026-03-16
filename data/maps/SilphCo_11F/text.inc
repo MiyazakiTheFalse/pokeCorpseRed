@@ -96,6 +96,11 @@ SilphCo_11F_Text_MemorySpaceMarker::
     .string "loaded. Celadon shops report supply squeezes\n"
     .string "and price spikes after routed shipments.$"
 
+SilphCo_11F_Text_RedImpactBeat_C2::
+    .string "[RED-IMPACT:C2] Confirmed loss: RED burned\n"
+    .string "our Silph archive wing, a core Rocket asset.\n"
+    .string "Executive route is closed while crews reroute.$"
+
 SilphCo_11F_Text_MemoryChapterIntro::
     .string "[MEMORY:C2] Silph incursion active.\n"
     .string "Pressure command nodes, hold the corridor,\n"

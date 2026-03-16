@@ -125,12 +125,18 @@ RocketHideout_B4F_EventScript_ActLocked::
 RocketHideout_B4F_EventScript_MemorySpaceMarker::
 	goto_if_ne VAR_GIO_CHAPTER, 1, RocketHideout_B4F_EventScript_MemoryChapterMismatchMarker
 	goto_if_set FLAG_GIO_MEM_CH1_COMPLETE, RocketHideout_B4F_EventScript_MemorySpaceMarkerComplete
+	call_if_unset FLAG_GIO_MEM_CH1_HUB_MONOLOGUE_SEEN, RocketHideout_B4F_EventScript_RedImpactBeat_C1
 	setvar VAR_ROCKETOPS_CH1_STAGE, 0
 	setvar VAR_GIO_ACT, 1
 	setvar VAR_GIO_CHECKPOINT_ID, 0
 	special SaveGiovanniMemoryModeCheckpoint
 	call EventScript_GiovanniCampaign_PrintActiveDirective
 	end
+
+RocketHideout_B4F_EventScript_RedImpactBeat_C1::
+	msgbox RocketHideout_B4F_Text_RedImpactBeat_C1, MSGBOX_AUTOCLOSE
+	setflag FLAG_GIO_MEM_CH1_HUB_MONOLOGUE_SEEN
+	return
 
 RocketHideout_B4F_EventScript_MemorySpaceMarkerComplete::
 	msgbox RocketHideout_B4F_Text_MemorySpaceMarker, MSGBOX_AUTOCLOSE
