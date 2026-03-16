@@ -53,6 +53,22 @@
   ],
   "bg_events": [
     {
+      "type": "sign",
+      "x": 4,
+      "y": 10,
+      "elevation": 3,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "UndergroundPath_NorthSouthTunnel_EventScript_MemoryRelic_ServicePlaque"
+    },
+    {
+      "type": "sign",
+      "x": 4,
+      "y": 47,
+      "elevation": 3,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "UndergroundPath_NorthSouthTunnel_EventScript_MemoryRelic_MaintenanceCrate"
+    },
+    {
       "type": "hidden_item",
       "x": 5,
       "y": 30,

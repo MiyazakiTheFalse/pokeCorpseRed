@@ -23,12 +23,31 @@ Route11_EventScript_DiglettsCaveSign::
 	msgbox Route11_Text_DiglettsCave, MSGBOX_SIGN
 	end
 
+Route11_EventScript_MemorySupplyCrateRelic::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_GIO_CHAPTER, 1, EventScript_Nothing
+	goto_if_set FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED, Route11_EventScript_MemorySupplyCrateRelic_After
+	msgbox Route11_Text_MemorySupplyCrateRelic_Before, MSGBOX_SIGN
+	end
+
+Route11_EventScript_MemorySupplyCrateRelic_After::
+	msgbox Route11_Text_MemorySupplyCrateRelic_After, MSGBOX_SIGN
+	end
+
+Route11_EventScript_MemoryTunnelMarkerRelic::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_GIO_CHAPTER, 1, EventScript_Nothing
+	msgbox Route11_Text_MemoryTunnelMarkerRelic, MSGBOX_SIGN
+	end
+
 Route11_EventScript_MemoryRouteCheckpoint::
 	goto_if_set FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED, Route11_EventScript_MemoryRouteCheckpoint_Save
 	lockall
 	msgbox Route11_Text_MemoryDiglettSwarmStart, MSGBOX_AUTOCLOSE
+	msgbox Route11_Text_MemoryTunnelLeaderPrepLore, MSGBOX_AUTOCLOSE
 	trainerbattle_no_intro TRAINER_ROCKETOPS_RANGER_TUNNEL_LEADER, Route11_Text_MemoryTunnelLeaderDefeat
 	msgbox Route11_Text_MemoryDiglettSwarmClear, MSGBOX_AUTOCLOSE
+	msgbox Route11_Text_MemoryTunnelLeaderAfterLore, MSGBOX_AUTOCLOSE
 	playse SE_M_DIG
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 2
