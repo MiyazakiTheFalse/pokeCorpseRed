@@ -322,9 +322,9 @@ ViridianCity_Gym_Text_MemoryAct5PresentResume::
     .string "battle protocol begins.$"
 
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounter::
-    .string "[MEMORY:C3] Final tunnel defense holds\n"
-    .string "long enough for the convoy to clear the\n"
-    .string "Viridian outskirts perimeter.$"
+    .string "[TASKFORCE:C3] Giovanni is disciplined and\n"
+    .string "dangerously effective, but his methods\n"
+    .string "turn Viridian into a containment risk.$"
 
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounterDefeat::
     .string "[MEMORY:C3] Security taskforce captain\n"
@@ -404,14 +404,14 @@ ViridianCity_Gym_Text_RocketOps_EvacEndpointLocked_C3::
     .string "Reach checkpoint alpha first.$"
 
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_DestroyData::
-    .string "[MEMORY:C3] Data purge route cut one\n"
-    .string "enemy wave. Hold against the remaining\n"
-    .string "counterattack at the tunnel mouth.$"
+    .string "[TASKFORCE:C3] Burned archives mean we lose\n"
+    .string "medical and hazard records too. We stop\n"
+    .string "Rocket before this spreads citywide.$"
 
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_ExtractStaff::
-    .string "[MEMORY:C3] Extracted scientists reroute\n"
-    .string "medical support to your line. Hold the\n"
-    .string "tunnel while they keep squads standing.$"
+    .string "[TASKFORCE:C3] We moved people out alive,\n"
+    .string "but extraction lanes can collapse fast.\n"
+    .string "We hold here to keep them breathing.$"
 
 ViridianCity_Gym_Text_RocketReport_ObjectiveLive_DestroyData::
     .string "[REPORT:C3] Purge branch active. Fewer\n"
