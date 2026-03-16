@@ -1542,6 +1542,27 @@
 #define FLAG_GIO_CH3_ACT3                                           FLAG_0x8C2
 #define FLAG_GIO_CH3_ACT4                                           FLAG_0x8C3
 
+// RocketOps per-NPC narrative state aliases.
+#define FLAG_GIO_NPC_VERA_CH1_MILESTONE                             FLAG_GIO_CH1_ACT2
+#define FLAG_GIO_NPC_VERA_CH2_MILESTONE                             FLAG_GIO_CH2_ACT2
+#define FLAG_GIO_NPC_VERA_CH3_MILESTONE                             FLAG_GIO_CH3_ACT2
+#define FLAG_GIO_NPC_VERA_CH3_RESOLVED                              FLAG_GIO_MEM_CH3_COMPLETE
+
+#define FLAG_GIO_NPC_ROURKE_CH1_MILESTONE                           FLAG_GIO_CH1_ACT2
+#define FLAG_GIO_NPC_ROURKE_CH2_MILESTONE                           FLAG_GIO_CH2_ACT2
+#define FLAG_GIO_NPC_ROURKE_CH3_MILESTONE                           FLAG_GIO_CH3_ACT2
+#define FLAG_GIO_NPC_ROURKE_CH3_RESOLVED                            FLAG_GIO_MEM_CH3_COMPLETE
+
+#define FLAG_GIO_NPC_NOX_CH1_MILESTONE                              FLAG_GIO_CH1_ACT2
+#define FLAG_GIO_NPC_NOX_CH2_MILESTONE                              FLAG_GIO_CH2_ACT2
+#define FLAG_GIO_NPC_NOX_CH3_MILESTONE                              FLAG_GIO_CH3_ACT2
+#define FLAG_GIO_NPC_NOX_CH3_RESOLVED                               FLAG_GIO_MEM_CH3_COMPLETE
+
+#define FLAG_GIO_NPC_DRAKE_CH1_MILESTONE                            FLAG_GIO_CH1_ACT2
+#define FLAG_GIO_NPC_DRAKE_CH2_MILESTONE                            FLAG_GIO_CH2_ACT2
+#define FLAG_GIO_NPC_DRAKE_CH3_MILESTONE                            FLAG_GIO_CH3_ACT2
+#define FLAG_GIO_NPC_DRAKE_CH3_RESOLVED                             FLAG_GIO_MEM_CH3_COMPLETE
+
 #define FLAG_GIO_MEM_CH1_DIGLETT_SWARM_VISUAL                        FLAG_0x8C8
 #define FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL                         FLAG_0x8C9
 #define FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL                   FLAG_0x8CA

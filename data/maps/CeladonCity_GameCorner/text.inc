@@ -172,5 +172,20 @@ CeladonCity_GameCorner_Text_RecurringCaptain_Act2::
 
 CeladonCity_GameCorner_Text_RecurringCaptain_Act3::
     .string "[FIELD CAPTAIN DRAKE:C1-A3] Celadon closes and\n"
-    .string "I redeploy to Viridian. I still stand with\n"
-    .string "the Boss, for better or worse.$"
+    .string "I redeploy to Viridian. Orders stay clear,\n"
+    .string "and I hold until relieved.$"
+
+CeladonCity_GameCorner_Text_RecurringScientist_Act1::
+    .string "[DR. NOX:C1-A1] Curious thing—your command\n"
+    .string "timing tracks better than our prediction\n"
+    .string "models. I want more samples.$"
+
+CeladonCity_GameCorner_Text_RecurringScientist_Act2::
+    .string "[DR. NOX:C1-A2] The suppression compound has\n"
+    .string "field side-effects command won't print.\n"
+    .string "I need to see what else they hid.$"
+
+CeladonCity_GameCorner_Text_RecurringScientist_Act3::
+    .string "[DR. NOX:C1-A3] Sending my notes to Silph.\n"
+    .string "If I stop reporting, assume I kept digging\n"
+    .string "and found something worse.$"

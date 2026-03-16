@@ -496,8 +496,30 @@ ViridianCity_Gym_Text_RecurringOpsOfficer_Act2::
 
 ViridianCity_Gym_Text_RecurringOpsOfficer_Act3::
     .string "[OPS OFFICER VERA:C3-A3] Final evac group is\n"
-    .string "clear. I will not feed another panic cycle.$"
+    .string "clear. I stayed loyal through the doubt,\n"
+    .string "and I will own that to the end.$"
 
 ViridianCity_Gym_Text_RecurringOpsOfficer_Done::
-    .string "[OPS OFFICER VERA:C3] Marked EVACUATED.\n"
-    .string "She got her people out and vanished.$"
+    .string "[OPS OFFICER VERA:C3] Status: LOYAL REMNANT.\n"
+    .string "She extracted her people and held the\n"
+    .string "line until command collapsed.$"
+
+ViridianCity_Gym_Text_RecurringScientist_Act1::
+    .string "[DR. NOX:C3-A1] Curiosity became triage.\n"
+    .string "Every archive sample now predicts one\n"
+    .string "more way this city can burn.$"
+
+ViridianCity_Gym_Text_RecurringScientist_Act2::
+    .string "[DR. NOX:C3-A2] War protocols are running\n"
+    .string "without ethics locks. The numbers look\n"
+    .string "clean and the outcomes look monstrous.$"
+
+ViridianCity_Gym_Text_RecurringScientist_Act3::
+    .string "[DR. NOX:C3-A3] Last trace points below the\n"
+    .string "archive gate. If I go dark again, do not\n"
+    .string "send a search team.$"
+
+ViridianCity_Gym_Text_RecurringScientist_Done::
+    .string "[DR. NOX:C3] FINAL STATUS: MISSING.\n"
+    .string "No recovery team found a body, only\n"
+    .string "burned notes and an open relay.$"
