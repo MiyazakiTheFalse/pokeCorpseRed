@@ -54,11 +54,13 @@ RocketHideout_B4F_Text_Grunt1PostBattle::
 
 
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 RocketHideout_B4F_Text_MemorySpaceMarker::
     .string "[MEMORY] Celadon Hideout (Echo)\n"
     .string "stabilized. Dock crews report local hires\n"
     .string "were pushed out for ROCKET freight quotas.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 RocketHideout_B4F_Text_MemoryChapterIntro::
     .string "[MEMORY:C1] Celadon operations begin.\n"
     .string "Secure the hideout, keep pressure on\n"
@@ -72,6 +74,7 @@ RocketHideout_B4F_Text_RocketOps_MilestoneLogged_C1::
     .string "[ROCKETOPS:C1] Milestone logged. Celadon\n"
     .string "chain archived for chapter transfer.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 RocketHideout_B4F_Text_ChapterReveal_InfrastructureControl::
     .string "[REVEAL:C1] Infrastructure control wasn't\n"
     .string "muscle. It was routing: power, freight,\n"
@@ -140,6 +143,7 @@ RocketHideout_B4F_Text_RocketOps_StatusReport_OpenRoute_C1::
     .string "Service lane to the medic corridor is\n"
     .string "now marked as safe passage.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 RocketHideout_B4F_Text_GruntReport_ObjectiveLive::
     .string "[REPORT:C1] Storefront pressure is still\n"
     .string "high. Keep civilians moving away from\n"

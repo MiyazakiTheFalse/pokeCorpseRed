@@ -41,3 +41,10 @@ python3 tools/validate_giovanni_campaign_stability.py
 - **Regression (fail/reset/load)**
   - Whiteout and bootstrap-on-load both include restore-or-abort+reconcile fallback logic.
   - Script abort path invokes abort + restore + reconcile for cleanup ordering.
+
+## Narrative QA acceptance criteria
+
+- [ ] New mission dialogue depicts war-linked content only as aftermath, policy response, or memory residue.
+- [ ] No new dialogue stages direct war scenes or flashbacks.
+- [ ] Sensitive chapter dialogue nodes are tagged with `@ NARRATIVE_REVIEW:WAR_SENSITIVE` in chapter `text.inc` files.
+- [ ] Structured validation includes narrative-policy checks for chapter text content.

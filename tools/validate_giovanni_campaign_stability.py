@@ -26,6 +26,16 @@ def has_all(text: str, patterns: list[str]) -> tuple[bool, list[str]]:
     return (len(missing) == 0, missing)
 
 
+def get_labeled_blocks(text: str) -> dict[str, str]:
+    matches = list(re.finditer(r"(?m)^([A-Za-z0-9_]+::)\n", text))
+    blocks: dict[str, str] = {}
+    for i, m in enumerate(matches):
+        start = m.start()
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
+        blocks[m.group(1)] = text[start:end]
+    return blocks
+
+
 def main() -> int:
     checks: list[Check] = []
 
@@ -37,6 +47,9 @@ def main() -> int:
     silph11 = read("data/maps/SilphCo_11F/scripts.inc")
     shared_warps = read("data/scripts/giovanni_shared_warps.inc")
     viridian_city = read("data/maps/ViridianCity/scripts.inc")
+    chapter1_text = read("data/maps/RocketHideout_B4F/text.inc")
+    chapter2_text = read("data/maps/SilphCo_11F/text.inc")
+    chapter3_text = read("data/maps/ViridianCity_Gym/text.inc")
 
     # 1) Core systems
     ok, missing = has_all(
@@ -172,6 +185,71 @@ def main() -> int:
         ],
     )
     checks.append(Check("Regression", "Script abort route clears and reconciles", ok, "" if ok else f"missing={missing}"))
+
+
+    # 6) Narrative policy checks (chapter dialogue constraints)
+    sensitive_labels = [
+        "RocketHideout_B4F_Text_MemorySpaceMarker::",
+        "RocketHideout_B4F_Text_MemoryChapterIntro::",
+        "RocketHideout_B4F_Text_ChapterReveal_InfrastructureControl::",
+        "RocketHideout_B4F_Text_GruntReport_ObjectiveLive::",
+        "SilphCo_11F_Text_MemorySpaceMarker::",
+        "SilphCo_11F_Text_MemoryChapter3EmergencyBriefing::",
+        "SilphCo_11F_Text_MemoryChapter3ObjectiveInit::",
+        "SilphCo_11F_Text_ChapterReveal_EconomicControl::",
+        "SilphCo_11F_Text_GruntReport_ObjectiveLive::",
+        "ViridianCity_Gym_Text_MemorySpaceMarker::",
+        "ViridianCity_Gym_Text_ChapterReveal_SystemCollapse::",
+        "ViridianCity_Gym_Text_GiovanniMemoryBeat_WarReference::",
+        "ViridianCity_Gym_Text_GiovanniMemoryBeat_WarFallback::",
+    ]
+    chapter_text_all = chapter1_text + "\n" + chapter2_text + "\n" + chapter3_text
+    marker = "@ NARRATIVE_REVIEW:WAR_SENSITIVE"
+    missing_markers = []
+    for label in sensitive_labels:
+        idx = chapter_text_all.find(label)
+        if idx == -1:
+            missing_markers.append(f"missing_label:{label}")
+            continue
+        pre = chapter_text_all[max(0, idx - 200):idx]
+        if marker not in pre:
+            missing_markers.append(label)
+    checks.append(Check(
+        "Narrative policy",
+        "Sensitive chapter dialogue nodes are review-marked",
+        len(missing_markers) == 0,
+        "" if len(missing_markers) == 0 else f"missing={missing_markers}",
+    ))
+
+    forbidden_scene_tokens = [
+        "flashback",
+        "on the battlefield",
+        "front line",
+        "during the war",
+        "war began",
+    ]
+    lower_all = chapter_text_all.lower()
+    violations = [tok for tok in forbidden_scene_tokens if tok in lower_all]
+    checks.append(Check(
+        "Narrative policy",
+        "No direct war scenes or flashbacks in chapter text",
+        len(violations) == 0,
+        "" if len(violations) == 0 else f"found={violations}",
+    ))
+
+    allowed_war_context_tokens = ["aftermath", "policy", "memory", "echo", "report", "residue"]
+    war_context_issues = []
+    for label, block in get_labeled_blocks(chapter_text_all).items():
+        if re.search(r"\bwar\b", block, flags=re.I) is None:
+            continue
+        if all(token not in block.lower() for token in allowed_war_context_tokens):
+            war_context_issues.append(label)
+    checks.append(Check(
+        "Narrative policy",
+        "War references are constrained to aftermath/policy/memory-residue framing",
+        len(war_context_issues) == 0,
+        "" if len(war_context_issues) == 0 else f"labels={war_context_issues}",
+    ))
 
     failures = [c for c in checks if not c.ok]
 
