@@ -25,3 +25,28 @@ EventScript_GiovanniSharedWarp_SetLockedFallback::
 
 EventScript_GiovanniSharedWarp_Return::
 	return
+
+@ Canonical chapter hub entrypoints for deterministic event wiring.
+EventScript_GiovanniHub_WarpByChapter::
+	goto_if_eq VAR_CHAPTER_ID, 1, EventScript_GiovanniHub_WarpChapter1
+	goto_if_eq VAR_CHAPTER_ID, 2, EventScript_GiovanniHub_WarpChapter2
+	goto_if_eq VAR_CHAPTER_ID, 3, EventScript_GiovanniHub_WarpChapter3
+	return
+
+EventScript_GiovanniHub_WarpChapter1::
+	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
+	releaseall
+	end
+
+EventScript_GiovanniHub_WarpChapter2::
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	releaseall
+	end
+
+EventScript_GiovanniHub_WarpChapter3::
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	releaseall
+	end
