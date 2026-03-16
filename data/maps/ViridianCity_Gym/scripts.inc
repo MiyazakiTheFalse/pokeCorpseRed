@@ -6,12 +6,12 @@ ViridianCity_Gym_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
 	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemoryRoutingCheck
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, ViridianCity_Gym_EventScript_SkipMemoryRoutingCheck
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_SkipMemoryRoutingCheck
 	goto ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
 
 ViridianCity_Gym_EventScript_MemoryRoutingCheck::
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
 	goto_if_unset FLAG_GIO_MEM_CH1_COMPLETE, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
 	goto_if_unset FLAG_GIO_MEM_CH2_COMPLETE, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
 	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_ChapterHubEntry
@@ -61,7 +61,7 @@ ViridianCity_Gym_EventScript_ChapterHubWatchdog::
 
 ViridianCity_Gym_EventScript_MemoryMedicKit::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemoryMedicKitOffline
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemoryMedicKitMismatch
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemoryMedicKitMismatch
 	msgbox ViridianCity_Gym_Text_MemoryMedicKitIntro, MSGBOX_AUTOCLOSE
 	special HealPlayerParty
 	msgbox ViridianCity_Gym_Text_MemoryMedicKitDone, MSGBOX_AUTOCLOSE
@@ -77,7 +77,7 @@ ViridianCity_Gym_EventScript_MemoryMedicKitOffline::
 
 ViridianCity_Gym_EventScript_MemoryRecoveryStation::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemoryMedicKitOffline
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemoryMedicKitMismatch
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemoryMedicKitMismatch
 	msgbox ViridianCity_Gym_Text_MemoryRecoveryStationIntro, MSGBOX_AUTOCLOSE
 	special HealPlayerParty
 	msgbox ViridianCity_Gym_Text_MemoryRecoveryStationDone, MSGBOX_AUTOCLOSE
@@ -98,7 +98,7 @@ ViridianCity_Gym_EventScript_MemoryDestroyDataConsole::
 
 ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpoint::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_set FLAG_GIO_MEM_CH3_STAFF_EXTRACTED, ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpointDone
 	setflag FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1
@@ -119,7 +119,7 @@ ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpointDone::
 
 ViridianCity_Gym_EventScript_MemoryEvacEndpoint::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_unset FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1, ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2
 	setvar VAR_0x8005, 4 @ ROCKETOPS_TRIGGER_EXTRACTION_NODE
@@ -242,7 +242,7 @@ ViridianCity_Gym_EventScript_GiovanniStartBattle::
 
 
 ViridianCity_Gym_EventScript_MemorySpaceMarker::
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_MemorySpaceMarkerComplete
 	setvar VAR_ROCKETOPS_CH3_STAGE, 0
 	setflag FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE
@@ -480,7 +480,7 @@ ViridianCity_Gym_EventScript_Jason::
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Jason_Battle
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Jason_Battle
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Jason_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Jason_Battle
 	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
@@ -495,7 +495,7 @@ ViridianCity_Gym_EventScript_Cole::
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Cole_Battle
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Cole_Battle
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Cole_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Cole_Battle
 	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
@@ -510,7 +510,7 @@ ViridianCity_Gym_EventScript_Atsushi::
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Atsushi_Battle
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Atsushi_Battle
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Atsushi_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Atsushi_Battle
 	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
@@ -525,7 +525,7 @@ ViridianCity_Gym_EventScript_Kiyo::
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Kiyo_Battle
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Kiyo_Battle
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Kiyo_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Kiyo_Battle
 	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
@@ -540,7 +540,7 @@ ViridianCity_Gym_EventScript_Takashi::
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Takashi_Battle
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Takashi_Battle
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Takashi_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Takashi_Battle
 	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
@@ -555,7 +555,7 @@ ViridianCity_Gym_EventScript_Samuel::
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Samuel_Battle
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Samuel_Battle
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Samuel_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Samuel_Battle
 	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
@@ -570,7 +570,7 @@ ViridianCity_Gym_EventScript_Yuji::
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Yuji_Battle
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Yuji_Battle
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Yuji_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Yuji_Battle
 	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
@@ -585,7 +585,7 @@ ViridianCity_Gym_EventScript_Warren::
 	specialvar VAR_RESULT, GetCorpseRunFieldBlockReason
 	goto_if_ne VAR_RESULT, 0, EventScript_CorpseRun_GymBattleBlocked
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Warren_Battle
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_Warren_Battle
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Warren_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Warren_Battle
 	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
@@ -605,7 +605,7 @@ ViridianCity_Gym_EventScript_GymGuy::
 	end
 
 ViridianCity_Gym_EventScript_GymGuyMemoryReport::
-	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_GymGuyMemoryReportDone
+	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_GymGuyMemoryReportDone
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_GymGuyMemoryReportDone
 	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive
 	release

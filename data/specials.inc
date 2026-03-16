@@ -472,6 +472,8 @@ gSpecials::
 	def_special IsGiovanniNarrativeBeatReadySpecial
 	def_special GetGiovanniNarrativeBeatFallbackChapterSpecial
 	def_special DebugForceGiovanniMemoryModeChapterState
+	def_special DebugValidateGiovanniCampaignState
+	def_special DebugGetGiovanniCampaignValidationMask
 	def_special ValidateGiovanniMemoryModeRocketFlags
 	def_special ValidateGiovanniInteractionOverlayForCurrentMap
 	def_special Special_GiovanniCampaignDispatch

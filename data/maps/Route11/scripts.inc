@@ -6,12 +6,12 @@ Route11_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
 	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, Route11_EventScript_MemoryRoutingCheck
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, EventScript_Return
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Return
 	goto Route11_EventScript_MemoryDesyncReturnToHub
 
 Route11_EventScript_MemoryRoutingCheck::
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, Route11_EventScript_MemoryDesyncReturnToHub
-	goto_if_eq VAR_CHAPTER_ID, 1, EventScript_Return
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, Route11_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_Return
 	goto Route11_EventScript_MemoryDesyncReturnToHub
 
 Route11_EventScript_MemoryDesyncReturnToHub::

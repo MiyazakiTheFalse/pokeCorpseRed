@@ -195,9 +195,9 @@
 #define VAR_GIO_CHAPTER            0x408D
 #define VAR_GIO_ACT                0x408E
 #define VAR_GIO_CHECKPOINT_ID      0x408F
-#define VAR_MODE_GIOVANNI_MEMORY   0x4090
-#define VAR_CHAPTER_ID             0x4091
-#define VAR_ROCKETOPS_CHAPTER      0x4092
+#define VAR_GIO_CAMPAIGN_ACTIVE    0x4090
+#define VAR_GIO_CHAPTER_LEGACY     0x4091
+#define VAR_GIO_CHAPTER_RUNTIME    0x4092
 #define VAR_ROCKETOPS_ALERT        0x4093
 #define VAR_ROCKETOPS_PROGRESS     0x4094
 #define VAR_ROCKETOPS_AGENT_TARGET 0x4095
@@ -217,7 +217,7 @@
 #define VAR_GIO_SEGMENT            0x40A3
 #define VAR_GIO_ACTIVE_DIRECTIVE_ID 0x40A4
 #define VAR_GIO_AUTHORITY_PACING   0x40A5
-#define VAR_0x40A6                 0x40A6
+#define VAR_GIO_DEBUG_VALIDATION_MASK 0x40A6
 #define VAR_0x40A7                 0x40A7
 #define VAR_0x40A8                 0x40A8
 #define VAR_0x40A9                 0x40A9
@@ -258,6 +258,39 @@
 #define VAR_0x40CD                 0x40CD
 #define VAR_0x40CE                 0x40CE
 #define VAR_FRONTIER_FACILITY      0x40CF
+
+// Canonical Giovanni campaign progression constants.
+#define GIO_CHAPTER_NONE               0
+#define GIO_CHAPTER_1                  1
+#define GIO_CHAPTER_2                  2
+#define GIO_CHAPTER_3                  3
+#define GIO_CHAPTER_COUNT              3
+
+#define GIO_CAMPAIGN_STATE_NONE        0
+#define GIO_CAMPAIGN_STATE_CH1_ACT1    1
+#define GIO_CAMPAIGN_STATE_CH1_COMPLETE 2
+#define GIO_CAMPAIGN_STATE_CH2_COMPLETE 3
+#define GIO_CAMPAIGN_STATE_CH3_COMPLETE 4
+
+#define GIO_SEGMENT_1                  0
+#define GIO_SEGMENT_2                  1
+#define GIO_SEGMENT_3                  2
+#define GIO_SEGMENT_4                  3
+#define GIO_SEGMENT_5                  4
+#define GIO_SEGMENT_6                  5
+#define GIO_SEGMENT_7                  6
+
+// Debug validation bitmask values for VAR_GIO_DEBUG_VALIDATION_MASK.
+#define GIO_VALIDATION_ERR_ACTIVE_WITHOUT_MODE         (1 << 0)
+#define GIO_VALIDATION_ERR_MODE_WITHOUT_ACTIVE         (1 << 1)
+#define GIO_VALIDATION_ERR_INVALID_CHAPTER             (1 << 2)
+#define GIO_VALIDATION_ERR_COMPLETE_WITHOUT_CHAPTER3   (1 << 3)
+#define GIO_VALIDATION_ERR_RESTORED_WHILE_ACTIVE       (1 << 4)
+
+// Legacy aliases retained during migration.
+#define VAR_MODE_GIOVANNI_MEMORY   VAR_GIO_CAMPAIGN_ACTIVE
+#define VAR_CHAPTER_ID             VAR_GIO_CHAPTER_LEGACY
+#define VAR_ROCKETOPS_CHAPTER      VAR_GIO_CHAPTER_RUNTIME
 #define VAR_0x40D0                 0x40D0
 #define VAR_0x40D1                 0x40D1
 #define VAR_0x40D2                 0x40D2

@@ -6,17 +6,17 @@ SaffronCity_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
 	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SaffronCity_EventScript_MemoryRoutingCheck
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, SaffronCity_EventScript_SetWorldMap
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SaffronCity_EventScript_SetWorldMap
 	goto SaffronCity_EventScript_MemoryDesyncReturnToHub
 
 SaffronCity_EventScript_MemoryRoutingCheck::
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, SaffronCity_EventScript_MemoryDesyncReturnToHub
-	goto_if_eq VAR_CHAPTER_ID, 2, SaffronCity_EventScript_SetWorldMap
-	goto_if_eq VAR_CHAPTER_ID, 3, SaffronCity_EventScript_SetWorldMap
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SaffronCity_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_GIO_CHAPTER, 2, SaffronCity_EventScript_SetWorldMap
+	goto_if_eq VAR_GIO_CHAPTER, 3, SaffronCity_EventScript_SetWorldMap
 	goto SaffronCity_EventScript_MemoryDesyncReturnToHub
 
 SaffronCity_EventScript_MemoryDesyncReturnToHub::
-	goto_if_eq VAR_CHAPTER_ID, 3, SaffronCity_EventScript_MemoryDesyncReturnToViridianHub
+	goto_if_eq VAR_GIO_CHAPTER, 3, SaffronCity_EventScript_MemoryDesyncReturnToViridianHub
 	warp MAP_SILPH_CO_11F, 6, 14
 	waitstate
 	end
@@ -199,9 +199,9 @@ SaffronCity_EventScript_TrainerFanClubSign::
 
 SaffronCity_EventScript_MemoryRouteCheckpoint::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, SaffronCity_EventScript_MemoryDesyncReturnToHub
-	goto_if_eq VAR_CHAPTER_ID, 2, SaffronCity_EventScript_MemoryRouteCheckpoint_Ch2
-	goto_if_eq VAR_CHAPTER_ID, 3, SaffronCity_EventScript_MemoryRouteCheckpoint_Ch3
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SaffronCity_EventScript_MemoryDesyncReturnToHub
+	goto_if_eq VAR_GIO_CHAPTER, 2, SaffronCity_EventScript_MemoryRouteCheckpoint_Ch2
+	goto_if_eq VAR_GIO_CHAPTER, 3, SaffronCity_EventScript_MemoryRouteCheckpoint_Ch3
 	goto SaffronCity_EventScript_MemoryDesyncReturnToHub
 
 SaffronCity_EventScript_MemoryRouteCheckpoint_Ch2::

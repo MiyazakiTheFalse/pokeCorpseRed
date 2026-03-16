@@ -13,9 +13,9 @@
 EventScript_GiovanniSharedWarp_ResolvePrecedence::
 	setvar VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_GiovanniSharedWarp_Return
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, EventScript_GiovanniSharedWarp_SetLockedFallback
+	goto_if_eq VAR_GIO_CAMPAIGN_ACTIVE, FALSE, EventScript_GiovanniSharedWarp_SetLockedFallback
 	goto_if_set FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE, EventScript_GiovanniSharedWarp_SetLockedFallback
-	compare VAR_CHAPTER_ID, VAR_0x8004
+	compare VAR_GIO_CHAPTER, VAR_0x8004
 	goto_if_ne EventScript_GiovanniSharedWarp_SetLockedFallback
 	setvar VAR_RESULT, GIO_SHARED_WARP_RESULT_CHAPTER_ROUTE
 	return
@@ -28,9 +28,9 @@ EventScript_GiovanniSharedWarp_Return::
 
 @ Canonical chapter hub entrypoints for deterministic event wiring.
 EventScript_GiovanniHub_WarpByChapter::
-	goto_if_eq VAR_CHAPTER_ID, 1, EventScript_GiovanniHub_WarpChapter1
-	goto_if_eq VAR_CHAPTER_ID, 2, EventScript_GiovanniHub_WarpChapter2
-	goto_if_eq VAR_CHAPTER_ID, 3, EventScript_GiovanniHub_WarpChapter3
+	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_GiovanniHub_WarpChapter1
+	goto_if_eq VAR_GIO_CHAPTER, 2, EventScript_GiovanniHub_WarpChapter2
+	goto_if_eq VAR_GIO_CHAPTER, 3, EventScript_GiovanniHub_WarpChapter3
 	return
 
 EventScript_GiovanniHub_WarpChapter1::

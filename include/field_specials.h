@@ -53,6 +53,8 @@ u16 ReconcileGiovanniMemoryModeOutcome(void);
 u16 IsGiovanniNarrativeBeatReadySpecial(void);
 u16 GetGiovanniNarrativeBeatFallbackChapterSpecial(void);
 u16 DebugForceGiovanniMemoryModeChapterState(void);
+u16 DebugValidateGiovanniCampaignState(void);
+u16 DebugGetGiovanniCampaignValidationMask(void);
 u16 ValidateGiovanniMemoryModeRocketFlags(void);
 u16 ValidateGiovanniInteractionOverlayForCurrentMap(void);
 u16 Special_GiovanniCampaignDispatch(void);

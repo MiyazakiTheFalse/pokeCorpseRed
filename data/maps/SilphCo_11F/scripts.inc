@@ -7,8 +7,8 @@ SilphCo_11F_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_11F_EventScript_SkipMemoryRoutingCheck
-	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
-	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
+	goto_if_ne VAR_GIO_CHAPTER, 2, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
 	goto_if_unset FLAG_GIO_MEM_CH1_COMPLETE, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
 	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
@@ -52,7 +52,7 @@ SilphCo_11F_EventScript_ChapterHubWatchdog::
 	end
 
 SilphCo_11F_EventScript_MemorySpaceMarker::
-	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_MemoryChapterMismatchMarker
+	goto_if_ne VAR_GIO_CHAPTER, 2, SilphCo_11F_EventScript_MemoryChapterMismatchMarker
 	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_MemorySpaceMarkerComplete
 	setvar VAR_ROCKETOPS_CH2_STAGE, 0
 	call EventScript_GiovanniCampaign_PrintActiveDirective
@@ -299,7 +299,7 @@ SilphCo_11F_EventScript_FloorSign::
 SilphCo_11F_EventScript_Grunt1::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_40, SilphCo_11F_Text_Grunt1Intro, SilphCo_11F_Text_Grunt1Defeat
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_11F_EventScript_Grunt1PostBattleNormal
-	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_Grunt1PostBattleNormal
+	goto_if_ne VAR_GIO_CHAPTER, 2, SilphCo_11F_EventScript_Grunt1PostBattleNormal
 	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_Grunt1PostBattleReportDone
 	msgbox SilphCo_11F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
@@ -314,7 +314,7 @@ SilphCo_11F_EventScript_Grunt1PostBattleReportDone::
 
 SilphCo_11F_EventScript_Grunt2::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_11F_EventScript_Grunt2_Battle
-	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_Grunt2_Battle
+	goto_if_ne VAR_GIO_CHAPTER, 2, SilphCo_11F_EventScript_Grunt2_Battle
 	msgbox SilphCo_11F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
 	end
 
