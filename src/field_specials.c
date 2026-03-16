@@ -90,6 +90,27 @@ struct GiovanniPartyTemplate
     u8 monCount;
 };
 
+struct GiovanniActEndpoint
+{
+    u8 chapterId;
+    u8 minCheckpointId;
+    u16 primaryMap;
+    u8 primaryX;
+    u8 primaryY;
+    u16 fallbackMap;
+    u8 fallbackX;
+    u8 fallbackY;
+};
+
+static const struct GiovanniActEndpoint sGiovanniActEndpoints[] =
+{
+    {1, 0, MAP_ROCKET_HIDEOUT_B4F, 18, 6, MAP_ROCKET_HIDEOUT_B4F, 19, 6},
+    {2, 0, MAP_SILPH_CO_11F, 6, 13, MAP_SILPH_CO_11F, 6, 14},
+    {3, 0, MAP_VIRIDIAN_CITY_GYM, 17, 20, MAP_VIRIDIAN_CITY_GYM, 17, 21},
+    {3, 1, MAP_VIRIDIAN_CITY_GYM, 9, 15, MAP_VIRIDIAN_CITY_GYM, 17, 21},
+    {3, 2, MAP_VIRIDIAN_CITY_GYM, 11, 7, MAP_VIRIDIAN_CITY_GYM, 17, 21},
+};
+
 // Final Giovanni memory-mode chapter parties.
 // Chapter 1 / 2 intentionally use MOVE_NONE entries so CreateMon keeps each
 // species' vanilla level-up moveset for the configured level.
@@ -801,6 +822,35 @@ static u8 ResolveGiovanniBeatFallbackChapter(u8 beatId)
     return GetGiovanniBeatFallbackChapter(sGiovanniBeatGates[beatId].fallbackBehavior);
 }
 
+static const struct GiovanniActEndpoint *GetGiovanniActEndpoint(u8 chapterId, u8 checkpointId)
+{
+    s32 i;
+    const struct GiovanniActEndpoint *result = NULL;
+
+    for (i = 0; i < ARRAY_COUNT(sGiovanniActEndpoints); i++)
+    {
+        if (sGiovanniActEndpoints[i].chapterId != chapterId)
+            continue;
+
+        if (checkpointId < sGiovanniActEndpoints[i].minCheckpointId)
+            continue;
+
+        result = &sGiovanniActEndpoints[i];
+    }
+
+    return result;
+}
+
+static bool8 IsGiovanniCoordValidOnMap(u16 map, u8 x, u8 y)
+{
+    const struct MapHeader *mapHeader = Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(map), MAP_NUM(map));
+
+    if (mapHeader == NULL || mapHeader->mapLayout == NULL)
+        return FALSE;
+
+    return x < mapHeader->mapLayout->width && y < mapHeader->mapLayout->height;
+}
+
 
 static bool8 IsGiovanniNarrativeBeatReady(u8 beatId)
 {
@@ -1094,25 +1144,17 @@ static u8 GetSanitizedGiovanniCheckpointId(u8 chapterId, u8 checkpointId)
 
 static void SetGiovanniCheckpointWarpDestination(u8 chapterId, u8 checkpointId)
 {
-    switch (chapterId)
+    const struct GiovanniActEndpoint *endpoint = GetGiovanniActEndpoint(chapterId, checkpointId);
+
+    if (endpoint == NULL)
+        endpoint = GetGiovanniActEndpoint(3, 0);
+
+    if (endpoint != NULL)
     {
-    case 1:
-        SetWarpDestination(MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F), MAP_NUM(MAP_ROCKET_HIDEOUT_B4F), WARP_ID_NONE, 18, 6);
-        break;
-    case 2:
-        SetWarpDestination(MAP_GROUP(MAP_SILPH_CO_11F), MAP_NUM(MAP_SILPH_CO_11F), WARP_ID_NONE, 6, 13);
-        break;
-    case 3:
-        if (checkpointId >= 2)
-            SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 11, 7);
-        else if (checkpointId >= 1)
-            SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 9, 15);
+        if (IsGiovanniCoordValidOnMap(endpoint->primaryMap, endpoint->primaryX, endpoint->primaryY))
+            SetWarpDestination(MAP_GROUP(endpoint->primaryMap), MAP_NUM(endpoint->primaryMap), WARP_ID_NONE, endpoint->primaryX, endpoint->primaryY);
         else
-            SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 17, 20);
-        break;
-    default:
-        SetWarpDestination(MAP_GROUP(MAP_VIRIDIAN_CITY_GYM), MAP_NUM(MAP_VIRIDIAN_CITY_GYM), WARP_ID_NONE, 17, 20);
-        break;
+            SetWarpDestination(MAP_GROUP(endpoint->fallbackMap), MAP_NUM(endpoint->fallbackMap), WARP_ID_NONE, endpoint->fallbackX, endpoint->fallbackY);
     }
 }
 

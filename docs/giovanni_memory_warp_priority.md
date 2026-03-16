@@ -36,6 +36,33 @@ Validated against:
 | 2 | `MAP_SILPH_CO_11F` | `(6, 14)` | Yes | `data/maps/SilphCo_11F/` |
 | 3 | `MAP_VIRIDIAN_CITY_GYM` | `(17, 21)` | Yes | `data/maps/ViridianCity_Gym/` |
 
+## Canonical mapping table (contract name -> map constant)
+
+All contract-facing aliases and shorthand names must resolve to exact constants already used by scripts/C.
+
+| Contract name / alias | Canonical constant |
+| --- | --- |
+| `ROCKET_HIDEOUT_BACK_ROOM` / `BACK_ROOM` | `MAP_ROCKET_HIDEOUT_B4F` |
+| `DIGLETT_CAVE` | `MAP_DIGLETTS_CAVE_NORTH_ENTRANCE` (chapter-1 route anchor) |
+| `SILPH_CO_BASEMENT` | `MAP_SILPH_CO_11F` |
+| `VIRIDIAN_GYM` | `MAP_VIRIDIAN_CITY_GYM` |
+
+These substitutions align with the Giovanni runtime map constants in `src/field_specials.c` and shared chapter hub warps in `data/scripts/giovanni_shared_warps.inc`.
+
+## Act endpoint primary/fallback policy
+
+Each act endpoint uses a primary coordinate with a fallback coordinate on a canonical map so map edits cannot strand restart/restore flow.
+
+| Chapter/checkpoint band | Primary endpoint | Fallback endpoint |
+| --- | --- | --- |
+| Chapter 1 (`checkpoint >= 0`) | `MAP_ROCKET_HIDEOUT_B4F (18,6)` | `MAP_ROCKET_HIDEOUT_B4F (19,6)` |
+| Chapter 2 (`checkpoint >= 0`) | `MAP_SILPH_CO_11F (6,13)` | `MAP_SILPH_CO_11F (6,14)` |
+| Chapter 3 (`checkpoint >= 0`) | `MAP_VIRIDIAN_CITY_GYM (17,20)` | `MAP_VIRIDIAN_CITY_GYM (17,21)` |
+| Chapter 3 (`checkpoint >= 1`) | `MAP_VIRIDIAN_CITY_GYM (9,15)` | `MAP_VIRIDIAN_CITY_GYM (17,21)` |
+| Chapter 3 (`checkpoint >= 2`) | `MAP_VIRIDIAN_CITY_GYM (11,7)` | `MAP_VIRIDIAN_CITY_GYM (17,21)` |
+
+Runtime selection validates primary coordinates against current target map layout bounds and automatically falls back when invalid.
+
 ### Substitutions
 
 - No map-name substitutions were required; all proposed hub maps exist.
