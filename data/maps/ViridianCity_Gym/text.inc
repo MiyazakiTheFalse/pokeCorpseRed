@@ -413,15 +413,15 @@ ViridianCity_Gym_Text_RocketOps_DeployAgent_C3::
 
 ViridianCity_Gym_Text_RocketOps_DestroyData_C3::
     .string "[ROCKETOPS:C3] Support archive purged.\n"
-    .string "One boss support routine removed. Nox\n"
-    .string "warns science objectives just turned\n"
-    .string "from recovery to forensic salvage.$"
+    .string "Terminal entry flags NOX-LINK as moved to\n"
+    .string "cold storage. Souls-linked pair trials were\n"
+    .string "left incomplete before relay blackout.$"
 
 ViridianCity_Gym_Text_RocketOps_ExtractStaff_C3::
     .string "[ROCKETOPS:C3] Hostage/staff extraction\n"
-    .string "completed for best-resolution path. Nox\n"
-    .string "opens optional investigation leads from\n"
-    .string "survivor testimony and lab traces.$"
+    .string "completed for best-resolution path. Lab\n"
+    .string "note fragments mention NOX-LINK and a\n"
+    .string "split-soul calibration that never closed.$"
 
 ViridianCity_Gym_Text_MemoryRecoveryStationIntro::
     .string "[MEMORY] Recovery station online.\n"
@@ -520,9 +520,9 @@ ViridianCity_Gym_Text_RecurringOpsOfficer_Act2::
 
 ViridianCity_Gym_Text_RecurringOpsOfficer_Act3::
     .string "[OPS OFFICER VERA:C3-A3] Final evac group is\n"
-    .string "clear. I stayed loyal through the doubt,\n"
-    .string "and I will own that to the end. Command\n"
-    .string "priority now hard-locks to hold-the-line.$"
+    .string "clear. I saw Nox take the lower archive\n"
+    .string "lift alone with one soul-link drive case;\n"
+    .string "no one saw that car return.$"
 
 ViridianCity_Gym_Text_RecurringOpsOfficer_Done::
     .string "[OPS OFFICER VERA:C3] Status: LOYAL REMNANT.\n"
@@ -536,19 +536,19 @@ ViridianCity_Gym_Text_RecurringScientist_Act1::
     .string "objective tone is now emergency triage.$"
 
 ViridianCity_Gym_Text_RecurringScientist_Act2::
-    .string "[DR. NOX:C3-A2] War protocols are running\n"
-    .string "without ethics locks. The numbers look\n"
-    .string "clean and the outcomes look monstrous.\n"
-    .string "Optional investigation hooks are open\n"
-    .string "if you track the archive anomalies.$"
+    .string "[LAB NOTE:C3] Nox margin log: paired soul\n"
+    .string "signatures keep echoing after separation.\n"
+    .string "If command collapses, follow relay 7 before\n"
+    .string "the trace cools beyond recovery.$"
 
 ViridianCity_Gym_Text_RecurringScientist_Act3::
-    .string "[DR. NOX:C3-A3] Last trace points below the\n"
-    .string "archive gate. If I go dark again, do not\n"
-    .string "send a search team unless you choose the\n"
-    .string "investigation branch yourself.$"
+    .string "[DR. NOX:C3-A3] Workstation empty. A fresh\n"
+    .string "note reads: \"If this falls, I go below.\"\n"
+    .string "Only relay static remains on his channel.\n"
+    .string "No direct contact available.$"
 
 ViridianCity_Gym_Text_RecurringScientist_Done::
-    .string "[DR. NOX:C3] FINAL STATUS: MISSING.\n"
+    .string "[DR. NOX:C3] FINAL STATUS: UNRESOLVED.\n"
     .string "No recovery team found a body, only\n"
-    .string "burned notes and an open relay.$"
+    .string "burned notes, an open relay, and one\n"
+    .string "soul-link drive still transmitting.$"
