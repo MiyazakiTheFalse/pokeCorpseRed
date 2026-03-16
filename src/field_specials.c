@@ -4933,6 +4933,26 @@ u16 Special_RocketOps_OpenTerminal(void)
     return TRUE;
 }
 
+u16 Special_RocketOps_GetCommandMenu(void)
+{
+    u16 chapterId = VarGet(VAR_GIO_CHAPTER_RUNTIME);
+
+    if (chapterId < 1 || chapterId > 3)
+        chapterId = VarGet(VAR_GIO_CHAPTER);
+
+    switch (chapterId)
+    {
+    case 1:
+        return MULTICHOICE_ROCKETOPS_COMMANDS_C1;
+    case 2:
+        return MULTICHOICE_ROCKETOPS_COMMANDS_C2;
+    case 3:
+        return MULTICHOICE_ROCKETOPS_COMMANDS_C3;
+    default:
+        return MULTICHOICE_ROCKETOPS_COMMANDS;
+    }
+}
+
 u16 Special_RocketOps_ValidateCommandContext(void)
 {
     u16 chapterId = VarGet(VAR_GIO_CHAPTER_RUNTIME);

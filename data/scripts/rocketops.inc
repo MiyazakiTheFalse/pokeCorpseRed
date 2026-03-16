@@ -11,12 +11,77 @@ EventScript_RocketOps_Terminal::
 	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_TerminalOffline
 	msgbox Text_RocketOpsTerminalBoot, MSGBOX_AUTOCLOSE
 	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_2
-	call EventScript_RocketOps_AssignImmediateCommand
-	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_TriggerLinkMismatch
+	specialvar VAR_0x8006, Special_RocketOps_GetCommandMenu
+	call EventScript_RocketOps_ShowCommandMenu
+	goto_if_eq VAR_0x8004, 4, EventScript_RocketOps_Close
 	specialvar VAR_RESULT, Special_RocketOps_ValidateCommandContext
 	goto_if_eq VAR_RESULT, TRUE, EventScript_RocketOps_CommandDispatch
 	call EventScript_RocketOps_CommandDenied
 	goto EventScript_RocketOps_Close
+
+EventScript_RocketOps_ShowCommandMenu::
+	switch VAR_0x8006
+	case MULTICHOICE_ROCKETOPS_COMMANDS_C1, EventScript_RocketOps_ShowCommandMenu_C1
+	case MULTICHOICE_ROCKETOPS_COMMANDS_C2, EventScript_RocketOps_ShowCommandMenu_C2
+	case MULTICHOICE_ROCKETOPS_COMMANDS_C3, EventScript_RocketOps_ShowCommandMenu_C3
+	multichoice 17, 0, MULTICHOICE_ROCKETOPS_COMMANDS, FALSE
+	copyvar VAR_0x8004, VAR_RESULT
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C1::
+	multichoice 17, 0, MULTICHOICE_ROCKETOPS_COMMANDS_C1, FALSE
+	copyvar VAR_0x8004, VAR_RESULT
+	goto_if_eq VAR_0x8004, 3, EventScript_RocketOps_ShowCommandMenu_C1_Exit
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C1_Exit::
+	setvar VAR_0x8004, 4
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C2::
+	multichoice 17, 0, MULTICHOICE_ROCKETOPS_COMMANDS_C2, FALSE
+	copyvar VAR_0x8004, VAR_RESULT
+	goto_if_eq VAR_0x8004, 3, EventScript_RocketOps_ShowCommandMenu_C2_Exit
+	goto_if_eq VAR_0x8004, 1, EventScript_RocketOps_ShowCommandMenu_C2_DestroyData
+	goto_if_eq VAR_0x8004, 2, EventScript_RocketOps_ShowCommandMenu_C2_ExtractStaff
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C2_DestroyData::
+	setvar VAR_0x8004, 2
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C2_ExtractStaff::
+	setvar VAR_0x8004, 3
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C2_Exit::
+	setvar VAR_0x8004, 4
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C3::
+	multichoice 17, 0, MULTICHOICE_ROCKETOPS_COMMANDS_C3, FALSE
+	copyvar VAR_0x8004, VAR_RESULT
+	goto_if_eq VAR_0x8004, 3, EventScript_RocketOps_ShowCommandMenu_C3_Exit
+	goto_if_eq VAR_0x8004, 0, EventScript_RocketOps_ShowCommandMenu_C3_DeployAgent
+	goto_if_eq VAR_0x8004, 1, EventScript_RocketOps_ShowCommandMenu_C3_DestroyData
+	goto_if_eq VAR_0x8004, 2, EventScript_RocketOps_ShowCommandMenu_C3_ExtractStaff
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C3_DeployAgent::
+	setvar VAR_0x8004, 1
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C3_DestroyData::
+	setvar VAR_0x8004, 2
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C3_ExtractStaff::
+	setvar VAR_0x8004, 3
+	return
+
+EventScript_RocketOps_ShowCommandMenu_C3_Exit::
+	setvar VAR_0x8004, 4
+	return
 
 EventScript_RocketOps_CommandDispatch::
 	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
@@ -25,35 +90,6 @@ EventScript_RocketOps_CommandDispatch::
 	goto_if_eq VAR_0x8004, 2, EventScript_RocketOps_Command_DestroyData
 	goto_if_eq VAR_0x8004, 3, EventScript_RocketOps_Command_ExtractStaff
 	goto EventScript_RocketOps_TriggerLinkMismatch
-
-EventScript_RocketOps_AssignImmediateCommand::
-	switch VAR_0x8005
-	case 1, EventScript_RocketOps_AssignImmediateCommand_SecureRoute
-	case 2, EventScript_RocketOps_AssignImmediateCommand_DeployAgent
-	case 3, EventScript_RocketOps_AssignImmediateCommand_DestroyData
-	case 4, EventScript_RocketOps_AssignImmediateCommand_ExtractStaff
-	setvar VAR_RESULT, FALSE
-	return
-
-EventScript_RocketOps_AssignImmediateCommand_SecureRoute::
-	setvar VAR_0x8004, 0
-	setvar VAR_RESULT, TRUE
-	return
-
-EventScript_RocketOps_AssignImmediateCommand_DeployAgent::
-	setvar VAR_0x8004, 1
-	setvar VAR_RESULT, TRUE
-	return
-
-EventScript_RocketOps_AssignImmediateCommand_DestroyData::
-	setvar VAR_0x8004, 2
-	setvar VAR_RESULT, TRUE
-	return
-
-EventScript_RocketOps_AssignImmediateCommand_ExtractStaff::
-	setvar VAR_0x8004, 3
-	setvar VAR_RESULT, TRUE
-	return
 
 EventScript_RocketOps_CommandDenied::
 	goto_if_eq VAR_0x8004, 0, EventScript_RocketOps_CommandDenied_SecureRoute
@@ -155,6 +191,22 @@ EventScript_GiovanniCampaign_WatchdogHint_C2::
 EventScript_GiovanniCampaign_WatchdogHint_C3::
 	msgbox Text_RocketOpsWatchdogHint_C3, MSGBOX_AUTOCLOSE
 	return
+
+EventScript_RocketOps_UseControlNodeTerminal::
+	setvar VAR_0x8005, 1 @ ROCKETOPS_TRIGGER_CONTROL_NODE
+	goto EventScript_RocketOps_Terminal
+
+EventScript_RocketOps_UseSurveillanceNodeTerminal::
+	setvar VAR_0x8005, 2 @ ROCKETOPS_TRIGGER_SURVEILLANCE_NODE
+	goto EventScript_RocketOps_Terminal
+
+EventScript_RocketOps_UseArchiveNodeTerminal::
+	setvar VAR_0x8005, 3 @ ROCKETOPS_TRIGGER_ARCHIVE_NODE
+	goto EventScript_RocketOps_Terminal
+
+EventScript_RocketOps_UseExtractionNodeTerminal::
+	setvar VAR_0x8005, 4 @ ROCKETOPS_TRIGGER_EXTRACTION_NODE
+	goto EventScript_RocketOps_Terminal
 
 EventScript_RocketOps_TerminalOffline::
 	msgbox Text_RocketOpsTerminalOffline
