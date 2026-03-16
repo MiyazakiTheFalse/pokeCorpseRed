@@ -7,6 +7,7 @@
 #include "fieldmap.h"
 #include "field_camera.h"
 #include "field_control_avatar.h"
+#include "field_specials.h"
 #include "field_effect.h"
 #include "field_effect_helpers.h"
 #include "field_player_avatar.h"
@@ -515,7 +516,7 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
         return;
     }
 
-    if (((heldKeys & B_BUTTON) || VarGet(VAR_GIO_AUTHORITY_PACING) == TRUE)
+    if (((heldKeys & B_BUTTON) || IsGiovanniAuthorityPacingForcedRunActive())
         && FlagGet(FLAG_SYS_B_DASH)
         && !IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior)
         && ChaseStamina_CanUseRunStep())

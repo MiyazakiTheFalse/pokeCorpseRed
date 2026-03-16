@@ -943,6 +943,8 @@ static void ReloadGiovanniMemoryModeNpcObjects(void)
 #define GIO_CHECKPOINT_OBJECTIVE_ACT4_DECISION (1 << 5)
 
 static void RunGiovanniMemoryModeResetHooks(u8 chapterId);
+static bool8 ShouldForceGiovanniAuthorityPacing(void);
+static void SetGiovanniAuthorityPacing(bool8 enabled);
 static u8 GetGiovanniMemoryModeChapterId(void);
 static u8 GetSanitizedGiovanniCheckpointId(u8 chapterId, u8 checkpointId);
 static void ReconcileGiovanniChapter3EscortSegmentState(void);
@@ -1410,13 +1412,50 @@ static bool8 RestoreGiovanniCheckpointContextForRestart(bool8 setWarp)
     return TRUE;
 }
 
+static bool8 ShouldForceGiovanniAuthorityPacing(void)
+{
+    if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
+        return FALSE;
+
+    if (ScriptContext_IsEnabled())
+        return FALSE;
+
+    if (FlagGet(FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE))
+        return FALSE;
+
+    if (FlagGet(FLAG_ROCKETOPS_ORDER_HOLD_POSITION))
+        return FALSE;
+
+    return TRUE;
+}
+
+static void SetGiovanniAuthorityPacing(bool8 enabled)
+{
+    VarSet(VAR_GIO_AUTHORITY_PACING, enabled);
+}
+
+bool8 IsGiovanniAuthorityPacingForcedRunActive(void)
+{
+    return ShouldForceGiovanniAuthorityPacing();
+}
+
+u16 ValidateGiovanniAuthorityPacingState(void)
+{
+    bool8 shouldForce = ShouldForceGiovanniAuthorityPacing();
+
+    AGB_ASSERT(VarGet(VAR_GIO_AUTHORITY_PACING) == shouldForce);
+    if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
+        AGB_ASSERT(VarGet(VAR_GIO_AUTHORITY_PACING) == FALSE);
+    return shouldForce;
+}
+
 static void RunGiovanniMemoryModeResetHooks(u8 chapterId)
 {
     bool8 giovanniMemoryModeActive = chapterId != 0;
 
     VarSet(VAR_MODE_GIOVANNI_MEMORY, giovanniMemoryModeActive);
     VarSet(VAR_CHAPTER_ID, chapterId);
-    VarSet(VAR_GIO_AUTHORITY_PACING, giovanniMemoryModeActive);
+    SetGiovanniAuthorityPacing(ShouldForceGiovanniAuthorityPacing());
     ApplyGiovanniMemoryModeNpcFlags(chapterId);
     ReloadGiovanniMemoryModeNpcObjects();
 }
@@ -4527,7 +4566,9 @@ u16 AbortGiovanniMemoryMode(void)
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_CAPTURE_LOCK);
     SetGiovanniCampaignProgress(0, 0, 0, GIO_CAMPAIGN_STATE_NONE);
     ResetRocketOpsState();
+    SetGiovanniAuthorityPacing(FALSE);
     RunGiovanniMemoryModeResetHooks(0);
+    AGB_ASSERT(ValidateGiovanniAuthorityPacingState() == FALSE);
     return TRUE;
 }
 
@@ -4579,7 +4620,9 @@ u16 RestoreGiovanniMemoryModeSnapshot(void)
     SetGiovanniCampaignProgress(0, 0, 0, IsGiovanniCampaignComplete() ? GIO_CAMPAIGN_STATE_CH3_COMPLETE : GIO_CAMPAIGN_STATE_NONE);
     ResetRocketOpsState();
     GetGiovanniMemoryModeSnapshot()->valid = FALSE;
+    SetGiovanniAuthorityPacing(FALSE);
     RunGiovanniMemoryModeResetHooks(0);
+    AGB_ASSERT(ValidateGiovanniAuthorityPacingState() == FALSE);
     return TRUE;
 }
 
@@ -4621,6 +4664,7 @@ bool8 HandleGiovanniMemoryModeWhiteout(void)
         SetGiovanniChapterHubWarpDestination(chapterId);
     }
 
+    ValidateGiovanniAuthorityPacingState();
     return TRUE;
 }
 
@@ -4720,6 +4764,7 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
     gSaveBlock1Ptr->pos.x = gSaveBlock1Ptr->location.x;
     gSaveBlock1Ptr->pos.y = gSaveBlock1Ptr->location.y;
     gSaveBlock1Ptr->continueGameWarp = gSaveBlock1Ptr->location;
+    ValidateGiovanniAuthorityPacingState();
     return TRUE;
 }
 
@@ -4759,7 +4804,9 @@ u16 ReconcileGiovanniMemoryModeOutcome(void)
     FlagClear(FLAG_GIO_MEM_CH3_COMPLETE);
     FlagClear(FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE);
     FlagClear(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
+    SetGiovanniAuthorityPacing(FALSE);
     RunGiovanniMemoryModeResetHooks(0);
+    AGB_ASSERT(ValidateGiovanniAuthorityPacingState() == FALSE);
     ResetRocketOpsState();
 
     if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE))
