@@ -261,9 +261,9 @@ SilphCo_11F_Text_RecurringScientist_Act2::
     .string "keep both from collapsing.$"
 
 SilphCo_11F_Text_RecurringScientist_Act3::
-    .string "[SCIENTIST DR. NOX:C2-A3] If this route fails,\n"
-    .string "tell Viridian I went to lock the archive\n"
-    .string "personally. Do not wait on me.$"
+    .string "[SCIENTIST DR. NOX:C2-A3] Transfer window is\n"
+    .string "closing. Meet me at Viridian's lower archive\n"
+    .string "after evac, or assume I sealed myself in.$"
 
 SilphCo_11F_Text_RecurringScientist_Done::
     .string "[SCIENTIST DR. NOX:C2] Last ping ended mid-\n"
