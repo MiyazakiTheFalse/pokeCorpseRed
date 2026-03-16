@@ -303,8 +303,9 @@ ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFallback::
 
 ViridianCity_Gym_Text_MemoryAct1EmergencyBriefing::
     .string "[MEMORY:C3 ACT1] Emergency briefing:\n"
-    .string "Silph archive purge, scientist escort,\n"
-    .string "and Viridian fallback orders are live.$"
+    .string "Vera flags command-level decisions now:\n"
+    .string "set route priority before archive purge\n"
+    .string "and scientist escort orders go live.$"
 
 ViridianCity_Gym_Text_MemoryAct1ObjectiveInit::
     .string "[OBJECTIVE:C3 ACT1] Initialization complete.\n"
@@ -324,7 +325,8 @@ ViridianCity_Gym_Text_MemoryAct3EscortRoute::
 ViridianCity_Gym_Text_MemoryAct4DecisionScene::
     .string "[MEMORY:C3 ACT4] Viridian outskirts decision\n"
     .string "made: Team Rocket disbands and remaining\n"
-    .string "cells scatter.$"
+    .string "cells scatter. Immediate shifts posted to\n"
+    .string "all route, archive, and defense states.$"
 
 ViridianCity_Gym_Text_MemoryAct5PresentResume::
     .string "[MEMORY:C3 ACT5] Present-time Viridian\n"
@@ -348,8 +350,9 @@ ViridianCity_Gym_Text_GiovanniMemoryCallback_Chapter3::
 
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounter::
     .string "[TASKFORCE:C3] Giovanni is disciplined and\n"
-    .string "dangerously effective, but his methods\n"
-    .string "turn Viridian into a containment risk.$"
+    .string "dangerously effective. Drake's presence\n"
+    .string "spikes urgency: this is now a hold-the-\n"
+    .string "line final defense at full alert.$"
 
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounterDefeat::
     .string "[MEMORY:C3] Security taskforce captain\n"
@@ -370,17 +373,20 @@ ViridianCity_Gym_Text_RocketReport_ObjectiveDone::
 ViridianCity_Gym_Text_RocketOps_StatusReport_SecureCorridor_C3::
     .string "[REPORT:C3] Secure corridor order accepted.\n"
     .string "Command ring narrowed to the boss lane\n"
-    .string "with perimeter doors reinforced.$"
+    .string "with perimeter doors reinforced. Vera\n"
+    .string "marks this as priority route alpha.$"
 
 ViridianCity_Gym_Text_RocketOps_StatusReport_HoldPosition_C3::
     .string "[REPORT:C3] Hold position order accepted.\n"
     .string "Outer guard pairs are pinned to static\n"
-    .string "posts and no longer sweep the gym.$"
+    .string "posts and no longer sweep the gym. Vera\n"
+    .string "confirms command lattice is stable.$"
 
 ViridianCity_Gym_Text_RocketOps_StatusReport_OpenRoute_C3::
     .string "[REPORT:C3] Open route order accepted.\n"
     .string "Escort checkpoint alpha is now marked as\n"
-    .string "a safe route for extraction.$"
+    .string "a safe route for extraction. Vera tags\n"
+    .string "it as top-priority civilian lane.$"
 
 ViridianCity_Gym_Text_RocketOps_StaffCheckpoint_C3::
     .string "[ROCKETOPS:C3] Escort checkpoint locked.\n"
@@ -397,19 +403,25 @@ ViridianCity_Gym_Text_RocketReport_ObjectivesIncomplete::
 
 ViridianCity_Gym_Text_RocketOps_SecureRoute_C3::
     .string "[ROCKETOPS:C3] Flanking lane sealed.\n"
-    .string "Boss approach corridor now enforced.$"
+    .string "Boss approach corridor now enforced.\n"
+    .string "Drake shifts reserve squads to the line.$"
 
 ViridianCity_Gym_Text_RocketOps_DeployAgent_C3::
     .string "[ROCKETOPS:C3] Decoy released. Elite\n"
-    .string "guard activation timer delayed.$"
+    .string "guard activation timer delayed. Rourke\n"
+    .string "rerouted power to buy this window.$"
 
 ViridianCity_Gym_Text_RocketOps_DestroyData_C3::
     .string "[ROCKETOPS:C3] Support archive purged.\n"
-    .string "One boss support routine removed.$"
+    .string "One boss support routine removed. Nox\n"
+    .string "warns science objectives just turned\n"
+    .string "from recovery to forensic salvage.$"
 
 ViridianCity_Gym_Text_RocketOps_ExtractStaff_C3::
     .string "[ROCKETOPS:C3] Hostage/staff extraction\n"
-    .string "completed for best-resolution path.$"
+    .string "completed for best-resolution path. Nox\n"
+    .string "opens optional investigation leads from\n"
+    .string "survivor testimony and lab traces.$"
 
 ViridianCity_Gym_Text_MemoryRecoveryStationIntro::
     .string "[MEMORY] Recovery station online.\n"
@@ -430,13 +442,15 @@ ViridianCity_Gym_Text_RocketOps_EvacEndpointLocked_C3::
 
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_DestroyData::
     .string "[TASKFORCE:C3] Burned archives mean we lose\n"
-    .string "medical and hazard records too. We stop\n"
-    .string "Rocket before this spreads citywide.$"
+    .string "medical and hazard records too. Drake's\n"
+    .string "line is all pressure now; we stop Rocket\n"
+    .string "before this spreads citywide.$"
 
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_ExtractStaff::
     .string "[TASKFORCE:C3] We moved people out alive,\n"
     .string "but extraction lanes can collapse fast.\n"
-    .string "We hold here to keep them breathing.$"
+    .string "Drake's units are still inbound, so we\n"
+    .string "hold here to keep them breathing.$"
 
 ViridianCity_Gym_Text_RocketReport_ObjectiveLive_DestroyData::
     .string "[REPORT:C3] Purge branch active. Fewer\n"
@@ -451,16 +465,20 @@ ViridianCity_Gym_Text_RocketReport_ObjectiveLive_ExtractStaff::
 ViridianCity_Gym_Text_RecurringCaptain_Act1::
     .string "[CAPTAIN DRAKE:C3-A1] Tunnel teams in place.\n"
     .string "Give me the word and I will hold this gym\n"
-    .string "like a fortress.$"
+    .string "like a fortress. Trigger defense phase\n"
+    .string "and I lock every breach lane.$"
 
 ViridianCity_Gym_Text_RecurringCaptain_Act2::
     .string "[CAPTAIN DRAKE:C3-A2] The line bends, not\n"
     .string "breaks. Loyalty is simple when everyone\n"
-    .string "else starts to waver.$"
+    .string "else starts to waver. Final hold timer\n"
+    .string "starts the moment command hesitates.$"
 
 ViridianCity_Gym_Text_RecurringCaptain_Act3::
     .string "[CAPTAIN DRAKE:C3-A3] I know what this costs.\n"
-    .string "I am still standing with Giovanni.$"
+    .string "I am still standing with Giovanni.\n"
+    .string "No retreat calls. This becomes the last\n"
+    .string "hold-the-line sequence.$"
 
 ViridianCity_Gym_Text_RecurringCaptain_Done::
     .string "[CAPTAIN DRAKE:C3] Status unchanged: LOYAL.\n"
@@ -469,16 +487,20 @@ ViridianCity_Gym_Text_RecurringCaptain_Done::
 ViridianCity_Gym_Text_RecurringEngineer_Act1::
     .string "[ENGINEER ROURKE:C3-A1] I can keep the backup\n"
     .string "grid alive, but I can't keep pretending this\n"
-    .string "plan protects anyone.$"
+    .string "plan protects anyone. Take my maintenance\n"
+    .string "shortcut if you want a faster flank.$"
 
 ViridianCity_Gym_Text_RecurringEngineer_Act2::
     .string "[ENGINEER ROURKE:C3-A2] Every order feels like\n"
     .string "we are patching a sinking hull. I am tired\n"
-    .string "of calling this control.$"
+    .string "of calling this control. I can still\n"
+    .string "explain which breakers open side routes.$"
 
 ViridianCity_Gym_Text_RecurringEngineer_Act3::
     .string "[ENGINEER ROURKE:C3-A3] Finish this and I walk.\n"
-    .string "No medals. No speeches. Just done.$"
+    .string "No medals. No speeches. Just done.\n"
+    .string "Take the infrastructure bypass now or\n"
+    .string "lose it when the grid drops.$"
 
 ViridianCity_Gym_Text_RecurringEngineer_Done::
     .string "[ENGINEER ROURKE:C3] Logged as DISILLUSIONED.\n"
@@ -487,17 +509,20 @@ ViridianCity_Gym_Text_RecurringEngineer_Done::
 ViridianCity_Gym_Text_RecurringOpsOfficer_Act1::
     .string "[OPS OFFICER VERA:C3-A1] Evac queue is active.\n"
     .string "I will move every noncombatant before the\n"
-    .string "last gate drops.$"
+    .string "last gate drops. Command-level choice is\n"
+    .string "live: route security or route speed.$"
 
 ViridianCity_Gym_Text_RecurringOpsOfficer_Act2::
     .string "[OPS OFFICER VERA:C3-A2] Civilian buses are\n"
     .string "rolling out now. We are cutting loose from\n"
-    .string "direct Rocket command.$"
+    .string "direct Rocket command and reprioritizing\n"
+    .string "all lanes around evac directives.$"
 
 ViridianCity_Gym_Text_RecurringOpsOfficer_Act3::
     .string "[OPS OFFICER VERA:C3-A3] Final evac group is\n"
     .string "clear. I stayed loyal through the doubt,\n"
-    .string "and I will own that to the end.$"
+    .string "and I will own that to the end. Command\n"
+    .string "priority now hard-locks to hold-the-line.$"
 
 ViridianCity_Gym_Text_RecurringOpsOfficer_Done::
     .string "[OPS OFFICER VERA:C3] Status: LOYAL REMNANT.\n"
@@ -507,17 +532,21 @@ ViridianCity_Gym_Text_RecurringOpsOfficer_Done::
 ViridianCity_Gym_Text_RecurringScientist_Act1::
     .string "[DR. NOX:C3-A1] Curiosity became triage.\n"
     .string "Every archive sample now predicts one\n"
-    .string "more way this city can burn.$"
+    .string "more way this city can burn. Science\n"
+    .string "objective tone is now emergency triage.$"
 
 ViridianCity_Gym_Text_RecurringScientist_Act2::
     .string "[DR. NOX:C3-A2] War protocols are running\n"
     .string "without ethics locks. The numbers look\n"
-    .string "clean and the outcomes look monstrous.$"
+    .string "clean and the outcomes look monstrous.\n"
+    .string "Optional investigation hooks are open\n"
+    .string "if you track the archive anomalies.$"
 
 ViridianCity_Gym_Text_RecurringScientist_Act3::
     .string "[DR. NOX:C3-A3] Last trace points below the\n"
     .string "archive gate. If I go dark again, do not\n"
-    .string "send a search team.$"
+    .string "send a search team unless you choose the\n"
+    .string "investigation branch yourself.$"
 
 ViridianCity_Gym_Text_RecurringScientist_Done::
     .string "[DR. NOX:C3] FINAL STATUS: MISSING.\n"
