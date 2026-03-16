@@ -1431,15 +1431,18 @@ static bool8 RestoreGiovanniCheckpointContextForRestart(bool8 setWarp)
 
 static bool8 ShouldForceGiovanniAuthorityPacing(void)
 {
-    if (!FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
+    if (VarGet(VAR_GIO_CAMPAIGN_ACTIVE) != TRUE)
         return FALSE;
 
+    // Suppress forced running while scripted cutscenes control the avatar.
     if (ScriptContext_IsEnabled())
         return FALSE;
 
+    // Suppress forced running during escort sequences.
     if (FlagGet(FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE))
         return FALSE;
 
+    // Suppress forced running during scripted slow-walk scenes.
     if (FlagGet(FLAG_ROCKETOPS_ORDER_HOLD_POSITION))
         return FALSE;
 
@@ -4871,7 +4874,10 @@ u16 IsGiovanniMemoryModeReadyForBattle(void)
      && FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE)
      && FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_RESTORED)
      && !FlagGet(FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE))
+    {
+        AGB_ASSERT(ValidateGiovanniAuthorityPacingState() == FALSE);
         return TRUE;
+    }
 
     return FALSE;
 }
