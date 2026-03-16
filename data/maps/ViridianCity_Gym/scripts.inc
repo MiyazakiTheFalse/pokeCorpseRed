@@ -293,6 +293,7 @@ ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence::
 	goto_if_lt VAR_GIO_ACT, 4, ViridianCity_Gym_EventScript_GiovanniMemoryObjectivesIncomplete
 	goto_if_unset FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2, ViridianCity_Gym_EventScript_GiovanniMemoryObjectivesIncomplete
 	goto_if_unset FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON, ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter
+	setflag FLAG_ROCKET_DISBANDED
 	fadescreen FADE_TO_BLACK
 	warp MAP_VIRIDIAN_CITY_GYM, 17, 20
 	waitstate
@@ -309,6 +310,8 @@ ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence::
 
 ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter::
 	lockall
+	goto_if_set FLAG_GIO_BRANCH_EXTRACT_STAFF, ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter_ExtractStaff
+	goto_if_set FLAG_GIO_BRANCH_DESTROY_DATA, ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter_DestroyData
 	msgbox ViridianCity_Gym_Text_MemoryFinalDefenseEncounter, MSGBOX_AUTOCLOSE
 	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
 	setwildbattle SPECIES_GOLBAT, 45
@@ -318,6 +321,29 @@ ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter::
 	setwildbattle SPECIES_HYPNO, 46
 	dowildbattle
 	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	goto ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter_End
+
+ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter_DestroyData::
+	msgbox ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_DestroyData, MSGBOX_AUTOCLOSE
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	setwildbattle SPECIES_MAROWAK, 46
+	dowildbattle
+	setwildbattle SPECIES_HYPNO, 46
+	dowildbattle
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	goto ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter_End
+
+ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter_ExtractStaff::
+	msgbox ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_ExtractStaff, MSGBOX_AUTOCLOSE
+	special HealPlayerParty
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	setwildbattle SPECIES_GOLBAT, 45
+	dowildbattle
+	setwildbattle SPECIES_HYPNO, 46
+	dowildbattle
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+
+ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter_End::
 	setflag FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON
 	special SaveGiovanniMemoryModeCheckpoint
 	releaseall
@@ -504,7 +530,7 @@ ViridianCity_Gym_EventScript_Jason::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Jason_Battle
 	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Jason_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Jason_Battle
-	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	call ViridianCity_Gym_EventScript_MemoryObjectiveLiveBranchDialogue
 	end
 
 ViridianCity_Gym_EventScript_Jason_Battle::
@@ -609,13 +635,27 @@ ViridianCity_Gym_EventScript_Warren::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_Warren_Battle
 	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_Warren_Battle
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_Warren_Battle
-	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	call ViridianCity_Gym_EventScript_MemoryObjectiveLiveBranchDialogue
 	end
 
 ViridianCity_Gym_EventScript_Warren_Battle::
 	trainerbattle_single TRAINER_COOLTRAINER_WARREN, ViridianCity_Gym_Text_WarrenIntro, ViridianCity_Gym_Text_WarrenDefeat
 	msgbox ViridianCity_Gym_Text_WarrenPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+ViridianCity_Gym_EventScript_MemoryObjectiveLiveBranchDialogue::
+	goto_if_set FLAG_GIO_BRANCH_EXTRACT_STAFF, ViridianCity_Gym_EventScript_MemoryObjectiveLiveBranchDialogue_ExtractStaff
+	goto_if_set FLAG_GIO_BRANCH_DESTROY_DATA, ViridianCity_Gym_EventScript_MemoryObjectiveLiveBranchDialogue_DestroyData
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	return
+
+ViridianCity_Gym_EventScript_MemoryObjectiveLiveBranchDialogue_DestroyData::
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive_DestroyData, MSGBOX_AUTOCLOSE
+	return
+
+ViridianCity_Gym_EventScript_MemoryObjectiveLiveBranchDialogue_ExtractStaff::
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectiveLive_ExtractStaff, MSGBOX_AUTOCLOSE
+	return
 
 ViridianCity_Gym_EventScript_GymGuy::
 	lock

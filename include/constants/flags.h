@@ -1616,6 +1616,8 @@
 #define FLAG_GIO_BRANCH_CH1_AUTHORITY_ROUTE                         FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
 #define FLAG_GIO_BRANCH_CH2_INFILTRATION_ROUTE                      FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
 #define FLAG_GIO_BRANCH_CH3_ESCORT_ROUTE                            FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
+#define FLAG_GIO_BRANCH_DESTROY_DATA                                FLAG_ROCKETOPS_DATA_DESTROYED
+#define FLAG_GIO_BRANCH_EXTRACT_STAFF                               FLAG_ROCKETOPS_STAFF_EXTRACTED
 
 // Canonical post-League world state flags.
 #define FLAG_ROCKET_DISBANDED                                       FLAG_0x8ED
