@@ -117,6 +117,10 @@ Route11_Text_MemoryDiglettSwarmStart::
     .string "colony into a panic. If we fail here,\n"
     .string "civilians on Route 11 get buried.$"
 
+Route11_Text_MemoryTunnelLeaderPrepLore::
+    .string "[TASKFORCE:C1] Tunnel foreman says this cut\n"
+    .string "was built for freight in the war years.$"
+
 
 Route11_Text_MemoryTunnelLeaderDefeat::
     .string "[MEMORY:C1] Tunnel resistance broken!$"
@@ -124,3 +128,19 @@ Route11_Text_MemoryTunnelLeaderDefeat::
 Route11_Text_MemoryDiglettSwarmClear::
     .string "[MEMORY:C1] Swarm dispersed.\n"
     .string "Route pressure normalized.$"
+
+Route11_Text_MemoryTunnelLeaderAfterLore::
+    .string "[MEMORY:C1] Old rail braces still hold, but\n"
+    .string "Rocket keeps repurposing the shafts.$"
+
+Route11_Text_MemoryTunnelMarkerRelic::
+    .string "[RELIC:C1] Rusted marker: TUNNEL LOGISTICS\n"
+    .string "LINE 4. Freight priority stamp remains.$"
+
+Route11_Text_MemorySupplyCrateRelic_Before::
+    .string "[RELIC:C1] Crate stencil: SUBTERRANEAN\n"
+    .string "SUPPRESSION KIT. Most seals are torn open.$"
+
+Route11_Text_MemorySupplyCrateRelic_After::
+    .string "[RELIC:C1] Empty suppression crate. New tag\n"
+    .string "reads CIVIL REPAIR TOOLS.$"

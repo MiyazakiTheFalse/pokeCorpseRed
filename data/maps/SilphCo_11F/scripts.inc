@@ -110,6 +110,7 @@ SilphCo_11F_EventScript_Act4_Start::
 	setvar VAR_GIO_CHECKPOINT_ID, 0
 	call EventScript_GiovanniCampaign_PrintActiveDirective
 	msgbox SilphCo_11F_Text_MemoryChapterOutro, MSGBOX_AUTOCLOSE
+	msgbox SilphCo_11F_Text_MemoryChapterOutroLore, MSGBOX_AUTOCLOSE
 	special SaveGiovanniMemoryModeCheckpoint
 	end
 
@@ -130,6 +131,7 @@ SilphCo_11F_EventScript_MemorySpaceMarker::
 
 SilphCo_11F_EventScript_RedImpactBeat_C2::
 	msgbox SilphCo_11F_Text_RedImpactBeat_C2, MSGBOX_AUTOCLOSE
+	msgbox SilphCo_11F_Text_MemoryChapterIntroLore, MSGBOX_AUTOCLOSE
 	setflag FLAG_GIO_MEM_CH2_HUB_MONOLOGUE_SEEN
 	return
 
@@ -153,6 +155,29 @@ SilphCo_11F_EventScript_MemoryDestroyDataTerminal::
 
 SilphCo_11F_EventScript_MemoryExtractStaffTerminal::
 	goto EventScript_RocketOps_UseExtractionNodeTerminal
+
+
+SilphCo_11F_EventScript_MemoryRelic_ComplianceTerminal::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_GIO_CHAPTER, 2, EventScript_Nothing
+	goto_if_unset FLAG_ROCKETOPS_ORDER_OPEN_ROUTE, SilphCo_11F_EventScript_MemoryRelic_ComplianceTerminal_Before
+	msgbox SilphCo_11F_Text_MemoryRelic_ComplianceTerminal_After, MSGBOX_SIGN
+	end
+
+SilphCo_11F_EventScript_MemoryRelic_ComplianceTerminal_Before::
+	msgbox SilphCo_11F_Text_MemoryRelic_ComplianceTerminal_Before, MSGBOX_SIGN
+	end
+
+SilphCo_11F_EventScript_MemoryRelic_LabCrate::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_GIO_CHAPTER, 2, EventScript_Nothing
+	goto_if_lt VAR_ROCKETOPS_CH2_STAGE, 2, SilphCo_11F_EventScript_MemoryRelic_LabCrate_Before
+	msgbox SilphCo_11F_Text_MemoryRelic_LabCrate_After, MSGBOX_SIGN
+	end
+
+SilphCo_11F_EventScript_MemoryRelic_LabCrate_Before::
+	msgbox SilphCo_11F_Text_MemoryRelic_LabCrate_Before, MSGBOX_SIGN
+	end
 
 EventScript_RocketOps_Command_SecureRoute_C2::
 	call SilphCo_11F_EventScript_CommandMatrix_AllowSecureRoute
@@ -338,6 +363,7 @@ SilphCo_11F_EventScript_SetMemorySaffronOutcome::
 	msgbox SilphCo_11F_Text_MemoryChapter3EmergencyBriefing, MSGBOX_AUTOCLOSE
 	msgbox SilphCo_11F_Text_MemoryChapter3ObjectiveInit, MSGBOX_AUTOCLOSE
 	msgbox SilphCo_11F_Text_MemoryChapterOutro, MSGBOX_AUTOCLOSE
+	msgbox SilphCo_11F_Text_MemoryChapterOutroLore, MSGBOX_AUTOCLOSE
 	closemessage
 	specialvar VAR_RESULT, CompleteGiovanniMemoryModeChapter2
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return

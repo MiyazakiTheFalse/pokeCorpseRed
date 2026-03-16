@@ -103,8 +103,12 @@ SilphCo_11F_Text_RedImpactBeat_C2::
 
 SilphCo_11F_Text_MemoryChapterIntro::
     .string "[MEMORY:C2] Silph incursion active.\n"
-    .string "Pressure command nodes, hold the corridor,\n"
-    .string "and force the executive floor breach.$"
+    .string "Pressure command nodes and force the\n"
+    .string "executive floor breach.$"
+
+SilphCo_11F_Text_MemoryChapterIntroLore::
+    .string "[OPS NOTE:C2] These blackout shutters were\n"
+    .string "installed for wartime city-grid raids.$"
 
 
 @ NARRATIVE_REVIEW:WAR_SENSITIVE
@@ -123,6 +127,10 @@ SilphCo_11F_Text_MemoryChapterOutro::
     .string "[MEMORY:C2] Silph objective complete.\n"
     .string "Viridian confrontation is now the active\n"
     .string "chapter path.$"
+
+SilphCo_11F_Text_MemoryChapterOutroLore::
+    .string "[MEMORY:C2] Residual solvent burn remains\n"
+    .string "in labs where prototype soul rigs failed.$"
 SilphCo_11F_Text_RocketOps_MilestoneLogged_C2::
     .string "[ROCKETOPS:C2] Milestone logged. Silph\n"
     .string "chain archived for Viridian transfer.$"
@@ -261,3 +269,20 @@ SilphCo_11F_Text_RecurringScientist_Done::
     .string "[SCIENTIST DR. NOX:C2] Last ping ended mid-\n"
     .string "transmission. Status has shifted to\n"
     .string "MISSING.$"
+
+
+SilphCo_11F_Text_MemoryRelic_ComplianceTerminal_Before::
+    .string "[RELIC:C2] Compliance terminal archive:\n"
+    .string "CIVIL BLACKOUT ENFORCEMENT GRID, Section 11.$"
+
+SilphCo_11F_Text_MemoryRelic_ComplianceTerminal_After::
+    .string "[RELIC:C2] Terminal now routes to\n"
+    .string "EXECUTIVE ACCESS CONTROL and price locks.$"
+
+SilphCo_11F_Text_MemoryRelic_LabCrate_Before::
+    .string "[RELIC:C2] Lab crate label: VOLATILE\n"
+    .string "PSYCHIC ISOTOPE SHIELDING REQUIRED.$"
+
+SilphCo_11F_Text_MemoryRelic_LabCrate_After::
+    .string "[RELIC:C2] Crate warning: exposure logs\n"
+    .string "list tremor cases among archive staff.$"
