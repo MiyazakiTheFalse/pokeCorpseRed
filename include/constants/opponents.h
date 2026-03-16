@@ -749,12 +749,16 @@
 #define TRAINER_LEADER_BROCK_MISTY               743
 #define TRAINER_ROUTE12_KOGA                     743
 #define TRAINER_ROUTE12_SABRINA                  744
+#define TRAINER_ROCKETOPS_RANGER_TUNNEL_LEADER   745
+#define TRAINER_ROCKETOPS_AGENT_ADMIN            746
+#define TRAINER_ROCKETOPS_TECHNICIAN_ADMIN       747
+#define TRAINER_ROCKETOPS_ACE_TASKFORCE_CAPTAIN  748
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is 
 //       only space for 25 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define NUM_TRAINERS                             745
+#define NUM_TRAINERS                             749
 #define MAX_TRAINERS_COUNT                       768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

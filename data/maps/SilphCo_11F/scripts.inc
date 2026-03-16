@@ -388,6 +388,33 @@ SilphCo_11F_EventScript_Grunt2_Battle::
 	msgbox SilphCo_11F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
 
+
+SilphCo_11F_EventScript_C2BranchLockdownBattle::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_GIO_CHAPTER, 2, EventScript_Nothing
+	goto_if_set FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON, EventScript_Nothing
+	goto_if_set FLAG_ROCKETOPS_ORDER_OPEN_ROUTE, EventScript_Nothing
+	lockall
+	msgbox SilphCo_11F_Text_MemoryBranchLockdownIntro, MSGBOX_AUTOCLOSE
+	trainerbattle_no_intro TRAINER_ROCKETOPS_AGENT_ADMIN, SilphCo_11F_Text_MemoryBranchLockdownDefeat
+	setflag FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON
+	special SaveGiovanniMemoryModeCheckpoint
+	releaseall
+	end
+
+SilphCo_11F_EventScript_C2BranchPurgeBattle::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_GIO_CHAPTER, 2, EventScript_Nothing
+	goto_if_set FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON, EventScript_Nothing
+	goto_if_unset FLAG_ROCKETOPS_ORDER_OPEN_ROUTE, EventScript_Nothing
+	lockall
+	msgbox SilphCo_11F_Text_MemoryBranchPurgeIntro, MSGBOX_AUTOCLOSE
+	trainerbattle_no_intro TRAINER_ROCKETOPS_TECHNICIAN_ADMIN, SilphCo_11F_Text_MemoryBranchPurgeDefeat
+	setflag FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON
+	special SaveGiovanniMemoryModeCheckpoint
+	releaseall
+	end
+
 SilphCo_11F_EventScript_MemoryExitGuard::
 	setvar VAR_0x8004, 2
 	call EventScript_GiovanniSharedWarp_ResolvePrecedence

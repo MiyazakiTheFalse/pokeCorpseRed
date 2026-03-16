@@ -127,9 +127,25 @@ Difficulty check (mandatory only): both branches = 2 Pokémon in branch fight, s
 
 ## Chapter boss completion-gate wiring
 
+Boss roles implemented in scripts:
+- Chapter 1: **Tunnel Resistance Leader** (`TRAINER_ROCKETOPS_RANGER_TUNNEL_LEADER`)
+- Chapter 2: **Rocket Financial Administrator** (`TRAINER_ROCKETOPS_AGENT_ADMIN` / `TRAINER_ROCKETOPS_TECHNICIAN_ADMIN`, branch-dependent)
+- Chapter 3: **Security Taskforce Captain** (`TRAINER_ROCKETOPS_ACE_TASKFORCE_CAPTAIN`)
+
+
 | Chapter boss | Boss script | Completion gate logic | Required objective condition before completion is written |
 |---|---|---|---|
 | `ROCKETOPS_C1_A3_BOSS_GIOVANNI` | `RocketHideout_B4F_EventScript_Giovanni` | `RocketHideout_B4F_EventScript_SetMemoryCeladonOutcome` → `CompleteGiovanniMemoryModeChapter1` | `FLAG_ROCKET_SUPPLY_NETWORK_ESTABLISHED` must be set. |
 | `ROCKETOPS_C2_A3_BOSS_GIOVANNI` | `SilphCo_11F_EventScript_BattleGiovanni` | `SilphCo_11F_EventScript_SetMemorySaffronOutcome` → `CompleteGiovanniMemoryModeChapter2` | `FLAG_SILPH_INFILTRATION_PREPARED` must be set. |
 | `ROCKETOPS_C3_A3_BOSS_GIOVANNI` | `ViridianCity_Gym_EventScript_GiovanniMemoryTransitionCadence` + `ViridianCity_Gym_EventScript_GiovanniStartBattle` | `SetGiovanniMemoryModeChapter3Complete` then restore/reconcile path, then `trainerbattle_single TRAINER_LEADER_GIOVANNI` | Must pass objective bundle checks (`FLAG_ROCKET_DATA_DESTROYED`, `FLAG_ROCKET_EVACUATION_COMPLETE`, `FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE`, escort + final-defense flags, and `VAR_GIO_ACT >= 4`). |
 
+
+
+### Required vs optional designation
+
+- All chapter progression encounters listed in this matrix are **Required** and set their corresponding chapter gate flags on victory.
+- Optional encounters are outside this matrix and do not set chapter completion-gate flags.
+
+### Branch contract validation
+
+- Chapter 2 branch fights are both mandatory, each with exactly **2 Pokémon**, level cap **40**, and aggregate levels **79** (39+40) per branch, satisfying the contract bounds.
