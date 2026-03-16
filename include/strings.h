@@ -637,6 +637,7 @@ extern const u8 gText_MenuRetire[];
 extern const u8 gText_MenuSafariStats[];
 extern const u8 gText_GiovanniMemorySaveBlocked[];
 extern const u8 gText_GiovanniMemorySaveAvailable[];
+extern const u8 gText_GiovanniMemorySaveStateChanged[];
 extern const u8 gStartMenuDesc_Pokedex[];
 extern const u8 gStartMenuDesc_Pokemon[];
 extern const u8 gStartMenuDesc_Bag[];
