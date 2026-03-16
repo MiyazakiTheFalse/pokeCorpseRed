@@ -126,6 +126,7 @@ ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked::
 EventScript_RocketOps_Command_SecureRoute_C3::
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
+	call ViridianCity_Gym_EventScript_RunGuardDoorSealMovement
 	special DrawWholeMapView
 	msgbox ViridianCity_Gym_Text_RocketOps_SecureRoute_C3
 	goto EventScript_RocketOps_CommandFinalize
@@ -161,6 +162,7 @@ EventScript_RocketOps_Command_DestroyData_C3_SkipArchiveFx::
 EventScript_RocketOps_Command_ExtractStaff_C3::
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
+	call ViridianCity_Gym_EventScript_RunEscortConvoyMovement
 	goto_if_set FLAG_GIO_MEM_CH3_EVAC_COLLAPSE_VISUAL, EventScript_RocketOps_Command_ExtractStaff_C3_SkipEvacFx
 	playse SE_BOO
 	setvar VAR_0x8004, 0
@@ -236,6 +238,7 @@ ViridianCity_Gym_EventScript_GiovanniStartBattle::
 ViridianCity_Gym_EventScript_MemorySpaceMarker::
 	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_set FLAG_GIO_MEM_CH3_COMPLETE, ViridianCity_Gym_EventScript_MemorySpaceMarkerComplete
+	setvar VAR_ROCKETOPS_CH3_STAGE, 0
 	setflag FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE
 	setvar VAR_GIO_ACT, 1
 	setvar VAR_GIO_CHECKPOINT_ID, 0
@@ -355,14 +358,52 @@ ViridianCity_Gym_Movement_PlayerBattleCue::
 	walk_in_place_faster_up
 	step_end
 
+ViridianCity_Gym_Movement_PlayerHoldForDoorSeal::
+	delay_16
+	delay_8
+	step_end
+
+ViridianCity_Gym_Movement_PlayerHoldForEscortConvoy::
+	delay_16
+	delay_16
+	step_end
+
+ViridianCity_Gym_EventScript_RunGuardDoorSealMovement::
+	applymovement LOCALID_PLAYER, ViridianCity_Gym_Movement_PlayerHoldForDoorSeal
+	waitmovement 0
+	return
+
+ViridianCity_Gym_EventScript_RunEscortConvoyMovement::
+	applymovement LOCALID_PLAYER, ViridianCity_Gym_Movement_PlayerHoldForEscortConvoy
+	waitmovement 0
+	return
+
 ViridianCity_Gym_EventScript_MemoryExitGuard::
 	setvar VAR_0x8004, 3
 	call EventScript_GiovanniSharedWarp_ResolvePrecedence
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
+	goto_if_lt VAR_ROCKETOPS_CH3_STAGE, 2, ViridianCity_Gym_EventScript_MemoryExitGuard_ReturnEntry
+	goto_if_lt VAR_ROCKETOPS_CH3_STAGE, 3, ViridianCity_Gym_EventScript_MemoryExitGuard_ReturnFork
 	lockall
 	msgbox ViridianCity_Gym_Text_MemoryExitBlocked
 	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	releaseall
+	end
+
+ViridianCity_Gym_EventScript_MemoryExitGuard_ReturnEntry::
+	lockall
+	msgbox ViridianCity_Gym_Text_MemoryExitBlocked
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 20
+	waitstate
+	releaseall
+	end
+
+ViridianCity_Gym_EventScript_MemoryExitGuard_ReturnFork::
+	lockall
+	msgbox ViridianCity_Gym_Text_MemoryExitBlocked
+	warp MAP_VIRIDIAN_CITY_GYM, 9, 15
 	waitstate
 	releaseall
 	end

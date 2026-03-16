@@ -48,6 +48,7 @@ SilphCo_11F_EventScript_ChapterHubWatchdog::
 SilphCo_11F_EventScript_MemorySpaceMarker::
 	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_MemoryChapterMismatchMarker
 	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_MemorySpaceMarkerComplete
+	setvar VAR_ROCKETOPS_CH2_STAGE, 0
 	call EventScript_GiovanniCampaign_PrintActiveDirective
 	end
 
@@ -82,6 +83,7 @@ EventScript_RocketOps_Command_SecureRoute_C2::
 	setflag FLAG_GIO_MEM_CH2_ROUTE_UNSEALED_VISUAL
 	setflag FLAG_SILPH_11F_DOOR
 	call EventScript_Open11FDoor
+	call SilphCo_11F_EventScript_RunDoorSealingPatrol
 	special DrawWholeMapView
 	msgbox SilphCo_11F_Text_RocketOps_SecureRoute_C2
 	goto EventScript_RocketOps_CommandFinalize
@@ -98,6 +100,7 @@ EventScript_RocketOps_Command_DeployAgent_C2::
 	special ShakeScreen
 	setflag FLAG_GIO_MEM_CH2_ALARM_ESCALATED_VISUAL
 EventScript_RocketOps_Command_DeployAgent_C2_SkipAlarmFx::
+	call SilphCo_11F_EventScript_RunScientistConvoyMovement
 	removeobject LOCALID_SILPH_CO_11F_GRUNT1
 	removeobject LOCALID_SILPH_CO_11F_GRUNT2
 	special DrawWholeMapView
@@ -319,12 +322,50 @@ SilphCo_11F_EventScript_MemoryExitGuard::
 	call EventScript_GiovanniSharedWarp_ResolvePrecedence
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_NORMAL_ROUTE, EventScript_Nothing
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
+	goto_if_lt VAR_ROCKETOPS_CH2_STAGE, 2, SilphCo_11F_EventScript_MemoryExitGuard_ReturnEntry
+	goto_if_lt VAR_ROCKETOPS_CH2_STAGE, 3, SilphCo_11F_EventScript_MemoryExitGuard_ReturnFork
 	lockall
 	msgbox SilphCo_11F_Text_MemoryExitBlocked
 	warp MAP_SILPH_CO_11F, 6, 14
 	waitstate
 	releaseall
 	end
+
+SilphCo_11F_EventScript_MemoryExitGuard_ReturnEntry::
+	lockall
+	msgbox SilphCo_11F_Text_MemoryExitBlocked
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	releaseall
+	end
+
+SilphCo_11F_EventScript_MemoryExitGuard_ReturnFork::
+	lockall
+	msgbox SilphCo_11F_Text_MemoryExitBlocked
+	warp MAP_SILPH_CO_11F, 9, 13
+	waitstate
+	releaseall
+	end
+
+SilphCo_11F_EventScript_RunScientistConvoyMovement::
+	applymovement LOCALID_PLAYER, SilphCo_11F_Movement_PlayerStepAsideForConvoy
+	waitmovement 0
+	return
+
+SilphCo_11F_EventScript_RunDoorSealingPatrol::
+	applymovement LOCALID_PLAYER, SilphCo_11F_Movement_PlayerHoldWhileDoorSealed
+	waitmovement 0
+	return
+
+SilphCo_11F_Movement_PlayerStepAsideForConvoy::
+	delay_8
+	delay_8
+	step_end
+
+SilphCo_11F_Movement_PlayerHoldWhileDoorSealed::
+	delay_16
+	delay_8
+	step_end
 
 SilphCo_11F_EventScript_MemoryExitGuard_Mismatch::
 	lockall
