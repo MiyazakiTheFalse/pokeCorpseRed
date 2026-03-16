@@ -129,6 +129,7 @@ ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked::
 	end
 
 EventScript_RocketOps_Command_SecureRoute_C3::
+	call ViridianCity_Gym_EventScript_CommandMatrix_DenySecureRoute
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
 	call ViridianCity_Gym_EventScript_RunGuardDoorSealMovement
@@ -137,6 +138,7 @@ EventScript_RocketOps_Command_SecureRoute_C3::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DeployAgent_C3::
+	call ViridianCity_Gym_EventScript_CommandMatrix_AllowDeployAgent
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
 	special DrawWholeMapView
@@ -144,6 +146,7 @@ EventScript_RocketOps_Command_DeployAgent_C3::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DestroyData_C3::
+	call ViridianCity_Gym_EventScript_CommandMatrix_AllowDestroyData
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
 	goto_if_set FLAG_GIO_MEM_CH3_ARCHIVE_EXPLOSION_VISUAL, EventScript_RocketOps_Command_DestroyData_C3_SkipArchiveFx
@@ -169,6 +172,7 @@ EventScript_RocketOps_Command_DestroyData_C3_SkipArchiveFx::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_ExtractStaff_C3::
+	call ViridianCity_Gym_EventScript_CommandMatrix_AllowExtractStaff
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
 	call ViridianCity_Gym_EventScript_RunEscortConvoyMovement
@@ -194,6 +198,36 @@ EventScript_RocketOps_Command_ExtractStaff_C3_SkipEvacFx::
 	msgbox ViridianCity_Gym_Text_RocketOps_ExtractStaff_C3
 	setflag FLAG_ROCKET_DISBANDED
 	goto EventScript_RocketOps_CommandFinalize
+
+	@ Deterministic command matrix (Chapter 3 acts):
+	@ - Act 1: allow Deploy Agent; forbid Secure Route / Destroy Data / Extract Staff.
+	@ - Act 2: allow Destroy Data; forbid Secure Route / Deploy Agent / Extract Staff.
+	@ - Act 3: allow Extract Staff; forbid Secure Route / Deploy Agent / Destroy Data.
+	@ - Act 4: forbid all commands.
+ViridianCity_Gym_EventScript_CommandMatrix_DenySecureRoute::
+	goto ViridianCity_Gym_EventScript_CommandMatrix_DenySecureRouteMessage
+
+ViridianCity_Gym_EventScript_CommandMatrix_AllowDeployAgent::
+	goto_if_set FLAG_GIO_CH3_ACT1, EventScript_Return
+	goto ViridianCity_Gym_EventScript_CommandMatrix_DenyForAct
+
+ViridianCity_Gym_EventScript_CommandMatrix_AllowDestroyData::
+	goto_if_set FLAG_GIO_CH3_ACT2, EventScript_Return
+	goto ViridianCity_Gym_EventScript_CommandMatrix_DenyForAct
+
+ViridianCity_Gym_EventScript_CommandMatrix_AllowExtractStaff::
+	goto_if_set FLAG_GIO_CH3_ACT3, EventScript_Return
+	goto ViridianCity_Gym_EventScript_CommandMatrix_DenyForAct
+
+ViridianCity_Gym_EventScript_CommandMatrix_DenySecureRouteMessage::
+	playse SE_BOO
+	msgbox Text_RocketOpsFailSecureRoute
+	goto EventScript_RocketOps_Close
+
+ViridianCity_Gym_EventScript_CommandMatrix_DenyForAct::
+	playse SE_BOO
+	msgbox ViridianCity_Gym_Text_RocketReport_ObjectivesIncomplete, MSGBOX_AUTOCLOSE
+	goto EventScript_RocketOps_Close
 
 ViridianCity_Gym_EventScript_Giovanni::
 	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemorySpaceMarker
@@ -680,6 +714,11 @@ ViridianCity_Gym_EventScript_GymStatuePostVictory::
 	releaseall
 	end
 
+	@ Act endpoint command matrix (C3):
+	@   Act1 -> allow Deploy Agent; forbid Secure Route, Destroy Data, Extract Staff.
+	@   Act2 -> allow Destroy Data; forbid Secure Route, Deploy Agent, Extract Staff.
+	@   Act3 -> allow Extract Staff; forbid Secure Route, Deploy Agent, Destroy Data.
+	@   Act4 -> forbid all commands.
 ViridianCity_Gym_EventScript_ActEndpoint_HubPrimary::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
 	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub

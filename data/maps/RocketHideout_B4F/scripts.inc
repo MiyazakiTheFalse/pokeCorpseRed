@@ -153,6 +153,7 @@ RocketHideout_B4F_EventScript_MemoryExtractStaffTerminal::
 	goto EventScript_RocketOps_UseExtractionNodeTerminal
 
 EventScript_RocketOps_Command_SecureRoute_C1::
+	call RocketHideout_B4F_EventScript_CommandMatrix_AllowSecureRoute
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
 	setflag FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL
@@ -162,6 +163,7 @@ EventScript_RocketOps_Command_SecureRoute_C1::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DeployAgent_C1::
+	call RocketHideout_B4F_EventScript_CommandMatrix_AllowDeployAgent
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
 	special DrawWholeMapView
@@ -169,19 +171,43 @@ EventScript_RocketOps_Command_DeployAgent_C1::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DestroyData_C1::
-	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
-	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
-	special DrawWholeMapView
-	msgbox RocketHideout_B4F_Text_RocketOps_DestroyData_C1
-	goto EventScript_RocketOps_CommandFinalize
+	goto RocketHideout_B4F_EventScript_CommandMatrix_DenyDestroyData
 
 EventScript_RocketOps_Command_ExtractStaff_C1::
+	call RocketHideout_B4F_EventScript_CommandMatrix_AllowExtractStaff
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
 	special HealPlayerParty
 	special DrawWholeMapView
 	msgbox RocketHideout_B4F_Text_RocketOps_ExtractStaff_C1
 	goto EventScript_RocketOps_CommandFinalize
+
+	@ Deterministic command matrix (Chapter 1 acts):
+	@ - Act 1: allow Secure Route; forbid Deploy Agent / Destroy Data / Extract Staff.
+	@ - Act 2: allow Deploy Agent; forbid Secure Route / Destroy Data / Extract Staff.
+	@ - Act 3: allow Extract Staff; forbid Secure Route / Deploy Agent / Destroy Data.
+	@ - Act 4: forbid all commands.
+RocketHideout_B4F_EventScript_CommandMatrix_AllowSecureRoute::
+	goto_if_set FLAG_GIO_CH1_ACT1, EventScript_Return
+	goto RocketHideout_B4F_EventScript_CommandMatrix_DenyForAct
+
+RocketHideout_B4F_EventScript_CommandMatrix_AllowDeployAgent::
+	goto_if_set FLAG_GIO_CH1_ACT2, EventScript_Return
+	goto RocketHideout_B4F_EventScript_CommandMatrix_DenyForAct
+
+RocketHideout_B4F_EventScript_CommandMatrix_AllowExtractStaff::
+	goto_if_set FLAG_GIO_CH1_ACT3, EventScript_Return
+	goto RocketHideout_B4F_EventScript_CommandMatrix_DenyForAct
+
+RocketHideout_B4F_EventScript_CommandMatrix_DenyDestroyData::
+	playse SE_BOO
+	msgbox Text_RocketOpsFailDestroyData
+	goto EventScript_RocketOps_Close
+
+RocketHideout_B4F_EventScript_CommandMatrix_DenyForAct::
+	playse SE_BOO
+	msgbox RocketHideout_B4F_Text_RocketReport_ObjectivesIncomplete, MSGBOX_AUTOCLOSE
+	goto EventScript_RocketOps_Close
 
 RocketHideout_B4F_OnLoad::
 	setvar NUM_DOOR_GRUNTS_DEFEATED, 0
@@ -390,6 +416,11 @@ RocketHideout_B4F_EventScript_MemoryExitGuard_Mismatch::
 	releaseall
 	end
 
+	@ Act endpoint command matrix (C1):
+	@   Act1 -> allow Secure Route; forbid Deploy Agent, Destroy Data, Extract Staff.
+	@   Act2 -> allow Deploy Agent; forbid Secure Route, Destroy Data, Extract Staff.
+	@   Act3 -> allow Extract Staff; forbid Secure Route, Deploy Agent, Destroy Data.
+	@   Act4 -> forbid all commands.
 RocketHideout_B4F_EventScript_ActEndpoint_Primary::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
 	goto_if_ne VAR_CHAPTER_ID, 1, RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub

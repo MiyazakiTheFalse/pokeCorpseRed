@@ -149,6 +149,7 @@ SilphCo_11F_EventScript_MemoryExtractStaffTerminal::
 	goto EventScript_RocketOps_UseExtractionNodeTerminal
 
 EventScript_RocketOps_Command_SecureRoute_C2::
+	call SilphCo_11F_EventScript_CommandMatrix_AllowSecureRoute
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
 	setflag FLAG_GIO_MEM_CH2_ROUTE_UNSEALED_VISUAL
@@ -160,6 +161,7 @@ EventScript_RocketOps_Command_SecureRoute_C2::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DeployAgent_C2::
+	call SilphCo_11F_EventScript_CommandMatrix_AllowDeployAgent
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
 	goto_if_set FLAG_GIO_MEM_CH2_ALARM_ESCALATED_VISUAL, EventScript_RocketOps_Command_DeployAgent_C2_SkipAlarmFx
@@ -179,6 +181,7 @@ EventScript_RocketOps_Command_DeployAgent_C2_SkipAlarmFx::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_DestroyData_C2::
+	call SilphCo_11F_EventScript_CommandMatrix_AllowDestroyData
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_OPEN_ROUTE
 	goto_if_set FLAG_GIO_MEM_CH2_SERVER_DESTROYED_VISUAL, EventScript_RocketOps_Command_DestroyData_C2_SkipServerFx
@@ -195,11 +198,42 @@ EventScript_RocketOps_Command_DestroyData_C2_SkipServerFx::
 	goto EventScript_RocketOps_CommandFinalize
 
 EventScript_RocketOps_Command_ExtractStaff_C2::
+	call SilphCo_11F_EventScript_CommandMatrix_AllowExtractStaff
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
 	special DrawWholeMapView
 	msgbox SilphCo_11F_Text_RocketOps_ExtractStaff_C2
 	goto EventScript_RocketOps_CommandFinalize
+
+	@ Deterministic command matrix (Chapter 2 acts):
+	@ - Act 1: allow Secure Route; forbid Deploy Agent / Destroy Data / Extract Staff.
+	@ - Act 2: allow Destroy Data; forbid Secure Route / Deploy Agent / Extract Staff.
+	@ - Act 3: allow Extract Staff; forbid Secure Route / Deploy Agent / Destroy Data.
+	@ - Act 4: forbid all commands.
+SilphCo_11F_EventScript_CommandMatrix_AllowSecureRoute::
+	goto_if_set FLAG_GIO_CH2_ACT1, EventScript_Return
+	goto SilphCo_11F_EventScript_CommandMatrix_DenyForAct
+
+SilphCo_11F_EventScript_CommandMatrix_AllowDeployAgent::
+	goto SilphCo_11F_EventScript_CommandMatrix_DenyDeployAgent
+
+SilphCo_11F_EventScript_CommandMatrix_AllowDestroyData::
+	goto_if_set FLAG_GIO_CH2_ACT2, EventScript_Return
+	goto SilphCo_11F_EventScript_CommandMatrix_DenyForAct
+
+SilphCo_11F_EventScript_CommandMatrix_AllowExtractStaff::
+	goto_if_set FLAG_GIO_CH2_ACT3, EventScript_Return
+	goto SilphCo_11F_EventScript_CommandMatrix_DenyForAct
+
+SilphCo_11F_EventScript_CommandMatrix_DenyDeployAgent::
+	playse SE_BOO
+	msgbox Text_RocketOpsFailDeployAgent
+	goto EventScript_RocketOps_Close
+
+SilphCo_11F_EventScript_CommandMatrix_DenyForAct::
+	playse SE_BOO
+	msgbox SilphCo_11F_Text_RocketReport_ObjectivesIncomplete, MSGBOX_AUTOCLOSE
+	goto EventScript_RocketOps_Close
 
 SilphCo_11F_OnLoad::
 	goto_if_set FLAG_GIO_MEM_CH2_ROUTE_UNSEALED_VISUAL, SilphCo_11F_OnLoad_OpenDoor
@@ -473,6 +507,11 @@ SilphCo_11F_EventScript_MemoryExitGuard_Mismatch::
 	releaseall
 	end
 
+	@ Act endpoint command matrix (C2):
+	@   Act1 -> allow Secure Route; forbid Deploy Agent, Destroy Data, Extract Staff.
+	@   Act2 -> allow Destroy Data; forbid Secure Route, Deploy Agent, Extract Staff.
+	@   Act3 -> allow Extract Staff; forbid Secure Route, Deploy Agent, Destroy Data.
+	@   Act4 -> forbid all commands.
 SilphCo_11F_EventScript_ActEndpoint_Primary::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
 	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
