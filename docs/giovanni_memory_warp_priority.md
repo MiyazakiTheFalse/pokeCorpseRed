@@ -24,8 +24,28 @@ This script-first order must be implemented on coordinate triggers placed on the
 - `DiglettsCave_NorthEntrance`: `(4,6)`
 - `DiglettsCave_SouthEntrance`: `(4,6)`
 
-## Chapter fallbacks
+## Canonical chapter hubs (validated)
 
-- Chapter 1 hub: `MAP_ROCKET_HIDEOUT_B4F, 19, 6`
-- Chapter 2 hub: `MAP_SILPH_CO_11F, 6, 14`
-- Chapter 3 hub: `MAP_VIRIDIAN_CITY_GYM, 17, 21`
+Validated against:
+- `include/constants/map_groups.h` canonical map constants.
+- `data/maps/<MapName>/` asset directories.
+
+| Chapter | Canonical map constant | Coordinates | Constant exists | Map directory exists |
+| --- | --- | --- | --- | --- |
+| 1 | `MAP_ROCKET_HIDEOUT_B4F` | `(19, 6)` | Yes | `data/maps/RocketHideout_B4F/` |
+| 2 | `MAP_SILPH_CO_11F` | `(6, 14)` | Yes | `data/maps/SilphCo_11F/` |
+| 3 | `MAP_VIRIDIAN_CITY_GYM` | `(17, 21)` | Yes | `data/maps/ViridianCity_Gym/` |
+
+### Substitutions
+
+- No map-name substitutions were required; all proposed hub maps exist.
+- One coordinate normalization was applied for Chapter 3 hub wiring: older script branches used `(17, 20)`, but authoritative canonical hub is `(17, 21)`.
+
+## Deterministic script entrypoints
+
+Use these shared labels as authoritative hub entrypoints:
+
+- `EventScript_GiovanniHub_WarpByChapter`
+- `EventScript_GiovanniHub_WarpChapter1`
+- `EventScript_GiovanniHub_WarpChapter2`
+- `EventScript_GiovanniHub_WarpChapter3`

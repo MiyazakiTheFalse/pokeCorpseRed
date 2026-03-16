@@ -129,22 +129,13 @@ EventScript_GiovanniCampaign_ReturnToHub::
 	goto EventScript_RocketOps_Close
 
 EventScript_GiovanniCampaign_ReturnToHub_Ch1::
-	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
-	waitstate
-	releaseall
-	end
+	goto EventScript_GiovanniHub_WarpChapter1
 
 EventScript_GiovanniCampaign_ReturnToHub_Ch2::
-	warp MAP_SILPH_CO_11F, 6, 14
-	waitstate
-	releaseall
-	end
+	goto EventScript_GiovanniHub_WarpChapter2
 
 EventScript_GiovanniCampaign_ReturnToHub_Ch3::
-	warp MAP_VIRIDIAN_CITY_GYM, 17, 20
-	waitstate
-	releaseall
-	end
+	goto EventScript_GiovanniHub_WarpChapter3
 
 EventScript_GiovanniCampaign_WatchdogHint::
 	goto_if_eq VAR_ROCKETOPS_CHAPTER, 1, EventScript_GiovanniCampaign_WatchdogHint_C1
