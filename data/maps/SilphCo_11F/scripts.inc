@@ -399,8 +399,7 @@ SilphCo_11F_EventScript_Grunt1::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_40, SilphCo_11F_Text_Grunt1Intro, SilphCo_11F_Text_Grunt1Defeat
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_11F_EventScript_Grunt1PostBattleNormal
 	goto_if_ne VAR_GIO_CHAPTER, 2, SilphCo_11F_EventScript_Grunt1PostBattleNormal
-	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_Grunt1PostBattleReportDone
-	msgbox SilphCo_11F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	call SilphCo_11F_EventScript_RecurringOpsOfficerDialogue
 	end
 
 SilphCo_11F_EventScript_Grunt1PostBattleNormal::
@@ -414,13 +413,52 @@ SilphCo_11F_EventScript_Grunt1PostBattleReportDone::
 SilphCo_11F_EventScript_Grunt2::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_11F_EventScript_Grunt2_Battle
 	goto_if_ne VAR_GIO_CHAPTER, 2, SilphCo_11F_EventScript_Grunt2_Battle
-	msgbox SilphCo_11F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	call SilphCo_11F_EventScript_RecurringScientistDialogue
 	end
 
 SilphCo_11F_EventScript_Grunt2_Battle::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_41, SilphCo_11F_Text_Grunt2Intro, SilphCo_11F_Text_Grunt2Defeat
 	msgbox SilphCo_11F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
+
+
+SilphCo_11F_EventScript_RecurringOpsOfficerDialogue::
+	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_RecurringOpsOfficerDialogue_Done
+	goto_if_set FLAG_GIO_CH2_ACT3, SilphCo_11F_EventScript_RecurringOpsOfficerDialogue_Act3
+	goto_if_set FLAG_GIO_CH2_ACT2, SilphCo_11F_EventScript_RecurringOpsOfficerDialogue_Act2
+	msgbox SilphCo_11F_Text_RecurringOpsOfficer_Act1, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_11F_EventScript_RecurringOpsOfficerDialogue_Act2::
+	msgbox SilphCo_11F_Text_RecurringOpsOfficer_Act2, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_11F_EventScript_RecurringOpsOfficerDialogue_Act3::
+	msgbox SilphCo_11F_Text_RecurringOpsOfficer_Act3, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_11F_EventScript_RecurringOpsOfficerDialogue_Done::
+	msgbox SilphCo_11F_Text_RecurringOpsOfficer_Done, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_11F_EventScript_RecurringScientistDialogue::
+	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_RecurringScientistDialogue_Done
+	goto_if_set FLAG_GIO_CH2_ACT3, SilphCo_11F_EventScript_RecurringScientistDialogue_Act3
+	goto_if_set FLAG_GIO_CH2_ACT2, SilphCo_11F_EventScript_RecurringScientistDialogue_Act2
+	msgbox SilphCo_11F_Text_RecurringScientist_Act1, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_11F_EventScript_RecurringScientistDialogue_Act2::
+	msgbox SilphCo_11F_Text_RecurringScientist_Act2, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_11F_EventScript_RecurringScientistDialogue_Act3::
+	msgbox SilphCo_11F_Text_RecurringScientist_Act3, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_11F_EventScript_RecurringScientistDialogue_Done::
+	msgbox SilphCo_11F_Text_RecurringScientist_Done, MSGBOX_AUTOCLOSE
+	return
 
 
 SilphCo_11F_EventScript_C2BranchLockdownBattle::

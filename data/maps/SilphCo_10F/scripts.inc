@@ -54,6 +54,13 @@ SilphCo_10F_EventScript_ActEndpointFallback::
 SilphCo_10F_EventScript_WorkerF::
 	lock
 	faceplayer
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, SilphCo_10F_EventScript_WorkerF_NormalFlow
+	goto_if_ne VAR_GIO_CHAPTER, 2, SilphCo_10F_EventScript_WorkerF_NormalFlow
+	call SilphCo_10F_EventScript_RecurringScientistFieldDialogue
+	release
+	end
+
+SilphCo_10F_EventScript_WorkerF_NormalFlow::
 	goto_if_ge VAR_MAP_SCENE_SILPH_CO_11F, 1, SilphCo_10F_EventScript_WorkerFRocketsGone
 	msgbox SilphCo_10F_Text_WaaaImScared
 	release
@@ -63,6 +70,25 @@ SilphCo_10F_EventScript_WorkerFRocketsGone::
 	msgbox SilphCo_10F_Text_KeepMeCryingASecret
 	release
 	end
+
+SilphCo_10F_EventScript_RecurringScientistFieldDialogue::
+	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_10F_EventScript_RecurringScientistFieldDialogue_Done
+	goto_if_set FLAG_GIO_CH2_ACT3, SilphCo_10F_EventScript_RecurringScientistFieldDialogue_Act3
+	goto_if_set FLAG_GIO_CH2_ACT2, SilphCo_10F_EventScript_RecurringScientistFieldDialogue_Act2
+	msgbox SilphCo_10F_Text_RecurringScientistField_Act1, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_10F_EventScript_RecurringScientistFieldDialogue_Act2::
+	msgbox SilphCo_10F_Text_RecurringScientistField_Act2, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_10F_EventScript_RecurringScientistFieldDialogue_Act3::
+	msgbox SilphCo_10F_Text_RecurringScientistField_Act3, MSGBOX_AUTOCLOSE
+	return
+
+SilphCo_10F_EventScript_RecurringScientistFieldDialogue_Done::
+	msgbox SilphCo_10F_Text_RecurringScientistField_Done, MSGBOX_AUTOCLOSE
+	return
 
 SilphCo_10F_EventScript_FloorSign::
 	msgbox SilphCo_10F_Text_FloorSign, MSGBOX_SIGN

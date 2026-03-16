@@ -159,3 +159,18 @@ CeladonCity_GameCorner_Text_MemoryExitBlocked::
 CeladonCity_GameCorner_Text_MemoryChapterMismatch::
     .string "That route belongs to a different\n"
     .string "chapter of the operation.$"
+
+CeladonCity_GameCorner_Text_RecurringCaptain_Act1::
+    .string "[FIELD CAPTAIN DRAKE:C1-A1] Keep the crowd\n"
+    .string "flowing. Panic is louder than gunfire in\n"
+    .string "a place like this.$"
+
+CeladonCity_GameCorner_Text_RecurringCaptain_Act2::
+    .string "[FIELD CAPTAIN DRAKE:C1-A2] We hold one lane\n"
+    .string "for medics, one for civilians, and no one\n"
+    .string "breaks formation.$"
+
+CeladonCity_GameCorner_Text_RecurringCaptain_Act3::
+    .string "[FIELD CAPTAIN DRAKE:C1-A3] Celadon closes and\n"
+    .string "I redeploy to Viridian. I still stand with\n"
+    .string "the Boss, for better or worse.$"
