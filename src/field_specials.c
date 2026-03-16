@@ -4037,6 +4037,10 @@ static void ResetRocketOpsState(void)
     VarSet(VAR_ROCKETOPS_COMMAND_STATE, 0);
     VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, 0);
     VarSet(VAR_ROCKETOPS_MILESTONE_STATE, 0);
+    VarSet(VAR_ROCKETOPS_LAST_COMMAND, 0);
+    VarSet(VAR_ROCKETOPS_LAST_TRIGGER, 0);
+    VarSet(VAR_ROCKETOPS_LAST_RESULT, 0);
+    VarSet(VAR_ROCKETOPS_DIRECTIVE_VERSION, 0);
     VarSet(VAR_GIO_CHECKPOINT_MAP_GROUP, 0);
     VarSet(VAR_GIO_CHECKPOINT_MAP_NUM, 0);
     VarSet(VAR_GIO_CHECKPOINT_X, 0);
@@ -4750,6 +4754,7 @@ u16 Special_RocketOps_OpenTerminal(void)
     VarSet(VAR_ROCKETOPS_CHAPTER, chapterId);
     VarSet(VAR_ROCKETOPS_COMMAND_STATE, 0);
     VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, VarGet(chapterStageVar));
+    VarSet(VAR_ROCKETOPS_LAST_RESULT, 0);
     FlagSet(FLAG_ROCKETOPS_TERMINAL_UNLOCKED);
     FlagClear(FLAG_ROCKETOPS_COMMAND_COOLDOWN);
     return TRUE;
@@ -4814,6 +4819,8 @@ u16 Special_RocketOps_ValidateCommandContext(void)
         return FALSE;
 
     VarSet(VAR_ROCKETOPS_COMMAND_STATE, commandId + 1);
+    VarSet(VAR_ROCKETOPS_LAST_COMMAND, commandId + 1);
+    VarSet(VAR_ROCKETOPS_LAST_TRIGGER, triggerType);
     FlagSet(FLAG_ROCKETOPS_COMMAND_STATE_DIRTY);
     return TRUE;
 }
@@ -4917,6 +4924,19 @@ u16 Special_RocketOps_WritebackState(void)
     {
         RefreshGiovanniActiveDirective();
     }
+
+    if (chapterId == 1 && VarGet(chapterStageVar) >= 3)
+        FlagSet(FLAG_GIO_MEM_CH1_CONVOY_COMPLETE);
+    if (chapterId == 2 && VarGet(chapterStageVar) >= 3)
+        FlagSet(FLAG_GIO_MEM_CH2_HIDEOUT_CLEARED);
+    if (chapterId == 3 && VarGet(chapterStageVar) >= 3)
+    {
+        FlagSet(FLAG_GIO_MEM_CH3_EVAC_COMPLETE);
+        FlagSet(FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON);
+    }
+
+    VarSet(VAR_ROCKETOPS_LAST_RESULT, VarGet(chapterStageVar));
+    VarSet(VAR_ROCKETOPS_DIRECTIVE_VERSION, VarGet(VAR_ROCKETOPS_DIRECTIVE_VERSION) + 1);
 
     FlagClear(FLAG_ROCKETOPS_COMMAND_STATE_DIRTY);
     UpdateGiovanniCheckpointFromRocketOpsStage(chapterId, VarGet(chapterStageVar));

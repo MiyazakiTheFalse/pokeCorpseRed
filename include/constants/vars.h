@@ -217,10 +217,10 @@
 #define VAR_GIO_SEGMENT            0x40A3
 #define VAR_GIO_ACTIVE_DIRECTIVE_ID 0x40A4
 #define VAR_GIO_AUTHORITY_PACING   0x40A5
-#define VAR_0x40A6                 0x40A6
-#define VAR_0x40A7                 0x40A7
-#define VAR_0x40A8                 0x40A8
-#define VAR_0x40A9                 0x40A9
+#define VAR_ROCKETOPS_LAST_COMMAND 0x40A6
+#define VAR_ROCKETOPS_LAST_TRIGGER 0x40A7
+#define VAR_ROCKETOPS_LAST_RESULT  0x40A8
+#define VAR_ROCKETOPS_DIRECTIVE_VERSION 0x40A9
 
 #define VAR_QLBAK_TRAINER_REMATCHES 0x40AA // array of 4
 #define VAR_QLBAK_MAP_LAYOUT        0x40AE
