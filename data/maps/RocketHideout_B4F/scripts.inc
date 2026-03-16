@@ -324,3 +324,24 @@ RocketHideout_B4F_EventScript_MemoryExitGuard_Mismatch::
 	waitstate
 	releaseall
 	end
+
+RocketHideout_B4F_EventScript_ActEndpoint_Primary::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_CHAPTER_ID, 1, RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub
+	goto_if_ge VAR_ROCKETOPS_CH1_STAGE, 3, RocketHideout_B4F_EventScript_ActEndpoint_ReturnHub
+	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
+	end
+
+RocketHideout_B4F_EventScript_ActEndpoint_Fallback::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_CHAPTER_ID, 1, RocketHideout_B4F_EventScript_MemoryDesyncReturnToHub
+	goto_if_ge VAR_ROCKETOPS_CH1_STAGE, 3, RocketHideout_B4F_EventScript_ActEndpoint_ReturnHub
+	end
+
+RocketHideout_B4F_EventScript_ActEndpoint_ReturnHub::
+	lockall
+	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
+	releaseall
+	end

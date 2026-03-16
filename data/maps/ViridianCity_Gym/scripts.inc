@@ -633,3 +633,40 @@ ViridianCity_Gym_EventScript_GymStatuePostVictory::
 	msgbox ViridianCity_Gym_Text_GymStatuePlayerWon
 	releaseall
 	end
+
+ViridianCity_Gym_EventScript_ActEndpoint_HubPrimary::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
+	goto_if_ge VAR_ROCKETOPS_CH3_STAGE, 3, ViridianCity_Gym_EventScript_ActEndpoint_ReturnHub
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	end
+
+ViridianCity_Gym_EventScript_ActEndpoint_HubFallback::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
+	goto_if_ge VAR_ROCKETOPS_CH3_STAGE, 3, ViridianCity_Gym_EventScript_ActEndpoint_ReturnHub
+	end
+
+ViridianCity_Gym_EventScript_ActEndpoint_Checkpoint1::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
+	goto_if_ge VAR_GIO_CHECKPOINT_ID, 1, ViridianCity_Gym_EventScript_ActEndpoint_ReturnHub
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	end
+
+ViridianCity_Gym_EventScript_ActEndpoint_Checkpoint2::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_CHAPTER_ID, 3, ViridianCity_Gym_EventScript_MemoryDesyncReturnToHub
+	goto_if_ge VAR_GIO_CHECKPOINT_ID, 2, ViridianCity_Gym_EventScript_ActEndpoint_ReturnHub
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	end
+
+ViridianCity_Gym_EventScript_ActEndpoint_ReturnHub::
+	lockall
+	warp MAP_VIRIDIAN_CITY_GYM, 17, 21
+	waitstate
+	releaseall
+	end
