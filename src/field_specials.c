@@ -4421,6 +4421,9 @@ static void ResetRocketOpsState(void)
     FlagClear(FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON);
     FlagClear(FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE);
     FlagClear(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
+    FlagClear(FLAG_GIO_MEM_CH1_HUB_MONOLOGUE_SEEN);
+    FlagClear(FLAG_GIO_MEM_CH2_HUB_MONOLOGUE_SEEN);
+    FlagClear(FLAG_GIO_MEM_CH3_HUB_MONOLOGUE_SEEN);
     FlagClear(FLAG_GIO_CH1_ACT1);
     FlagClear(FLAG_GIO_CH1_ACT2);
     FlagClear(FLAG_GIO_CH1_ACT3);
@@ -5071,6 +5074,9 @@ u16 ReconcileGiovanniMemoryModeOutcome(void)
     FlagClear(FLAG_GIO_MEM_CH3_COMPLETE);
     FlagClear(FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE);
     FlagClear(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
+    FlagClear(FLAG_GIO_MEM_CH1_HUB_MONOLOGUE_SEEN);
+    FlagClear(FLAG_GIO_MEM_CH2_HUB_MONOLOGUE_SEEN);
+    FlagClear(FLAG_GIO_MEM_CH3_HUB_MONOLOGUE_SEEN);
     SetGiovanniAuthorityPacing(FALSE);
     RunGiovanniMemoryModeResetHooks(0);
     AGB_ASSERT(ValidateGiovanniAuthorityPacingState() == FALSE);

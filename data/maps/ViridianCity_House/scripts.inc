@@ -29,7 +29,7 @@ ViridianCity_House_EventScript_ChapterHubReturnScene::
 	end
 
 ViridianCity_House_EventScript_ChapterHubDirective::
-	call EventScript_GiovanniCampaign_PrintActiveDirective
+	call EventScript_GiovanniCampaign_PrintHubBriefing
 	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
 	end
 

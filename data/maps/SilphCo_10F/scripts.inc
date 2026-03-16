@@ -35,7 +35,7 @@ SilphCo_10F_EventScript_BunkerFlow_Return::
 	end
 
 SilphCo_10F_EventScript_BunkerFlow_Directive::
-	call EventScript_GiovanniCampaign_PrintActiveDirective
+	call EventScript_GiovanniCampaign_PrintHubBriefing
 	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
 	end
 
