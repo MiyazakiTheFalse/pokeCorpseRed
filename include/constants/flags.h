@@ -1529,6 +1529,19 @@
 #define FLAG_0x8FF                                                  (SYS_FLAGS + 0xFF)
 
 // RocketOps runtime flags.
+#define FLAG_GIO_CH1_ACT1                                           FLAG_0x8B8
+#define FLAG_GIO_CH1_ACT2                                           FLAG_0x8B9
+#define FLAG_GIO_CH1_ACT3                                           FLAG_0x8BA
+#define FLAG_GIO_CH1_ACT4                                           FLAG_0x8BB
+#define FLAG_GIO_CH2_ACT1                                           FLAG_0x8BC
+#define FLAG_GIO_CH2_ACT2                                           FLAG_0x8BD
+#define FLAG_GIO_CH2_ACT3                                           FLAG_0x8BE
+#define FLAG_GIO_CH2_ACT4                                           FLAG_0x8BF
+#define FLAG_GIO_CH3_ACT1                                           FLAG_0x8C0
+#define FLAG_GIO_CH3_ACT2                                           FLAG_0x8C1
+#define FLAG_GIO_CH3_ACT3                                           FLAG_0x8C2
+#define FLAG_GIO_CH3_ACT4                                           FLAG_0x8C3
+
 #define FLAG_GIO_MEM_CH1_DIGLETT_SWARM_VISUAL                        FLAG_0x8C8
 #define FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL                         FLAG_0x8C9
 #define FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL                   FLAG_0x8CA

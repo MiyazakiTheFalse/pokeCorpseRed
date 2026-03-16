@@ -51,6 +51,75 @@ SilphCo_11F_EventScript_ChapterHubWatchdog::
 	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
 	end
 
+
+SilphCo_11F_EventScript_Act1_Start::
+	goto_if_set FLAG_GIO_CH2_ACT1, SilphCo_11F_EventScript_Act1_Return
+	setflag FLAG_GIO_CH2_ACT1
+	clearflag FLAG_GIO_CH2_ACT2
+	clearflag FLAG_GIO_CH2_ACT3
+	clearflag FLAG_GIO_CH2_ACT4
+	setvar VAR_GIO_ACT, 1
+	setvar VAR_GIO_CHECKPOINT_ID, 0
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	msgbox SilphCo_11F_Text_RocketOps_DeployAgent_C2, MSGBOX_AUTOCLOSE
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+SilphCo_11F_EventScript_Act1_Return::
+	end
+
+SilphCo_11F_EventScript_Act2_Start::
+	goto_if_unset FLAG_ROCKETOPS_AGENT_DEPLOYED, SilphCo_11F_EventScript_ActLocked
+	goto_if_set FLAG_GIO_CH2_ACT2, SilphCo_11F_EventScript_Act2_Return
+	clearflag FLAG_GIO_CH2_ACT1
+	setflag FLAG_GIO_CH2_ACT2
+	clearflag FLAG_GIO_CH2_ACT3
+	clearflag FLAG_GIO_CH2_ACT4
+	setvar VAR_GIO_ACT, 2
+	setvar VAR_GIO_CHECKPOINT_ID, 0
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	msgbox SilphCo_11F_Text_RocketOps_DestroyData_C2, MSGBOX_AUTOCLOSE
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+SilphCo_11F_EventScript_Act2_Return::
+	end
+
+SilphCo_11F_EventScript_Act3_Start::
+	goto_if_unset FLAG_ROCKETOPS_DATA_DESTROYED, SilphCo_11F_EventScript_ActLocked
+	goto_if_set FLAG_GIO_CH2_ACT3, SilphCo_11F_EventScript_Act3_Return
+	clearflag FLAG_GIO_CH2_ACT2
+	setflag FLAG_GIO_CH2_ACT3
+	clearflag FLAG_GIO_CH2_ACT4
+	setvar VAR_GIO_ACT, 3
+	setvar VAR_GIO_CHECKPOINT_ID, 1
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	msgbox SilphCo_11F_Text_RocketOps_ExtractStaff_C2, MSGBOX_AUTOCLOSE
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+SilphCo_11F_EventScript_Act3_Return::
+	end
+
+SilphCo_11F_EventScript_Act4_Start::
+	goto_if_unset FLAG_ROCKETOPS_STAFF_EXTRACTED, SilphCo_11F_EventScript_ActLocked
+	goto_if_set FLAG_GIO_CH2_ACT4, SilphCo_11F_EventScript_Act4_Return
+	clearflag FLAG_GIO_CH2_ACT3
+	setflag FLAG_GIO_CH2_ACT4
+	setvar VAR_GIO_ACT, 4
+	setvar VAR_GIO_CHECKPOINT_ID, 0
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	msgbox SilphCo_11F_Text_MemoryChapterOutro, MSGBOX_AUTOCLOSE
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+SilphCo_11F_EventScript_Act4_Return::
+	end
+
+SilphCo_11F_EventScript_ActLocked::
+	msgbox SilphCo_11F_Text_RocketReport_ObjectivesIncomplete, MSGBOX_AUTOCLOSE
+	end
+
 SilphCo_11F_EventScript_MemorySpaceMarker::
 	goto_if_ne VAR_GIO_CHAPTER, 2, SilphCo_11F_EventScript_MemoryChapterMismatchMarker
 	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_MemorySpaceMarkerComplete

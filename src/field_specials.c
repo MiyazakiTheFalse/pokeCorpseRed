@@ -4219,6 +4219,18 @@ static void ResetRocketOpsState(void)
     FlagClear(FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON);
     FlagClear(FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE);
     FlagClear(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
+    FlagClear(FLAG_GIO_CH1_ACT1);
+    FlagClear(FLAG_GIO_CH1_ACT2);
+    FlagClear(FLAG_GIO_CH1_ACT3);
+    FlagClear(FLAG_GIO_CH1_ACT4);
+    FlagClear(FLAG_GIO_CH2_ACT1);
+    FlagClear(FLAG_GIO_CH2_ACT2);
+    FlagClear(FLAG_GIO_CH2_ACT3);
+    FlagClear(FLAG_GIO_CH2_ACT4);
+    FlagClear(FLAG_GIO_CH3_ACT1);
+    FlagClear(FLAG_GIO_CH3_ACT2);
+    FlagClear(FLAG_GIO_CH3_ACT3);
+    FlagClear(FLAG_GIO_CH3_ACT4);
     FlagClear(FLAG_GIO_MEM_CH1_DIGLETT_SWARM_VISUAL);
     FlagClear(FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL);
     FlagClear(FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL);
@@ -4441,6 +4453,7 @@ u16 StartGiovanniMemoryMode(void)
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_VALIDATED);
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_VALIDATION_FAILED);
     SetGiovanniCampaignProgress(1, 1, 0, GIO_CAMPAIGN_STATE_CH1_ACT1);
+    FlagSet(FLAG_GIO_CH1_ACT1);
     SyncGiovanniLegacyCampaignState();
     SaveGiovanniCheckpointPositionAndStageAtMap(1,
                                                 MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F),
@@ -4489,6 +4502,11 @@ u16 CompleteGiovanniMemoryModeChapter1(void)
 
     FlagSet(FLAG_GIO_MEM_CH1_COMPLETE);
     FlagSet(FLAG_GIO_MEM_CH2_STARTED);
+    FlagClear(FLAG_GIO_CH1_ACT1);
+    FlagClear(FLAG_GIO_CH1_ACT2);
+    FlagClear(FLAG_GIO_CH1_ACT3);
+    FlagClear(FLAG_GIO_CH1_ACT4);
+    FlagSet(FLAG_GIO_CH2_ACT1);
     FlagSet(FLAG_GIO_MEM_HIDE_CELADON_ROCKETS);
     SetGiovanniCampaignProgress(2, 1, 0, GIO_CAMPAIGN_STATE_CH1_COMPLETE);
     SyncGiovanniLegacyCampaignState();
@@ -4525,6 +4543,11 @@ u16 CompleteGiovanniMemoryModeChapter2(void)
 
     FlagSet(FLAG_GIO_MEM_CH2_COMPLETE);
     FlagSet(FLAG_GIO_MEM_CH3_STARTED);
+    FlagClear(FLAG_GIO_CH2_ACT1);
+    FlagClear(FLAG_GIO_CH2_ACT2);
+    FlagClear(FLAG_GIO_CH2_ACT3);
+    FlagClear(FLAG_GIO_CH2_ACT4);
+    FlagSet(FLAG_GIO_CH3_ACT1);
     FlagSet(FLAG_GIO_MEM_HIDE_SAFFRON_ROCKETS);
     FlagClear(FLAG_GIO_MEM_HIDE_SAFFRON_CIVILIANS);
     SetGiovanniCampaignProgress(3, 1, 0, GIO_CAMPAIGN_STATE_CH2_COMPLETE);
@@ -4571,6 +4594,10 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
     FlagSet(FLAG_SYS_GIOVANNI_MEMORY_MODE_CHAPTER3_COMPLETE);
     FlagSet(FLAG_GIO_MEM_CH3_STARTED);
     FlagSet(FLAG_GIO_MEM_CH3_COMPLETE);
+    FlagClear(FLAG_GIO_CH3_ACT1);
+    FlagClear(FLAG_GIO_CH3_ACT2);
+    FlagClear(FLAG_GIO_CH3_ACT3);
+    FlagClear(FLAG_GIO_CH3_ACT4);
     ResetGiovanniChapter3EscortSegmentState();
     FlagClear(FLAG_SYS_GIOVANNI_MEMORY_MODE_ABORTED);
     RunGiovanniMemoryModeResetHooks(3);

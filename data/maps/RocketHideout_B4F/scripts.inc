@@ -53,6 +53,75 @@ RocketHideout_B4F_EventScript_ChapterHubWatchdog::
 	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
 	end
 
+
+RocketHideout_B4F_EventScript_Act1_Start::
+	goto_if_set FLAG_GIO_CH1_ACT1, RocketHideout_B4F_EventScript_Act1_Return
+	setflag FLAG_GIO_CH1_ACT1
+	clearflag FLAG_GIO_CH1_ACT2
+	clearflag FLAG_GIO_CH1_ACT3
+	clearflag FLAG_GIO_CH1_ACT4
+	setvar VAR_GIO_ACT, 1
+	setvar VAR_GIO_CHECKPOINT_ID, 0
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	msgbox RocketHideout_B4F_Text_RocketOps_SecureRoute_C1, MSGBOX_AUTOCLOSE
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+RocketHideout_B4F_EventScript_Act1_Return::
+	end
+
+RocketHideout_B4F_EventScript_Act2_Start::
+	goto_if_unset FLAG_ROCKETOPS_ROUTE_SECURED, RocketHideout_B4F_EventScript_ActLocked
+	goto_if_set FLAG_GIO_CH1_ACT2, RocketHideout_B4F_EventScript_Act2_Return
+	clearflag FLAG_GIO_CH1_ACT1
+	setflag FLAG_GIO_CH1_ACT2
+	clearflag FLAG_GIO_CH1_ACT3
+	clearflag FLAG_GIO_CH1_ACT4
+	setvar VAR_GIO_ACT, 2
+	setvar VAR_GIO_CHECKPOINT_ID, 1
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	msgbox RocketHideout_B4F_Text_GruntReport_ObjectiveLive, MSGBOX_AUTOCLOSE
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+RocketHideout_B4F_EventScript_Act2_Return::
+	end
+
+RocketHideout_B4F_EventScript_Act3_Start::
+	goto_if_unset FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED, RocketHideout_B4F_EventScript_ActLocked
+	goto_if_set FLAG_GIO_CH1_ACT3, RocketHideout_B4F_EventScript_Act3_Return
+	clearflag FLAG_GIO_CH1_ACT2
+	setflag FLAG_GIO_CH1_ACT3
+	clearflag FLAG_GIO_CH1_ACT4
+	setvar VAR_GIO_ACT, 3
+	setvar VAR_GIO_CHECKPOINT_ID, 2
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	msgbox RocketHideout_B4F_Text_RocketOps_DeployAgent_C1, MSGBOX_AUTOCLOSE
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+RocketHideout_B4F_EventScript_Act3_Return::
+	end
+
+RocketHideout_B4F_EventScript_Act4_Start::
+	goto_if_unset FLAG_GIO_MEM_CH1_CONVOY_COMPLETE, RocketHideout_B4F_EventScript_ActLocked
+	goto_if_set FLAG_GIO_CH1_ACT4, RocketHideout_B4F_EventScript_Act4_Return
+	clearflag FLAG_GIO_CH1_ACT3
+	setflag FLAG_GIO_CH1_ACT4
+	setvar VAR_GIO_ACT, 4
+	setvar VAR_GIO_CHECKPOINT_ID, 2
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	msgbox RocketHideout_B4F_Text_MemoryChapterOutro, MSGBOX_AUTOCLOSE
+	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+RocketHideout_B4F_EventScript_Act4_Return::
+	end
+
+RocketHideout_B4F_EventScript_ActLocked::
+	msgbox RocketHideout_B4F_Text_RocketReport_ObjectivesIncomplete, MSGBOX_AUTOCLOSE
+	end
+
 RocketHideout_B4F_EventScript_MemorySpaceMarker::
 	goto_if_ne VAR_GIO_CHAPTER, 1, RocketHideout_B4F_EventScript_MemoryChapterMismatchMarker
 	goto_if_set FLAG_GIO_MEM_CH1_COMPLETE, RocketHideout_B4F_EventScript_MemorySpaceMarkerComplete
