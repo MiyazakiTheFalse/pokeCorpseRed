@@ -363,3 +363,23 @@ ViridianCity_Gym_Text_RocketOps_StaffCheckpointDone_C3::
 ViridianCity_Gym_Text_RocketOps_EvacEndpointLocked_C3::
     .string "[ROCKETOPS:C3] Escort route not staged.\n"
     .string "Reach checkpoint alpha first.$"
+
+ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_DestroyData::
+    .string "[MEMORY:C3] Data purge route cut one\n"
+    .string "enemy wave. Hold against the remaining\n"
+    .string "counterattack at the tunnel mouth.$"
+
+ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_ExtractStaff::
+    .string "[MEMORY:C3] Extracted scientists reroute\n"
+    .string "medical support to your line. Hold the\n"
+    .string "tunnel while they keep squads standing.$"
+
+ViridianCity_Gym_Text_RocketReport_ObjectiveLive_DestroyData::
+    .string "[REPORT:C3] Purge branch active. Fewer\n"
+    .string "defenders remain on the floor, but the\n"
+    .string "archive burn drew heavy return fire.$"
+
+ViridianCity_Gym_Text_RocketReport_ObjectiveLive_ExtractStaff::
+    .string "[REPORT:C3] Extraction branch active.\n"
+    .string "Scientist allies are stabilizing the lane\n"
+    .string "and patching wounded squads.$"

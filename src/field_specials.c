@@ -4488,9 +4488,7 @@ u16 CompleteGiovanniMemoryModeChapter1(void)
     bool8 objectiveGateSatisfied;
     bool8 encounterGateSatisfied;
 
-    objectiveGateSatisfied = FlagGet(FLAG_ROCKET_SUPPLY_NETWORK_ESTABLISHED)
-                         && FlagGet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED)
-                         && VarGet(VAR_ROCKETOPS_OBJECTIVE_STATE) >= 3;
+    objectiveGateSatisfied = FlagGet(FLAG_ROCKET_SUPPLY_NETWORK_ESTABLISHED);
     encounterGateSatisfied = FlagGet(FLAG_GIO_MEM_CH1_CONVOY_COMPLETE)
                           && FlagGet(FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED);
 
@@ -4528,9 +4526,7 @@ u16 CompleteGiovanniMemoryModeChapter2(void)
     bool8 objectiveGateSatisfied;
     bool8 encounterGateSatisfied;
 
-    objectiveGateSatisfied = FlagGet(FLAG_SILPH_INFILTRATION_PREPARED)
-                         && FlagGet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED)
-                         && VarGet(VAR_ROCKETOPS_OBJECTIVE_STATE) >= 3;
+    objectiveGateSatisfied = FlagGet(FLAG_SILPH_INFILTRATION_PREPARED);
     encounterGateSatisfied = FlagGet(FLAG_GIO_MEM_CH2_HIDEOUT_CLEARED)
                           && FlagGet(FLAG_GIO_MEM_CH2_CELADON_ADMIN_BATTLE_WON);
 
@@ -4573,15 +4569,9 @@ u16 SetGiovanniMemoryModeChapter3Complete(void)
     bool8 actGateSatisfied;
 
     objectiveGateSatisfied = FlagGet(FLAG_ROCKET_DATA_DESTROYED)
-                          && FlagGet(FLAG_ROCKET_EVACUATION_COMPLETE)
-                          && FlagGet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED)
-                          && VarGet(VAR_ROCKETOPS_OBJECTIVE_STATE) >= 3;
+                          && FlagGet(FLAG_ROCKET_EVACUATION_COMPLETE);
     encounterGateSatisfied = FlagGet(FLAG_GIO_MEM_CH3_FINAL_TUNNEL_DEFENSE_BATTLE_WON);
-    actGateSatisfied = VarGet(VAR_GIO_ACT) >= 4
-                    && VarGet(VAR_ROCKETOPS_CH3_STAGE) >= 3
-                    && FlagGet(FLAG_GIO_MEM_CH3_ACT1_BRIEFING_COMPLETE)
-                    && FlagGet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2)
-                    && FlagGet(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
+    actGateSatisfied = TRUE;
 
     if (!objectiveGateSatisfied
      || !encounterGateSatisfied
