@@ -1,5 +1,6 @@
 CeladonCity_GameCorner_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, CeladonCity_GameCorner_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, CeladonCity_GameCorner_OnTransition
 	.byte 0
 
 CeladonCity_GameCorner_OnLoad::
@@ -9,6 +10,47 @@ CeladonCity_GameCorner_OnLoad::
 	call_if_unset FLAG_OPENED_ROCKET_HIDEOUT, CeladonCity_GameCorner_EventScript_HideRocketHideout
 	end
 
+
+CeladonCity_GameCorner_OnTransition::
+	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
+	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Return
+	goto_if_eq VAR_MODE_GIOVANNI_MEMORY, FALSE, CeladonCity_GameCorner_EventScript_MemoryDesyncReturnToHub
+	goto_if_ne VAR_CHAPTER_ID, 1, CeladonCity_GameCorner_EventScript_MemoryDesyncReturnToHub
+	goto CeladonCity_GameCorner_EventScript_ChapterHubEntry
+
+CeladonCity_GameCorner_EventScript_ChapterHubEntry::
+	specialvar VAR_RESULT, Special_GiovanniCampaignDispatch
+	goto_if_eq VAR_RESULT, 2, CeladonCity_GameCorner_EventScript_ChapterHubReturnScene
+	goto_if_eq VAR_RESULT, 0, CeladonCity_GameCorner_EventScript_ChapterHubDirective
+	goto_if_eq VAR_RESULT, 3, CeladonCity_GameCorner_EventScript_ChapterHubDirective
+	goto_if_eq VAR_RESULT, 4, CeladonCity_GameCorner_EventScript_ChapterHubWatchdog
+	end
+
+CeladonCity_GameCorner_EventScript_ChapterHubReturnScene::
+	msgbox RocketHideout_B4F_Text_RocketOps_MilestoneLogged_C1, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
+	end
+
+CeladonCity_GameCorner_EventScript_ChapterHubDirective::
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
+	end
+
+CeladonCity_GameCorner_EventScript_ChapterHubWatchdog::
+	call EventScript_GiovanniCampaign_WatchdogHint
+	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
+	end
+
+CeladonCity_GameCorner_EventScript_BackRoomFlow::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_CHAPTER_ID, 1, CeladonCity_GameCorner_EventScript_MemoryDesyncReturnToHub
+	goto_if_lt VAR_ROCKETOPS_CH1_STAGE, 2, CeladonCity_GameCorner_EventScript_MemoryDesyncReturnToHub
+	lockall
+	warp MAP_ROCKET_HIDEOUT_B4F, 18, 6
+	waitstate
+	releaseall
+	end
 CeladonCity_GameCorner_EventScript_MemoryOverlayOnLoad::
 	clearflag FLAG_HIDE_GAME_CORNER_ROCKET
 	setflag FLAG_OPENED_ROCKET_HIDEOUT

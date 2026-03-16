@@ -380,3 +380,24 @@ SilphCo_11F_EventScript_MemoryExitGuard_Mismatch::
 	waitstate
 	releaseall
 	end
+
+SilphCo_11F_EventScript_ActEndpoint_Primary::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
+	goto_if_ge VAR_ROCKETOPS_CH2_STAGE, 3, SilphCo_11F_EventScript_ActEndpoint_ReturnHub
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	end
+
+SilphCo_11F_EventScript_ActEndpoint_Fallback::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
+	goto_if_ne VAR_CHAPTER_ID, 2, SilphCo_11F_EventScript_MemoryDesyncReturnToHub
+	goto_if_ge VAR_ROCKETOPS_CH2_STAGE, 3, SilphCo_11F_EventScript_ActEndpoint_ReturnHub
+	end
+
+SilphCo_11F_EventScript_ActEndpoint_ReturnHub::
+	lockall
+	warp MAP_SILPH_CO_11F, 6, 14
+	waitstate
+	releaseall
+	end
