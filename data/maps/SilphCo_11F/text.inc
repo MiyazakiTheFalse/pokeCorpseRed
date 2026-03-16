@@ -90,6 +90,7 @@ SilphCo_11F_Text_FloorSign::
 
 
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 SilphCo_11F_Text_MemorySpaceMarker::
     .string "[MEMORY] Silph aftermath projection\n"
     .string "loaded. Celadon shops report supply squeezes\n"
@@ -101,11 +102,13 @@ SilphCo_11F_Text_MemoryChapterIntro::
     .string "and force the executive floor breach.$"
 
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 SilphCo_11F_Text_MemoryChapter3EmergencyBriefing::
     .string "[MEMORY:C3 ACT1] Emergency briefing from\n"
     .string "Saffron confirms Viridian's command ring is\n"
     .string "the final Rocket fallback.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 SilphCo_11F_Text_MemoryChapter3ObjectiveInit::
     .string "[OBJECTIVE:C3] Act 2: destroy archive nodes\n"
     .string "in Silph/tunnel routes. Act 3: escort\n"
@@ -119,6 +122,7 @@ SilphCo_11F_Text_RocketOps_MilestoneLogged_C2::
     .string "[ROCKETOPS:C2] Milestone logged. Silph\n"
     .string "chain archived for Viridian transfer.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 SilphCo_11F_Text_ChapterReveal_EconomicControl::
     .string "[REVEAL:C2] Economic control followed:\n"
     .string "credit, inventory, and compliance folded\n"
@@ -187,6 +191,7 @@ SilphCo_11F_Text_RocketOps_StatusReport_OpenRoute_C2::
     .string "A low-heat approach path is now routed\n"
     .string "to the executive breach point.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 SilphCo_11F_Text_GruntReport_ObjectiveLive::
     .string "[REPORT:C2] Executive floor still locked\n"
     .string "down. Keep pressure on SILPH control\n"

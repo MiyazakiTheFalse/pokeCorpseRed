@@ -183,6 +183,7 @@ ViridianCity_Gym_Text_GymStatuePlayerWon::
     .string "{RIVAL}, {PLAYER}$"
 
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 ViridianCity_Gym_Text_MemorySpaceMarker::
     .string "[MEMORY] Viridian Gym shimmers with\n"
     .string "GIOVANNI's recollection. Evac logs show\n"
@@ -202,6 +203,7 @@ ViridianCity_Gym_Text_RocketOps_MilestoneLogged_C3::
     .string "[ROCKETOPS:C3] Milestone logged. Final\n"
     .string "chapter chain archived before collapse.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 ViridianCity_Gym_Text_ChapterReveal_SystemCollapse::
     .string "[REVEAL:C3] Region-wide system collapse was\n"
     .string "the endpoint: infrastructure and markets\n"
@@ -266,11 +268,13 @@ ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH3::
     .string "[GIOVANNI] All three chapters stand\n"
     .string "resolved. What remains is judgment.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 ViridianCity_Gym_Text_GiovanniMemoryBeat_WarReference::
     .string "[CAMEO] The final reports read like war\n"
     .string "dispatches: assets burned, convoys moved,\n"
     .string "and no one left untouched.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 ViridianCity_Gym_Text_GiovanniMemoryBeat_WarFallback::
     .string "[CAMEO] No war-reference thread resolves\n"
     .string "here. This memory path closed before that\n"

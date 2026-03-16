@@ -126,6 +126,20 @@ This guarantees:
 
 ---
 
+## Narrative writing policy (mission dialogue)
+
+For all **new mission dialogue** in Giovanni memory chapters:
+
+- Show war consequences through civilian impact, infrastructure strain, governance policy, and memory residue.
+- Do **not** stage direct war scenes or flashbacks in spoken or report text.
+- Any explicit war reference must frame events as one of:
+  1. aftermath,
+  2. policy/administrative response, or
+  3. memory residue (echo/report language).
+- Sensitive chapter lines must include a `@ NARRATIVE_REVIEW:WAR_SENSITIVE` marker directly above the dialogue label.
+
+---
+
 ## Acceptance checklist
 
 - [ ] RocketOps terminal in Chapters 1–3 presents identical 4-command menu.
@@ -133,3 +147,4 @@ This guarantees:
 - [ ] Every command has explicit failure text + outcome branch.
 - [ ] Chapter variants alter outcomes only; they do not alter base interface flow.
 - [ ] Save/load preserves RocketOps vars/flags without chapter desync.
+- [ ] Narrative policy check passes: no direct war scenes/flashbacks, all war references are aftermath/policy/memory-residue framing, and sensitive lines are review-marked.
