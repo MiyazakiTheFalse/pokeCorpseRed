@@ -113,8 +113,9 @@ Route11_Text_DiglettsCave::
 
 
 Route11_Text_MemoryDiglettSwarmStart::
-    .string "[MEMORY:C1] Diglett swarm spike detected.\n"
-    .string "Hold this route and clear the burst.$"
+    .string "[TASKFORCE:C1] Rocket drove the tunnel\n"
+    .string "colony into a panic. If we fail here,\n"
+    .string "civilians on Route 11 get buried.$"
 
 
 Route11_Text_MemoryTunnelLeaderDefeat::

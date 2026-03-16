@@ -203,17 +203,17 @@ SilphCo_11F_Text_GruntReport_ObjectiveDone::
     .string "chapter route.$"
 
 SilphCo_11F_Text_MemoryBranchLockdownIntro::
-    .string "[MEMORY:C2] Financial administrator engaged.
-"
-    .string "Lockdown branch is now contested.$"
+    .string "[TASKFORCE:C2] We're freezing this floor\n"
+    .string "because Rocket turns Silph staff into\n"
+    .string "disposable leverage. Stand down now.$"
 
 SilphCo_11F_Text_MemoryBranchLockdownDefeat::
     .string "[MEMORY:C2] Corridor control branch lost…$"
 
 SilphCo_11F_Text_MemoryBranchPurgeIntro::
-    .string "[MEMORY:C2] Financial administrator engaged.
-"
-    .string "Purge branch defense is online.$"
+    .string "[TASKFORCE:C2] We're freezing this floor\n"
+    .string "because Rocket turns Silph staff into\n"
+    .string "disposable leverage. Stand down now.$"
 
 SilphCo_11F_Text_MemoryBranchPurgeDefeat::
     .string "[MEMORY:C2] Data purge branch collapsed…$"
