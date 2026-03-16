@@ -165,19 +165,19 @@ RocketHideout_B4F_Text_RecurringOpsOfficer_Act1::
     .string "before the floor turns hot.$"
 
 RocketHideout_B4F_Text_RecurringOpsOfficer_Act2::
-    .string "[OPS OFFICER VERA:C1-A2] Corridor is open,\n"
-    .string "but every minute costs us goodwill.\n"
-    .string "No sloppy pressure plays.$"
+    .string "[OPS OFFICER VERA:C1-A2] Corridor is open.\n"
+    .string "Confidence is easy before the first\n"
+    .string "mistake, so don't give me one.$"
 
 RocketHideout_B4F_Text_RecurringOpsOfficer_Act3::
-    .string "[OPS OFFICER VERA:C1-A3] Orders landed.\n"
-    .string "Once this chapter closes, I am pulling\n"
-    .string "my crew out of frontline duty.$"
+    .string "[OPS OFFICER VERA:C1-A3] Chapter closes clean.\n"
+    .string "I said we could run this operation and\n"
+    .string "I still believe it.$"
 
 RocketHideout_B4F_Text_RecurringEngineer_Act1::
-    .string "[ENGINEER LEAD ROURKE:C1-A1] The motors are\n"
-    .string "held together with salvage tape. If we\n"
-    .string "overdrive them, this level floods.$"
+    .string "[ENGINEER LEAD ROURKE:C1-A1] Hear that hum?\n"
+    .string "I tuned these motors from scrap and they\n"
+    .string "still outwork factory rigs.$"
 
 RocketHideout_B4F_Text_RecurringEngineer_Act2::
     .string "[ENGINEER LEAD ROURKE:C1-A2] I rerouted power\n"
@@ -195,11 +195,11 @@ RocketHideout_B4F_Text_RecurringCaptain_Act1::
     .string "this whole basement becomes a trap.$"
 
 RocketHideout_B4F_Text_RecurringCaptain_Act2::
-    .string "[FIELD CAPTAIN DRAKE:C1-A2] Your command stream\n"
-    .string "is cleaner than half the tower brass.\n"
-    .string "Give me one lane and I will hold it.$"
+    .string "[FIELD CAPTAIN DRAKE:C1-A2] Keep your order short\n"
+    .string "and I execute. Soldiers don't debate while\n"
+    .string "the line is live.$"
 
 RocketHideout_B4F_Text_RecurringCaptain_Act3::
     .string "[FIELD CAPTAIN DRAKE:C1-A3] Celadon wraps soon.\n"
-    .string "I am still loyal to the Boss, but I am\n"
-    .string "counting every cost now.$"
+    .string "War discipline keeps people breathing;\n"
+    .string "that's all I need to know.$"

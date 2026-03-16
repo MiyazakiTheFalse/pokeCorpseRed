@@ -49,3 +49,33 @@ SilphCo_10F_Text_RecurringScientistField_Done::
     .string "Silph says DR. NOX never checked out of\n"
     .string "the archive wing. They just call him\n"
     .string "missing now.$"
+
+SilphCo_10F_Text_RecurringEngineerField_Act1::
+    .string "ENGINEER ROURKE said these relays were\n"
+    .string "war-grade once. He sounded proud that\n"
+    .string "they still work under this load.$"
+
+SilphCo_10F_Text_RecurringEngineerField_Act2::
+    .string "ROURKE keeps muttering that this wiring\n"
+    .string "was built for sieges, not offices. He\n"
+    .string "looks sick every time alarms spike.$"
+
+SilphCo_10F_Text_RecurringEngineerField_Act3::
+    .string "ROURKE said he's done pretending this is\n"
+    .string "a rescue plan. He just wants everyone\n"
+    .string "alive long enough to walk away.$"
+
+SilphCo_10F_Text_RecurringCaptainField_Act1::
+    .string "CAPTAIN DRAKE ordered his squad like this\n"
+    .string "was still a formal battlefield drill.\n"
+    .string "No hesitation at all.$"
+
+SilphCo_10F_Text_RecurringCaptainField_Act2::
+    .string "DRAKE said this war never really ended,\n"
+    .string "it only moved indoors and changed names.\n"
+    .string "That was not comforting.$"
+
+SilphCo_10F_Text_RecurringCaptainField_Act3::
+    .string "DRAKE pulled his team to the final line\n"
+    .string "near Viridian. He said it's their last\n"
+    .string "defense and they will not break.$"

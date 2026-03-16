@@ -229,14 +229,14 @@ SilphCo_11F_Text_RecurringOpsOfficer_Act1::
     .string "clean or this floor panics.$"
 
 SilphCo_11F_Text_RecurringOpsOfficer_Act2::
-    .string "[OPS OFFICER VERA:C2-A2] We can still run this\n"
-    .string "as controlled pressure, not chaos. Keep\n"
-    .string "our civilians clear and moving.$"
+    .string "[OPS OFFICER VERA:C2-A2] I used to think clean\n"
+    .string "command could keep this humane. Now I am\n"
+    .string "not sure control is real.$"
 
 SilphCo_11F_Text_RecurringOpsOfficer_Act3::
     .string "[OPS OFFICER VERA:C2-A3] Route is nearly stable.\n"
-    .string "I already queued buses for our noncombat\n"
-    .string "staff. No one gets left in the tower.$"
+    .string "If the chain breaks, I stay with my people\n"
+    .string "until the last bus clears.$"
 
 SilphCo_11F_Text_RecurringOpsOfficer_Done::
     .string "[OPS OFFICER VERA:C2] Evacuation convoy departed.\n"
