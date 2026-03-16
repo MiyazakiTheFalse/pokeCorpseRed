@@ -44,7 +44,7 @@ RocketHideout_B4F_EventScript_ChapterHubReturnScene_MilestoneMissing::
 	end
 
 RocketHideout_B4F_EventScript_ChapterHubDirective::
-	call EventScript_GiovanniCampaign_PrintActiveDirective
+	call EventScript_GiovanniCampaign_PrintHubBriefing
 	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
 	end
 

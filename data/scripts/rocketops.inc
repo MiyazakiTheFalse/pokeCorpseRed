@@ -5,6 +5,35 @@ EventScript_GiovanniCampaign_PrintActiveDirective::
 	msgbox gStringVar4, MSGBOX_AUTOCLOSE
 	return
 
+EventScript_GiovanniCampaign_PrintHubMonologueOnce::
+	goto_if_eq VAR_GIO_CHAPTER, 1, EventScript_GiovanniCampaign_PrintHubMonologueOnce_C1
+	goto_if_eq VAR_GIO_CHAPTER, 2, EventScript_GiovanniCampaign_PrintHubMonologueOnce_C2
+	goto_if_eq VAR_GIO_CHAPTER, 3, EventScript_GiovanniCampaign_PrintHubMonologueOnce_C3
+	return
+
+EventScript_GiovanniCampaign_PrintHubMonologueOnce_C1::
+	goto_if_set FLAG_GIO_MEM_CH1_HUB_MONOLOGUE_SEEN, EventScript_Return
+	setflag FLAG_GIO_MEM_CH1_HUB_MONOLOGUE_SEEN
+	msgbox Text_GiovanniHubMonologue_C1, MSGBOX_AUTOCLOSE
+	return
+
+EventScript_GiovanniCampaign_PrintHubMonologueOnce_C2::
+	goto_if_set FLAG_GIO_MEM_CH2_HUB_MONOLOGUE_SEEN, EventScript_Return
+	setflag FLAG_GIO_MEM_CH2_HUB_MONOLOGUE_SEEN
+	msgbox Text_GiovanniHubMonologue_C2, MSGBOX_AUTOCLOSE
+	return
+
+EventScript_GiovanniCampaign_PrintHubMonologueOnce_C3::
+	goto_if_set FLAG_GIO_MEM_CH3_HUB_MONOLOGUE_SEEN, EventScript_Return
+	setflag FLAG_GIO_MEM_CH3_HUB_MONOLOGUE_SEEN
+	msgbox Text_GiovanniHubMonologue_C3, MSGBOX_AUTOCLOSE
+	return
+
+EventScript_GiovanniCampaign_PrintHubBriefing::
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	call EventScript_GiovanniCampaign_PrintHubMonologueOnce
+	return
+
 EventScript_RocketOps_Terminal::
 	lockall
 	specialvar VAR_RESULT, Special_RocketOps_OpenTerminal
@@ -222,6 +251,25 @@ EventScript_RocketOps_TerminalOffline::
 EventScript_RocketOps_Close::
 	releaseall
 	end
+
+
+Text_GiovanniHubMonologue_C1::
+	.string "Order is not a victory lap—it is a\n"
+	.string "habit we build until it outlives us.\p"
+	.string "I do not gamble on chaos. I shape\n"
+	.string "lasting order and make it hold.$"
+
+Text_GiovanniHubMonologue_C2::
+	.string "Anomaly follows us in red shoes.\n"
+	.string "That boy turns probability into noise.\p"
+	.string "Even so, I do not gamble on chaos.\n"
+	.string "I force order to answer the anomaly.$"
+
+Text_GiovanniHubMonologue_C3::
+	.string "Controlled collapse is still collapse.\n"
+	.string "The architect owns every broken beam.\p"
+	.string "I did not gamble on chaos—I rationed it.\n"
+	.string "Responsibility is the weight that remains.$"
 
 Text_RocketOpsTerminalBoot::
 	.string "[ROCKETOPS] Link established. Routing\n"
