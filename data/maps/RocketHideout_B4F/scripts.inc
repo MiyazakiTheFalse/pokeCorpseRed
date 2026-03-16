@@ -33,6 +33,12 @@ RocketHideout_B4F_EventScript_ChapterHubEntry::
 	end
 
 RocketHideout_B4F_EventScript_ChapterHubReturnScene::
+	goto_if_unset FLAG_ROCKETOPS_MILESTONE_CH1_LOGGED, RocketHideout_B4F_EventScript_ChapterHubReturnScene_MilestoneMissing
+	msgbox RocketHideout_B4F_Text_ChapterReveal_InfrastructureControl, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
+	end
+
+RocketHideout_B4F_EventScript_ChapterHubReturnScene_MilestoneMissing::
 	msgbox RocketHideout_B4F_Text_RocketOps_MilestoneLogged_C1, MSGBOX_AUTOCLOSE
 	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
 	end

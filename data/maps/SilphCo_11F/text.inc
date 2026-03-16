@@ -119,6 +119,11 @@ SilphCo_11F_Text_RocketOps_MilestoneLogged_C2::
     .string "[ROCKETOPS:C2] Milestone logged. Silph\n"
     .string "chain archived for Viridian transfer.$"
 
+SilphCo_11F_Text_ChapterReveal_EconomicControl::
+    .string "[REVEAL:C2] Economic control followed:\n"
+    .string "credit, inventory, and compliance folded\n"
+    .string "behind one executive trigger.$"
+
 SilphCo_11F_Text_RocketReport_ObjectivesIncomplete::
     .string "[REPORT:C2] RocketOps milestone missing.\n"
     .string "Complete chapter commands before advancing\n"
