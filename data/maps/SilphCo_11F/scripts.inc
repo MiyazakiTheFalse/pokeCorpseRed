@@ -123,9 +123,15 @@ SilphCo_11F_EventScript_ActLocked::
 SilphCo_11F_EventScript_MemorySpaceMarker::
 	goto_if_ne VAR_GIO_CHAPTER, 2, SilphCo_11F_EventScript_MemoryChapterMismatchMarker
 	goto_if_set FLAG_GIO_MEM_CH2_COMPLETE, SilphCo_11F_EventScript_MemorySpaceMarkerComplete
+	call_if_unset FLAG_GIO_MEM_CH2_HUB_MONOLOGUE_SEEN, SilphCo_11F_EventScript_RedImpactBeat_C2
 	setvar VAR_ROCKETOPS_CH2_STAGE, 0
 	call EventScript_GiovanniCampaign_PrintActiveDirective
 	end
+
+SilphCo_11F_EventScript_RedImpactBeat_C2::
+	msgbox SilphCo_11F_Text_RedImpactBeat_C2, MSGBOX_AUTOCLOSE
+	setflag FLAG_GIO_MEM_CH2_HUB_MONOLOGUE_SEEN
+	return
 
 SilphCo_11F_EventScript_MemorySpaceMarkerComplete::
 	msgbox SilphCo_11F_Text_MemorySpaceMarker, MSGBOX_AUTOCLOSE

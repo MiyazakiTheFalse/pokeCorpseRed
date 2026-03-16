@@ -192,6 +192,11 @@ ViridianCity_Gym_Text_MemorySpaceMarker::
     .string "whole blocks strained by rushed clearances.$"
 
 
+ViridianCity_Gym_Text_RedImpactBeat_C3::
+    .string "[RED-IMPACT:C3] Command confirms it now:\n"
+    .string "RED is collapsing system integrity. Evac\n"
+    .string "orders are rushed and whole blocks are clearing.$"
+
 ViridianCity_Gym_Text_MemoryChapterIntro::
     .string "[MEMORY:C3] Viridian command chamber\n"
     .string "is active. Resolve final RocketOps states\n"
@@ -285,6 +290,11 @@ ViridianCity_Gym_Text_GiovanniMemoryBeat_WarFallback::
 ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFull::
     .string "[MEMORY] The chamber settles into the\n"
     .string "present. RED's frame is restored.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueAllRedImpact::
+    .string "[MEMORY] Celadon called RED a minor\n"
+    .string "disruption, Silph confirmed a core-asset\n"
+    .string "loss, and Viridian admits system collapse.$"
 
 ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFallback::
     .string "[MEMORY] Residual echoes are fading.\n"
