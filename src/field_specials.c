@@ -924,6 +924,10 @@ static void ReloadGiovanniMemoryModeNpcObjects(void)
 #define GIO_CHECKPOINT_OBJECTIVE_ESCORT_CP2 (1 << 3)
 #define GIO_CHECKPOINT_OBJECTIVE_ACT1_BRIEFING (1 << 4)
 #define GIO_CHECKPOINT_OBJECTIVE_ACT4_DECISION (1 << 5)
+#define GIO_CHECKPOINT_BRANCH_AUTHORITY_ROUTE (1 << 6)
+#define GIO_CHECKPOINT_BRANCH_INFILTRATION_ROUTE (1 << 7)
+#define GIO_CHECKPOINT_BRANCH_DESTROY_DATA (1 << 8)
+#define GIO_CHECKPOINT_BRANCH_EXTRACT_STAFF (1 << 9)
 
 static void RunGiovanniMemoryModeResetHooks(u8 chapterId);
 static void SyncGiovanniLegacyCampaignState(void);
@@ -972,7 +976,7 @@ static void SetGiovanniCampaignSegment(u16 segment)
 
 static bool8 IsGiovanniCampaignSegmentActActive(u16 segment)
 {
-    return segment >= GIO_SEGMENT_3 && segment <= GIO_SEGMENT_5;
+    return segment >= GIO_SEGMENT_3 && segment <= GIO_SEGMENT_4;
 }
 
 static void UpdateGiovanniMemorySaveStateForSegment(u16 previousSegment, u16 nextSegment, bool8 emitMessage)
@@ -1196,6 +1200,14 @@ static u16 GetGiovanniCheckpointObjectiveFlags(void)
         objectiveFlags |= GIO_CHECKPOINT_OBJECTIVE_ACT1_BRIEFING;
     if (FlagGet(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE))
         objectiveFlags |= GIO_CHECKPOINT_OBJECTIVE_ACT4_DECISION;
+    if (FlagGet(FLAG_GIO_BRANCH_CH1_AUTHORITY_ROUTE))
+        objectiveFlags |= GIO_CHECKPOINT_BRANCH_AUTHORITY_ROUTE;
+    if (FlagGet(FLAG_GIO_BRANCH_CH2_INFILTRATION_ROUTE))
+        objectiveFlags |= GIO_CHECKPOINT_BRANCH_INFILTRATION_ROUTE;
+    if (FlagGet(FLAG_GIO_BRANCH_DESTROY_DATA))
+        objectiveFlags |= GIO_CHECKPOINT_BRANCH_DESTROY_DATA;
+    if (FlagGet(FLAG_GIO_BRANCH_EXTRACT_STAFF))
+        objectiveFlags |= GIO_CHECKPOINT_BRANCH_EXTRACT_STAFF;
 
     return objectiveFlags;
 }
@@ -1231,6 +1243,26 @@ static void ApplyGiovanniCheckpointObjectiveFlags(u16 objectiveFlags)
         FlagSet(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
     else
         FlagClear(FLAG_GIO_MEM_CH3_ACT4_DECISION_COMPLETE);
+
+    if (objectiveFlags & GIO_CHECKPOINT_BRANCH_AUTHORITY_ROUTE)
+        FlagSet(FLAG_GIO_BRANCH_CH1_AUTHORITY_ROUTE);
+    else
+        FlagClear(FLAG_GIO_BRANCH_CH1_AUTHORITY_ROUTE);
+
+    if (objectiveFlags & GIO_CHECKPOINT_BRANCH_INFILTRATION_ROUTE)
+        FlagSet(FLAG_GIO_BRANCH_CH2_INFILTRATION_ROUTE);
+    else
+        FlagClear(FLAG_GIO_BRANCH_CH2_INFILTRATION_ROUTE);
+
+    if (objectiveFlags & GIO_CHECKPOINT_BRANCH_DESTROY_DATA)
+        FlagSet(FLAG_GIO_BRANCH_DESTROY_DATA);
+    else
+        FlagClear(FLAG_GIO_BRANCH_DESTROY_DATA);
+
+    if (objectiveFlags & GIO_CHECKPOINT_BRANCH_EXTRACT_STAFF)
+        FlagSet(FLAG_GIO_BRANCH_EXTRACT_STAFF);
+    else
+        FlagClear(FLAG_GIO_BRANCH_EXTRACT_STAFF);
 }
 
 static void SnapshotGiovanniActCheckpointState(bool8 saveAllowedAtCheckpoint)
@@ -4758,11 +4790,10 @@ bool8 HandleGiovanniMemoryModeBootstrapOnLoad(void)
     }
     else if (RestoreGiovanniCheckpointContextForRestart(FALSE))
     {
-        bool8 saveBlocked = IsGiovanniMemorySaveBlocked();
         bool8 usedSavedPosition = FALSE;
 
         gSaveBlock1Ptr->location.warpId = WARP_ID_NONE;
-        if (!saveBlocked && VarGet(VAR_GIO_CHECKPOINT_X) != 0 && VarGet(VAR_GIO_CHECKPOINT_Y) != 0)
+        if (VarGet(VAR_GIO_CHECKPOINT_X) != 0 && VarGet(VAR_GIO_CHECKPOINT_Y) != 0)
         {
             gSaveBlock1Ptr->location.mapGroup = VarGet(VAR_GIO_CHECKPOINT_MAP_GROUP);
             gSaveBlock1Ptr->location.mapNum = VarGet(VAR_GIO_CHECKPOINT_MAP_NUM);
@@ -4943,6 +4974,7 @@ u16 Special_RocketOps_OpenTerminal(void)
     }
 
     VarSet(VAR_GIO_CHAPTER_RUNTIME, chapterId);
+    SetGiovanniCampaignSegment(GIO_SEGMENT_2);
     VarSet(VAR_ROCKETOPS_COMMAND_STATE, 0);
     VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, VarGet(chapterStageVar));
     FlagSet(FLAG_ROCKETOPS_TERMINAL_UNLOCKED);
@@ -5029,6 +5061,7 @@ u16 Special_RocketOps_ValidateCommandContext(void)
         return FALSE;
 
     VarSet(VAR_ROCKETOPS_COMMAND_STATE, commandId + 1);
+    SetGiovanniCampaignSegment(GIO_SEGMENT_3);
     FlagSet(FLAG_ROCKETOPS_COMMAND_STATE_DIRTY);
     return TRUE;
 }
@@ -5117,6 +5150,7 @@ u16 Special_RocketOps_WritebackState(void)
 
     VarSet(VAR_ROCKETOPS_CHAIN_STATE, (VarGet(VAR_ROCKETOPS_CHAIN_STATE) & 0xFF00) | (VarGet(chapterStageVar) & 0xFF));
     VarSet(VAR_ROCKETOPS_OBJECTIVE_STATE, VarGet(chapterStageVar));
+    SetGiovanniCampaignSegment(GIO_SEGMENT_5);
 
     if (VarGet(chapterStageVar) >= 3)
         FlagSet(FLAG_ROCKETOPS_CHAPTER_OBJECTIVE_CLEARED);
