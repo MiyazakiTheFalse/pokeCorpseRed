@@ -331,6 +331,21 @@ ViridianCity_Gym_Text_MemoryAct5PresentResume::
     .string "returns. GIOVANNI's final monologue ends;\n"
     .string "battle protocol begins.$"
 
+ViridianCity_Gym_Text_GiovanniMemoryCallback_Chapter1::
+    .string "[CALLBACK:C1] Celadon taught us this:\n"
+    .string "infrastructure control made every route\n"
+    .string "feel like a trap.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryCallback_Chapter2::
+    .string "[CALLBACK:C2] Silph proved economics and\n"
+    .string "control were the same weapon in different\n"
+    .string "hands.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryCallback_Chapter3::
+    .string "[CALLBACK:C3] Viridian ended where it had\n"
+    .string "to: collapse, disbandment, and no command\n"
+    .string "left to hide behind.$"
+
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounter::
     .string "[TASKFORCE:C3] Giovanni is disciplined and\n"
     .string "dangerously effective, but his methods\n"
