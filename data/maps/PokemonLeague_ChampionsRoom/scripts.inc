@@ -50,8 +50,7 @@ PokemonLeague_ChampionsRoom_EventScript_EnterRoom::
 	applymovement LOCALID_PLAYER, PokemonLeague_ChampionsRoom_Movement_PlayerEnter
 	waitmovement 0
 	delay 20
-	call_if_unset FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_Intro
-	call_if_set FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_RematchIntro
+	call PokemonLeague_ChampionsRoom_EventScript_FinalPreBattleDialogue
 	goto_if_questlog PokemonLeague_ChampionsRoom_EventScript_QuestLogEnd
 	setflag FLAG_TEMP_3
 	setflag FLAG_TEMP_5
@@ -110,6 +109,26 @@ PokemonLeague_ChampionsRoom_EventScript_Rematch::
 	call_if_eq VAR_STARTER_MON, 2, PokemonLeague_ChampionsRoom_EventScript_RematchSquirtle
 	call_if_eq VAR_STARTER_MON, 1, PokemonLeague_ChampionsRoom_EventScript_RematchBulbasaur
 	call_if_eq VAR_STARTER_MON, 0, PokemonLeague_ChampionsRoom_EventScript_RematchCharmander
+	return
+
+PokemonLeague_ChampionsRoom_EventScript_FinalPreBattleDialogue::
+	@ Canonical final pre-battle dialogue block.
+	@ Keep contract-locked monologue text unchanged and route all edits through
+	@ these optional slots to avoid branch drift.
+	call PokemonLeague_ChampionsRoom_EventScript_FinalPreBattleDialogue_OptionalIdeologySlot1
+	call PokemonLeague_ChampionsRoom_EventScript_FinalPreBattleDialogue_Core
+	call PokemonLeague_ChampionsRoom_EventScript_FinalPreBattleDialogue_OptionalIdeologySlot2
+	return
+
+PokemonLeague_ChampionsRoom_EventScript_FinalPreBattleDialogue_OptionalIdeologySlot1::
+	call_if_unset FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_Intro
+	return
+
+PokemonLeague_ChampionsRoom_EventScript_FinalPreBattleDialogue_Core::
+	call_if_set FLAG_SYS_GAME_CLEAR, PokemonLeague_ChampionsRoom_EventScript_RematchIntro
+	return
+
+PokemonLeague_ChampionsRoom_EventScript_FinalPreBattleDialogue_OptionalIdeologySlot2::
 	return
 
 PokemonLeague_ChampionsRoom_EventScript_Intro::
