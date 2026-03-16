@@ -1335,8 +1335,11 @@ static bool8 RestoreGiovanniCheckpointContextForRestart(bool8 setWarp)
 
 static void RunGiovanniMemoryModeResetHooks(u8 chapterId)
 {
-    VarSet(VAR_MODE_GIOVANNI_MEMORY, chapterId != 0);
+    bool8 giovanniMemoryModeActive = chapterId != 0;
+
+    VarSet(VAR_MODE_GIOVANNI_MEMORY, giovanniMemoryModeActive);
     VarSet(VAR_CHAPTER_ID, chapterId);
+    VarSet(VAR_GIO_AUTHORITY_PACING, giovanniMemoryModeActive);
     ApplyGiovanniMemoryModeNpcFlags(chapterId);
     ReloadGiovanniMemoryModeNpcObjects();
 }

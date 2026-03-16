@@ -216,7 +216,7 @@
 #define VAR_ROCKETOPS_MILESTONE_STATE 0x40A2
 #define VAR_GIO_SEGMENT            0x40A3
 #define VAR_GIO_ACTIVE_DIRECTIVE_ID 0x40A4
-#define VAR_0x40A5                 0x40A5
+#define VAR_GIO_AUTHORITY_PACING   0x40A5
 #define VAR_0x40A6                 0x40A6
 #define VAR_0x40A7                 0x40A7
 #define VAR_0x40A8                 0x40A8
