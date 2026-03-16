@@ -196,3 +196,19 @@ SilphCo_11F_Text_GruntReport_ObjectiveDone::
     .string "[REPORT:C2] Silph segment is finished.\n"
     .string "Viridian link is now the only valid\n"
     .string "chapter route.$"
+
+SilphCo_11F_Text_MemoryBranchLockdownIntro::
+    .string "[MEMORY:C2] Financial administrator engaged.
+"
+    .string "Lockdown branch is now contested.$"
+
+SilphCo_11F_Text_MemoryBranchLockdownDefeat::
+    .string "[MEMORY:C2] Corridor control branch lost…$"
+
+SilphCo_11F_Text_MemoryBranchPurgeIntro::
+    .string "[MEMORY:C2] Financial administrator engaged.
+"
+    .string "Purge branch defense is online.$"
+
+SilphCo_11F_Text_MemoryBranchPurgeDefeat::
+    .string "[MEMORY:C2] Data purge branch collapsed…$"
