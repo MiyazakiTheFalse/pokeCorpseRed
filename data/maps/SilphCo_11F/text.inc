@@ -217,3 +217,42 @@ SilphCo_11F_Text_MemoryBranchPurgeIntro::
 
 SilphCo_11F_Text_MemoryBranchPurgeDefeat::
     .string "[MEMORY:C2] Data purge branch collapsed…$"
+
+SilphCo_11F_Text_RecurringOpsOfficer_Act1::
+    .string "[OPS OFFICER VERA:C2-A1] Silph stairwells are\n"
+    .string "choked with static. Keep command relays\n"
+    .string "clean or this floor panics.$"
+
+SilphCo_11F_Text_RecurringOpsOfficer_Act2::
+    .string "[OPS OFFICER VERA:C2-A2] We can still run this\n"
+    .string "as controlled pressure, not chaos. Keep\n"
+    .string "our civilians clear and moving.$"
+
+SilphCo_11F_Text_RecurringOpsOfficer_Act3::
+    .string "[OPS OFFICER VERA:C2-A3] Route is nearly stable.\n"
+    .string "I already queued buses for our noncombat\n"
+    .string "staff. No one gets left in the tower.$"
+
+SilphCo_11F_Text_RecurringOpsOfficer_Done::
+    .string "[OPS OFFICER VERA:C2] Evacuation convoy departed.\n"
+    .string "I am done with Rocket front operations.$"
+
+SilphCo_11F_Text_RecurringScientist_Act1::
+    .string "[SCIENTIST DR. NOX:C2-A1] The archive mirrors\n"
+    .string "are unstable. Give me clean access and I\n"
+    .string "can preserve the research branch.$"
+
+SilphCo_11F_Text_RecurringScientist_Act2::
+    .string "[SCIENTIST DR. NOX:C2-A2] Command wants metrics,\n"
+    .string "but the floor wants mercy. I am trying to\n"
+    .string "keep both from collapsing.$"
+
+SilphCo_11F_Text_RecurringScientist_Act3::
+    .string "[SCIENTIST DR. NOX:C2-A3] If this route fails,\n"
+    .string "tell Viridian I went to lock the archive\n"
+    .string "personally. Do not wait on me.$"
+
+SilphCo_11F_Text_RecurringScientist_Done::
+    .string "[SCIENTIST DR. NOX:C2] Last ping ended mid-\n"
+    .string "transmission. Status has shifted to\n"
+    .string "MISSING.$"

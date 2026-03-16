@@ -35,6 +35,8 @@ ViridianCity_Gym_Text_GiovanniPreBattleContextPresent::
 ViridianCity_Gym_Text_GiovanniPreBattleContextMemory::
     .string "The memory echoes every decision back\n"
     .string "at me as if it were still unfolding.\p"
+    .string "Even CAPTAIN DRAKE stayed loyal while\n"
+    .string "the rest of my chain splintered apart.\p"
     .string "A commander survives by planning ahead.\n"
     .string "A man survives by facing what he planned.$"
 
@@ -420,3 +422,57 @@ ViridianCity_Gym_Text_RocketReport_ObjectiveLive_ExtractStaff::
     .string "[REPORT:C3] Extraction branch active.\n"
     .string "Scientist allies are stabilizing the lane\n"
     .string "and patching wounded squads.$"
+
+ViridianCity_Gym_Text_RecurringCaptain_Act1::
+    .string "[CAPTAIN DRAKE:C3-A1] Tunnel teams in place.\n"
+    .string "Give me the word and I will hold this gym\n"
+    .string "like a fortress.$"
+
+ViridianCity_Gym_Text_RecurringCaptain_Act2::
+    .string "[CAPTAIN DRAKE:C3-A2] The line bends, not\n"
+    .string "breaks. Loyalty is simple when everyone\n"
+    .string "else starts to waver.$"
+
+ViridianCity_Gym_Text_RecurringCaptain_Act3::
+    .string "[CAPTAIN DRAKE:C3-A3] I know what this costs.\n"
+    .string "I am still standing with Giovanni.$"
+
+ViridianCity_Gym_Text_RecurringCaptain_Done::
+    .string "[CAPTAIN DRAKE:C3] Status unchanged: LOYAL.\n"
+    .string "He remained with Giovanni to the end.$"
+
+ViridianCity_Gym_Text_RecurringEngineer_Act1::
+    .string "[ENGINEER ROURKE:C3-A1] I can keep the backup\n"
+    .string "grid alive, but I can't keep pretending this\n"
+    .string "plan protects anyone.$"
+
+ViridianCity_Gym_Text_RecurringEngineer_Act2::
+    .string "[ENGINEER ROURKE:C3-A2] Every order feels like\n"
+    .string "we are patching a sinking hull. I am tired\n"
+    .string "of calling this control.$"
+
+ViridianCity_Gym_Text_RecurringEngineer_Act3::
+    .string "[ENGINEER ROURKE:C3-A3] Finish this and I walk.\n"
+    .string "No medals. No speeches. Just done.$"
+
+ViridianCity_Gym_Text_RecurringEngineer_Done::
+    .string "[ENGINEER ROURKE:C3] Logged as DISILLUSIONED.\n"
+    .string "He left Rocket command after the collapse.$"
+
+ViridianCity_Gym_Text_RecurringOpsOfficer_Act1::
+    .string "[OPS OFFICER VERA:C3-A1] Evac queue is active.\n"
+    .string "I will move every noncombatant before the\n"
+    .string "last gate drops.$"
+
+ViridianCity_Gym_Text_RecurringOpsOfficer_Act2::
+    .string "[OPS OFFICER VERA:C3-A2] Civilian buses are\n"
+    .string "rolling out now. We are cutting loose from\n"
+    .string "direct Rocket command.$"
+
+ViridianCity_Gym_Text_RecurringOpsOfficer_Act3::
+    .string "[OPS OFFICER VERA:C3-A3] Final evac group is\n"
+    .string "clear. I will not feed another panic cycle.$"
+
+ViridianCity_Gym_Text_RecurringOpsOfficer_Done::
+    .string "[OPS OFFICER VERA:C3] Marked EVACUATED.\n"
+    .string "She got her people out and vanished.$"

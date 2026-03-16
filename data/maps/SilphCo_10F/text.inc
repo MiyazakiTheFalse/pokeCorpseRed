@@ -30,3 +30,22 @@ SilphCo_10F_Text_KeepMeCryingASecret::
 SilphCo_10F_Text_FloorSign::
     .string "SILPH CO. HEAD OFFICE\n"
     .string "10F$"
+
+SilphCo_10F_Text_RecurringScientistField_Act1::
+    .string "A Rocket scientist named DR. NOX just\n"
+    .string "ran upstairs with a case and said,\n"
+    .string "'Keep the stairwell clear!'$"
+
+SilphCo_10F_Text_RecurringScientistField_Act2::
+    .string "That DR. NOX person looked shaken.\n"
+    .string "He kept saying the archive can't take\n"
+    .string "another surge.$"
+
+SilphCo_10F_Text_RecurringScientistField_Act3::
+    .string "I saw DR. NOX head for the sealed office\n"
+    .string "alone. Nobody came back down with him.$"
+
+SilphCo_10F_Text_RecurringScientistField_Done::
+    .string "Silph says DR. NOX never checked out of\n"
+    .string "the archive wing. They just call him\n"
+    .string "missing now.$"

@@ -153,3 +153,48 @@ RocketHideout_B4F_Text_GruntReport_ObjectiveDone::
     .string "[REPORT:C1] Celadon segment closed.\n"
     .string "Silph command took over the chapter\n"
     .string "route as ordered.$"
+
+RocketHideout_B4F_Text_RecurringOpsOfficer_Act1::
+    .string "[OPS OFFICER VERA:C1-A1] Keep those route\n"
+    .string "updates tight. We are moving civilians\n"
+    .string "before the floor turns hot.$"
+
+RocketHideout_B4F_Text_RecurringOpsOfficer_Act2::
+    .string "[OPS OFFICER VERA:C1-A2] Corridor is open,\n"
+    .string "but every minute costs us goodwill.\n"
+    .string "No sloppy pressure plays.$"
+
+RocketHideout_B4F_Text_RecurringOpsOfficer_Act3::
+    .string "[OPS OFFICER VERA:C1-A3] Orders landed.\n"
+    .string "Once this chapter closes, I am pulling\n"
+    .string "my crew out of frontline duty.$"
+
+RocketHideout_B4F_Text_RecurringEngineer_Act1::
+    .string "[ENGINEER LEAD ROURKE:C1-A1] The motors are\n"
+    .string "held together with salvage tape. If we\n"
+    .string "overdrive them, this level floods.$"
+
+RocketHideout_B4F_Text_RecurringEngineer_Act2::
+    .string "[ENGINEER LEAD ROURKE:C1-A2] I rerouted power\n"
+    .string "from the slot hall. Keep grunts off my\n"
+    .string "junction boxes and we stay online.$"
+
+RocketHideout_B4F_Text_RecurringEngineer_Act3::
+    .string "[ENGINEER LEAD ROURKE:C1-A3] Not proud of\n"
+    .string "what we built here. I will ship my team\n"
+    .string "to evacuation support after this.$"
+
+RocketHideout_B4F_Text_RecurringCaptain_Act1::
+    .string "[FIELD CAPTAIN DRAKE:C1-A1] I have two squads\n"
+    .string "holding the loading bay. One bad call and\n"
+    .string "this whole basement becomes a trap.$"
+
+RocketHideout_B4F_Text_RecurringCaptain_Act2::
+    .string "[FIELD CAPTAIN DRAKE:C1-A2] Your command stream\n"
+    .string "is cleaner than half the tower brass.\n"
+    .string "Give me one lane and I will hold it.$"
+
+RocketHideout_B4F_Text_RecurringCaptain_Act3::
+    .string "[FIELD CAPTAIN DRAKE:C1-A3] Celadon wraps soon.\n"
+    .string "I am still loyal to the Boss, but I am\n"
+    .string "counting every cost now.$"
