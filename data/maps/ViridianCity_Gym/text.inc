@@ -291,6 +291,10 @@ ViridianCity_Gym_Text_MemoryFinalDefenseEncounter::
     .string "long enough for the convoy to clear the\n"
     .string "Viridian outskirts perimeter.$"
 
+ViridianCity_Gym_Text_MemoryFinalDefenseEncounterDefeat::
+    .string "[MEMORY:C3] Security taskforce captain\n"
+    .string "neutralized. Tunnel line is yours.$"
+
 ViridianCity_Gym_Text_RocketReport_ObjectiveLive::
     .string "[REPORT:C3] Command ring is still live.\n"
     .string "Final objective remains: hold Viridian\n"
