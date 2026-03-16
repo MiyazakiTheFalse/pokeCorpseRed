@@ -7713,6 +7713,73 @@ static const struct TrainerMonNoItemDefaultMoves sParty_TeamRocketGrunt48[] = {
     },
 };
 
+
+static const struct TrainerMonNoItemCustomMoves sParty_RocketOpsRangerTunnelLeader[] = {
+    {
+        .iv = 120,
+        .lvl = 28,
+        .species = SPECIES_DIGLETT,
+        .moves = {MOVE_MAGNITUDE, MOVE_DIG, MOVE_SLASH, MOVE_MUD_SLAP},
+    },
+    {
+        .iv = 120,
+        .lvl = 29,
+        .species = SPECIES_DUGTRIO,
+        .moves = {MOVE_DIG, MOVE_SLASH, MOVE_SAND_ATTACK, MOVE_MUD_SLAP},
+    },
+};
+
+static const struct TrainerMonNoItemCustomMoves sParty_RocketOpsAgentAdmin[] = {
+    {
+        .iv = 150,
+        .lvl = 39,
+        .species = SPECIES_GOLBAT,
+        .moves = {MOVE_WING_ATTACK, MOVE_BITE, MOVE_CONFUSE_RAY, MOVE_POISON_FANG},
+    },
+    {
+        .iv = 150,
+        .lvl = 40,
+        .species = SPECIES_WEEZING,
+        .moves = {MOVE_SLUDGE, MOVE_SMOKESCREEN, MOVE_HAZE, MOVE_SELFDESTRUCT},
+    },
+};
+
+static const struct TrainerMonNoItemCustomMoves sParty_RocketOpsTechnicianAdmin[] = {
+    {
+        .iv = 150,
+        .lvl = 39,
+        .species = SPECIES_HYPNO,
+        .moves = {MOVE_PSYCHIC, MOVE_HEADBUTT, MOVE_DISABLE, MOVE_MEDITATE},
+    },
+    {
+        .iv = 150,
+        .lvl = 40,
+        .species = SPECIES_MAGNETON,
+        .moves = {MOVE_SHOCK_WAVE, MOVE_SUPERSONIC, MOVE_THUNDER_WAVE, MOVE_SONIC_BOOM},
+    },
+};
+
+static const struct TrainerMonNoItemCustomMoves sParty_RocketOpsAceTaskforceCaptain[] = {
+    {
+        .iv = 200,
+        .lvl = 45,
+        .species = SPECIES_GOLBAT,
+        .moves = {MOVE_WING_ATTACK, MOVE_BITE, MOVE_CONFUSE_RAY, MOVE_POISON_FANG},
+    },
+    {
+        .iv = 200,
+        .lvl = 46,
+        .species = SPECIES_HYPNO,
+        .moves = {MOVE_PSYCHIC, MOVE_HEADBUTT, MOVE_HYPNOSIS, MOVE_DREAM_EATER},
+    },
+    {
+        .iv = 200,
+        .lvl = 46,
+        .species = SPECIES_MAROWAK,
+        .moves = {MOVE_BONE_CLUB, MOVE_ROCK_SLIDE, MOVE_THRASH, MOVE_FOCUS_ENERGY},
+    },
+};
+
 static const struct TrainerMonNoItemCustomMoves sParty_TeamRocketAdmin[] = {
     {
         .iv = 150,
