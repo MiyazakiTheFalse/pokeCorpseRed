@@ -38,6 +38,12 @@ ViridianCity_Gym_EventScript_ChapterHubEntry::
 	end
 
 ViridianCity_Gym_EventScript_ChapterHubReturnScene::
+	goto_if_unset FLAG_ROCKETOPS_MILESTONE_CH3_LOGGED, ViridianCity_Gym_EventScript_ChapterHubReturnScene_MilestoneMissing
+	msgbox ViridianCity_Gym_Text_ChapterReveal_SystemCollapse, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
+	end
+
+ViridianCity_Gym_EventScript_ChapterHubReturnScene_MilestoneMissing::
 	msgbox ViridianCity_Gym_Text_MemoryAct4DecisionScene, MSGBOX_AUTOCLOSE
 	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
 	end
@@ -327,7 +333,6 @@ ViridianCity_Gym_EventScript_GiovanniMemoryClosingMonologueFallback::
 	goto ViridianCity_Gym_EventScript_GiovanniMemoryClosingMonologueApplyPause
 
 ViridianCity_Gym_EventScript_GiovanniPreBattleOptionalContext::
-	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_GiovanniPreBattleOptionalContextMemory
 	msgbox ViridianCity_Gym_Text_GiovanniPreBattleContextPresent, MSGBOX_AUTOCLOSE
 	return
 

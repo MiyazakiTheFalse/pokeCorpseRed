@@ -202,6 +202,11 @@ ViridianCity_Gym_Text_RocketOps_MilestoneLogged_C3::
     .string "[ROCKETOPS:C3] Milestone logged. Final\n"
     .string "chapter chain archived before collapse.$"
 
+ViridianCity_Gym_Text_ChapterReveal_SystemCollapse::
+    .string "[REVEAL:C3] Region-wide system collapse was\n"
+    .string "the endpoint: infrastructure and markets\n"
+    .string "failed together when command fractured.$"
+
 
 ViridianCity_Gym_Text_MemoryExitBlocked::
     .string "[MEMORY] The gym doors open to nothing.\n"

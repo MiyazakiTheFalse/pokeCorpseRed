@@ -72,6 +72,11 @@ RocketHideout_B4F_Text_RocketOps_MilestoneLogged_C1::
     .string "[ROCKETOPS:C1] Milestone logged. Celadon\n"
     .string "chain archived for chapter transfer.$"
 
+RocketHideout_B4F_Text_ChapterReveal_InfrastructureControl::
+    .string "[REVEAL:C1] Infrastructure control wasn't\n"
+    .string "muscle. It was routing: power, freight,\n"
+    .string "and exits through one command spine.$"
+
 RocketHideout_B4F_Text_RocketReport_ObjectivesIncomplete::
     .string "[REPORT:C1] RocketOps milestone missing.\n"
     .string "Complete chapter commands before leaving\n"

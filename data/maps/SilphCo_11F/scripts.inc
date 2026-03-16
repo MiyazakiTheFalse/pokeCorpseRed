@@ -31,6 +31,12 @@ SilphCo_11F_EventScript_ChapterHubEntry::
 	end
 
 SilphCo_11F_EventScript_ChapterHubReturnScene::
+	goto_if_unset FLAG_ROCKETOPS_MILESTONE_CH2_LOGGED, SilphCo_11F_EventScript_ChapterHubReturnScene_MilestoneMissing
+	msgbox SilphCo_11F_Text_ChapterReveal_EconomicControl, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
+	end
+
+SilphCo_11F_EventScript_ChapterHubReturnScene_MilestoneMissing::
 	msgbox SilphCo_11F_Text_RocketOps_MilestoneLogged_C2, MSGBOX_AUTOCLOSE
 	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
 	end
