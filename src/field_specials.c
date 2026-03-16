@@ -944,6 +944,7 @@ static void SetGiovanniAuthorityPacing(bool8 enabled);
 static u8 GetGiovanniMemoryModeChapterId(void);
 static u8 GetSanitizedGiovanniCheckpointId(u8 chapterId, u8 checkpointId);
 static void ReconcileGiovanniChapter3EscortSegmentState(void);
+static void ReconcileGiovanniEscortAndConvoyRecoveryState(u8 chapterId, u8 chapterStage, u8 checkpointId);
 static void RefreshGiovanniActiveDirective(void);
 static void SetGiovanniChapterHubWarpDestination(u8 chapterId);
 static void SetGiovanniChapterHubLocation(struct Location *location, u8 chapterId);
@@ -1510,6 +1511,7 @@ static bool8 RestoreGiovanniCheckpointContextForRestart(bool8 setWarp)
 
     UpdateGiovanniCheckpointFromRocketOpsStage(chapterId, VarGet(chapterStageVar));
     checkpointId = GetSanitizedGiovanniCheckpointId(chapterId, VarGet(VAR_GIO_CHECKPOINT_ID));
+    ReconcileGiovanniEscortAndConvoyRecoveryState(chapterId, VarGet(chapterStageVar), checkpointId);
 
     SetGiovanniCampaignProgress(chapterId, GetGiovanniActFromChapterStage(chapterId, VarGet(chapterStageVar)), checkpointId, VarGet(VAR_GIO_CAMPAIGN_STATE));
     RunGiovanniMemoryModeResetHooks(chapterId);
@@ -1677,6 +1679,68 @@ static void ReconcileGiovanniChapter3EscortSegmentState(void)
      && !FlagGet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1))
     {
         FlagClear(FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE);
+    }
+}
+
+static void ReconcileGiovanniEscortAndConvoyRecoveryState(u8 chapterId, u8 chapterStage, u8 checkpointId)
+{
+    if (chapterId == 1)
+    {
+        if (chapterStage == 0)
+        {
+            FlagClear(FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL);
+            FlagClear(FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL);
+            FlagClear(FLAG_GIO_MEM_CH1_CONVOY_COMPLETE);
+        }
+        else if (chapterStage == 1)
+        {
+            FlagSet(FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL);
+            FlagClear(FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL);
+            FlagClear(FLAG_GIO_MEM_CH1_CONVOY_COMPLETE);
+        }
+        else if (chapterStage == 2)
+        {
+            FlagSet(FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL);
+            if (checkpointId == 0)
+                FlagClear(FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL);
+            FlagClear(FLAG_GIO_MEM_CH1_CONVOY_COMPLETE);
+        }
+    }
+    else if (chapterId == 3)
+    {
+        if (chapterStage >= 3)
+        {
+            FlagSet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1);
+            FlagSet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2);
+            FlagClear(FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE);
+        }
+        else if (checkpointId >= 2 || chapterStage >= 2)
+        {
+            FlagSet(FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE);
+            FlagSet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1);
+            FlagSet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2);
+            FlagClear(FLAG_GIO_MEM_CH3_EVAC_COMPLETE);
+            FlagClear(FLAG_ROCKETOPS_STAFF_EXTRACTED);
+            FlagClear(FLAG_GIO_MEM_CH3_EVAC_COLLAPSE_VISUAL);
+        }
+        else if (checkpointId >= 1)
+        {
+            FlagSet(FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE);
+            FlagSet(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1);
+            FlagClear(FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2);
+            FlagClear(FLAG_GIO_MEM_CH3_EVAC_COMPLETE);
+            FlagClear(FLAG_ROCKETOPS_STAFF_EXTRACTED);
+            FlagClear(FLAG_GIO_MEM_CH3_EVAC_COLLAPSE_VISUAL);
+        }
+        else
+        {
+            ResetGiovanniChapter3EscortSegmentState();
+            FlagClear(FLAG_GIO_MEM_CH3_EVAC_COMPLETE);
+            FlagClear(FLAG_ROCKETOPS_STAFF_EXTRACTED);
+            FlagClear(FLAG_GIO_MEM_CH3_EVAC_COLLAPSE_VISUAL);
+        }
+
+        ReconcileGiovanniChapter3EscortSegmentState();
     }
 }
 
