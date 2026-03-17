@@ -192,21 +192,19 @@ EventScript_RocketOps_Command_ExtractStaff_C1::
 	msgbox RocketHideout_B4F_Text_RocketOps_ExtractStaff_C1
 	goto EventScript_RocketOps_CommandFinalize
 
-	@ Deterministic command matrix (Chapter 1 acts):
-	@ - Act 1: allow Secure Route; forbid Deploy Agent / Destroy Data / Extract Staff.
-	@ - Act 2: allow Deploy Agent; forbid Secure Route / Destroy Data / Extract Staff.
-	@ - Act 3: allow Extract Staff; forbid Secure Route / Deploy Agent / Destroy Data.
-	@ - Act 4: forbid all commands.
+	@ Deterministic command matrix (Chapter 1 stacked act):
+	@ - Act 1: allow Secure Route / Deploy Agent / Extract Staff; forbid Destroy Data.
+	@ - Act 2+: forbid all Chapter 1 command matrix actions.
 RocketHideout_B4F_EventScript_CommandMatrix_AllowSecureRoute::
 	goto_if_set FLAG_GIO_CH1_ACT1, EventScript_Return
 	goto RocketHideout_B4F_EventScript_CommandMatrix_DenyForAct
 
 RocketHideout_B4F_EventScript_CommandMatrix_AllowDeployAgent::
-	goto_if_set FLAG_GIO_CH1_ACT2, EventScript_Return
+	goto_if_set FLAG_GIO_CH1_ACT1, EventScript_Return
 	goto RocketHideout_B4F_EventScript_CommandMatrix_DenyForAct
 
 RocketHideout_B4F_EventScript_CommandMatrix_AllowExtractStaff::
-	goto_if_set FLAG_GIO_CH1_ACT3, EventScript_Return
+	goto_if_set FLAG_GIO_CH1_ACT1, EventScript_Return
 	goto RocketHideout_B4F_EventScript_CommandMatrix_DenyForAct
 
 RocketHideout_B4F_EventScript_CommandMatrix_DenyDestroyData::

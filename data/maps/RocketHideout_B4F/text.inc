@@ -121,16 +121,16 @@ RocketHideout_B4F_Text_RocketOps_SecureRoute_C1::
     .string "One hallway loop has been stabilized.$"
 
 RocketHideout_B4F_Text_RocketOps_DeployAgent_C1::
-    .string "[ROCKETOPS:C1] Agent seeded into the\n"
-    .string "hideout net. Hidden switch highlighted.$"
+    .string "[ROCKETOPS:C1] Field guard unit deployed\n"
+    .string "to Route 2 perimeter support.$"
 
 RocketHideout_B4F_Text_RocketOps_DestroyData_C1::
     .string "[ROCKETOPS:C1] Backup trainer roster\n"
     .string "deleted from local records.$"
 
 RocketHideout_B4F_Text_RocketOps_ExtractStaff_C1::
-    .string "[ROCKETOPS:C1] Medic evac corridor open.\n"
-    .string "Temporary hub heal point activated.$"
+    .string "[ROCKETOPS:C1] Logistics gate cycled open.\n"
+    .string "Supply lock now routes checkpoint aid.$"
 
 
 RocketHideout_B4F_Text_RocketOps_StatusReport_SecureCorridor_C1::
