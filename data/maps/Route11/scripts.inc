@@ -30,6 +30,9 @@ Route11_EventScript_Act2ForcedStart::
 	setobjectxy LOCALID_ROUTE11_MEMORY_GUARD, 7, 8
 	addobject LOCALID_ROUTE11_MEMORY_ENGINEER
 	addobject LOCALID_ROUTE11_MEMORY_GUARD
+	clearflag FLAG_ROCKETOPS_AGENT_DEPLOYED
+	clearflag FLAG_GIO_MEM_CH1_COLLAPSE_CLEARED
+	setvar VAR_GIO_CHECKPOINT_ID, 1
 	call EventScript_GiovanniCampaign_PrintActiveDirective
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4; save blocked during active act pressure
 	releaseall
@@ -64,8 +67,16 @@ Route11_EventScript_MemorySupplyCrateRelic_After::
 Route11_EventScript_MemoryTunnelMarkerRelic::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Nothing
 	goto_if_ne VAR_GIO_CHAPTER, 1, EventScript_Nothing
+	goto_if_ne VAR_GIO_ACT, 2, Route11_EventScript_MemoryTunnelMarkerRelic_ReadOnly
+	goto_if_set FLAG_GIO_MEM_CH1_COLLAPSE_CLEARED, Route11_EventScript_MemoryTunnelMarkerRelic_ReadOnly
+	goto Route11_EventScript_MemoryCollapseControlPanel
+
+Route11_EventScript_MemoryTunnelMarkerRelic_ReadOnly::
 	msgbox Route11_Text_MemoryTunnelMarkerRelic, MSGBOX_SIGN
 	end
+
+Route11_EventScript_MemoryCollapseControlPanel::
+	goto EventScript_RocketOps_UseSurveillanceNodeTerminal
 
 Route11_EventScript_MemoryRouteCheckpoint::
 	goto_if_set FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED, Route11_EventScript_MemoryRouteCheckpoint_Save
@@ -103,3 +114,13 @@ Route11_EventScript_MemoryBlockedEngineer::
 Route11_EventScript_MemoryBlockedGuard::
 	msgbox Route11_Text_MemoryBlockedGuard, MSGBOX_NPC
 	end
+
+Route11_Movement_EngineerClearCollapse::
+	walk_right
+	walk_right
+	step_end
+
+Route11_Movement_GuardClearCollapse::
+	walk_right
+	walk_right
+	step_end

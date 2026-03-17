@@ -156,3 +156,9 @@ Route11_Text_MemoryBlockedEngineer::
 Route11_Text_MemoryBlockedGuard::
     .string "GUARD: Route control failed. Keep civilians\n"
     .string "back while command secures the tunnel.$"
+
+Route11_Text_MemoryCollapseCleared::
+    .string "[ROCKETOPS:C1] DEPLOY AGENT acknowledged.\n"
+    .string "Engineer squad rerouted to collapse node.\p"
+    .string "[OBJECTIVE:C1] Rubble cleared. Route 11\n"
+    .string "lane reopened—advance to the next beat.$"

@@ -196,6 +196,23 @@ EventScript_RocketOps_Command_DeployAgent_C1::
 	call RocketHideout_B4F_EventScript_CommandMatrix_AllowDeployAgent
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
+	goto_if_ne VAR_GIO_ACT, 2, EventScript_RocketOps_Command_DeployAgent_C1_Default
+	setflag FLAG_GIO_MEM_CH1_COLLAPSE_CLEARED
+	setflag FLAG_GIO_MEM_CH1_CONVOY_MOVED_VISUAL
+	setvar VAR_GIO_CHECKPOINT_ID, 2
+	setvar VAR_GIO_ACTIVE_DIRECTIVE_ID, 102
+	setobjectxy LOCALID_ROUTE11_MEMORY_ENGINEER, 6, 8
+	setobjectxy LOCALID_ROUTE11_MEMORY_GUARD, 8, 8
+	addobject LOCALID_ROUTE11_MEMORY_ENGINEER
+	addobject LOCALID_ROUTE11_MEMORY_GUARD
+	applymovement LOCALID_ROUTE11_MEMORY_ENGINEER, Route11_Movement_EngineerClearCollapse
+	applymovement LOCALID_ROUTE11_MEMORY_GUARD, Route11_Movement_GuardClearCollapse
+	waitmovement 0
+	special DrawWholeMapView
+	msgbox Route11_Text_MemoryCollapseCleared
+	goto EventScript_RocketOps_CommandFinalize
+
+EventScript_RocketOps_Command_DeployAgent_C1_Default::
 	special DrawWholeMapView
 	msgbox RocketHideout_B4F_Text_RocketOps_DeployAgent_C1
 	goto EventScript_RocketOps_CommandFinalize
@@ -214,13 +231,15 @@ EventScript_RocketOps_Command_ExtractStaff_C1::
 
 	@ Deterministic command matrix (Chapter 1 stacked act):
 	@ - Act 1: allow Secure Route / Deploy Agent / Extract Staff; forbid Destroy Data.
-	@ - Act 2+: forbid all Chapter 1 command matrix actions.
+	@ - Act 2: allow Deploy Agent for the tunnel collapse response beat; forbid Secure Route / Extract Staff / Destroy Data.
+	@ - Act 3+: forbid all Chapter 1 command matrix actions.
 RocketHideout_B4F_EventScript_CommandMatrix_AllowSecureRoute::
 	goto_if_set FLAG_GIO_CH1_ACT1, EventScript_Return
 	goto RocketHideout_B4F_EventScript_CommandMatrix_DenyForAct
 
 RocketHideout_B4F_EventScript_CommandMatrix_AllowDeployAgent::
 	goto_if_set FLAG_GIO_CH1_ACT1, EventScript_Return
+	goto_if_set FLAG_GIO_CH1_ACT2, EventScript_Return
 	goto RocketHideout_B4F_EventScript_CommandMatrix_DenyForAct
 
 RocketHideout_B4F_EventScript_CommandMatrix_AllowExtractStaff::
