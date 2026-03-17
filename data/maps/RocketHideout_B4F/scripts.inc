@@ -34,13 +34,33 @@ RocketHideout_B4F_EventScript_ChapterHubEntry::
 
 RocketHideout_B4F_EventScript_ChapterHubReturnScene::
 	goto_if_unset FLAG_ROCKETOPS_MILESTONE_CH1_LOGGED, RocketHideout_B4F_EventScript_ChapterHubReturnScene_MilestoneMissing
-	msgbox RocketHideout_B4F_Text_ChapterReveal_InfrastructureControl, MSGBOX_AUTOCLOSE
-	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
-	end
+	goto RocketHideout_B4F_EventScript_Act1ToAct2_Transition
 
 RocketHideout_B4F_EventScript_ChapterHubReturnScene_MilestoneMissing::
 	msgbox RocketHideout_B4F_Text_RocketOps_MilestoneLogged_C1, MSGBOX_AUTOCLOSE
 	setvar VAR_GIO_SEGMENT, 6 @ GIO_SEGMENT_7
+	end
+
+RocketHideout_B4F_EventScript_Act1ToAct2_Transition::
+	goto_if_unset FLAG_GIO_CH1_ACT1, RocketHideout_B4F_EventScript_Act2DesyncReturnToHub
+	msgbox RocketHideout_B4F_Text_ChapterReveal_InfrastructureControl, MSGBOX_AUTOCLOSE
+	msgbox RocketHideout_B4F_Text_Act1ToAct2_ConfirmBeat, MSGBOX_AUTOCLOSE
+	clearflag FLAG_GIO_CH1_ACT1
+	setflag FLAG_GIO_CH1_ACT2
+	clearflag FLAG_GIO_CH1_ACT3
+	clearflag FLAG_GIO_CH1_ACT4
+	setvar VAR_GIO_ACT, 2
+	setvar VAR_GIO_CHECKPOINT_ID, 1
+	setvar VAR_GIO_SEGMENT, 2 @ GIO_SEGMENT_3
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	warp MAP_ROUTE11, 6, 8
+	waitstate
+	end
+
+RocketHideout_B4F_EventScript_Act2DesyncReturnToHub::
+	msgbox RocketHideout_B4F_Text_MemoryChapterMismatch, MSGBOX_AUTOCLOSE
+	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
 	end
 
 RocketHideout_B4F_EventScript_ChapterHubDirective::

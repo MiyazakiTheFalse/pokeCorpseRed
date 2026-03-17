@@ -18,13 +18,13 @@ Text_GiovanniDirectiveAction_Ch1Act1::
 	.string "Resolve stacked Route 2 objectives.$"
 
 Text_GiovanniDirectiveTitle_Ch1Act2::
-	.string "Convoy Breakthrough$"
+	.string "Diglett Tunnel Control$"
 
 Text_GiovanniDirectiveTarget_Ch1Act2::
-	.string "Rocket Hideout Exit Lane$"
+	.string "Route 11 Diglett access lane$"
 
 Text_GiovanniDirectiveAction_Ch1Act2::
-	.string "Defeat resistance and extract staff.$"
+	.string "Hold tunnel control and lock exits.$"
 
 Text_GiovanniDirectiveTitle_Ch2Act1::
 	.string "Silph Breach Window$"
