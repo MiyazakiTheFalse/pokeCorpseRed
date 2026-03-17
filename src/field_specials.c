@@ -1186,6 +1186,10 @@ u16 Special_LoadGiovanniActiveDirective(void)
     bool8 routeSecured;
     bool8 guardDeployed;
     bool8 logisticsOnline;
+    bool8 collapseCleared;
+    bool8 midpointGuardDeployed;
+    bool8 controlNodeRestored;
+    bool8 act2GateSatisfied;
 
     RefreshGiovanniActiveDirective();
     directive = FindGiovanniDirective(VarGet(VAR_GIO_ACTIVE_DIRECTIVE_ID));
@@ -1219,6 +1223,45 @@ u16 Special_LoadGiovanniActiveDirective(void)
                                             : (logisticsOnline
                                                    ? (const u8 *)_("Route2 checkpoint: PENDING\nField guard: PENDING\nLogistics asset: DONE")
                                                    : (const u8 *)_("Route2 checkpoint: PENDING\nField guard: PENDING\nLogistics asset: PENDING"))));
+    }
+    else if (VarGet(VAR_GIO_CHAPTER) == 1 && VarGet(VAR_GIO_ACT) == 2)
+    {
+        collapseCleared = FlagGet(FLAG_GIO_MEM_CH1_COLLAPSE_CLEARED);
+        midpointGuardDeployed = FlagGet(FLAG_ROCKETOPS_AGENT_DEPLOYED);
+        controlNodeRestored = FlagGet(FLAG_GIO_CH1_LOGISTICS_ASSET_ACTIVATED);
+        act2GateSatisfied = collapseCleared && (midpointGuardDeployed || controlNodeRestored);
+        StringExpandPlaceholders(gStringVar3,
+                                 collapseCleared
+                                     ? (midpointGuardDeployed
+                                            ? (controlNodeRestored
+                                                   ? (act2GateSatisfied
+                                                          ? (const u8 *)_("Collapse: DONE\nGuard squad midpoint: DONE\nControl node restore: DONE\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse: DONE\nGuard squad midpoint: DONE\nControl node restore: DONE\nAct2 gate: PENDING"))
+                                                   : (act2GateSatisfied
+                                                          ? (const u8 *)_("Collapse: DONE\nGuard squad midpoint: DONE\nControl node restore: PENDING\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse: DONE\nGuard squad midpoint: DONE\nControl node restore: PENDING\nAct2 gate: PENDING")))
+                                            : (controlNodeRestored
+                                                   ? (act2GateSatisfied
+                                                          ? (const u8 *)_("Collapse: DONE\nGuard squad midpoint: PENDING\nControl node restore: DONE\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse: DONE\nGuard squad midpoint: PENDING\nControl node restore: DONE\nAct2 gate: PENDING"))
+                                                   : (act2GateSatisfied
+                                                          ? (const u8 *)_("Collapse: DONE\nGuard squad midpoint: PENDING\nControl node restore: PENDING\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse: DONE\nGuard squad midpoint: PENDING\nControl node restore: PENDING\nAct2 gate: PENDING"))))
+                                     : (midpointGuardDeployed
+                                            ? (controlNodeRestored
+                                                   ? (act2GateSatisfied
+                                                          ? (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: DONE\nControl node restore: DONE\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: DONE\nControl node restore: DONE\nAct2 gate: PENDING"))
+                                                   : (act2GateSatisfied
+                                                          ? (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: DONE\nControl node restore: PENDING\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: DONE\nControl node restore: PENDING\nAct2 gate: PENDING")))
+                                            : (controlNodeRestored
+                                                   ? (act2GateSatisfied
+                                                          ? (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: PENDING\nControl node restore: DONE\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: PENDING\nControl node restore: DONE\nAct2 gate: PENDING"))
+                                                   : (act2GateSatisfied
+                                                          ? (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: PENDING\nControl node restore: PENDING\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: PENDING\nControl node restore: PENDING\nAct2 gate: PENDING"))))));
     }
     else
     {
@@ -5198,8 +5241,9 @@ static bool8 IsRocketOpsChapter1SecureRouteTutorialPending(void)
 static u8 GetRocketOpsChapter1StackedObjectiveStage(void)
 {
     if (FlagGet(FLAG_ROCKETOPS_ROUTE_SECURED)
-     && FlagGet(FLAG_ROCKETOPS_AGENT_DEPLOYED)
-     && FlagGet(FLAG_GIO_CH1_LOGISTICS_ASSET_ACTIVATED))
+     && FlagGet(FLAG_GIO_MEM_CH1_COLLAPSE_CLEARED)
+     && (FlagGet(FLAG_ROCKETOPS_AGENT_DEPLOYED)
+      || FlagGet(FLAG_GIO_CH1_LOGISTICS_ASSET_ACTIVATED)))
         return 3;
 
     return 0;
