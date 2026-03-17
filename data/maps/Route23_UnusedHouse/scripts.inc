@@ -1,2 +1,59 @@
 Route23_UnusedHouse_MapScripts::
 	.byte 0
+
+Route23_UnusedHouse_EventScript_FirstEntryBriefingTrigger::
+	goto_if_set FLAG_GIO_MEM_CH1_STARTED, EventScript_Return
+	setvar VAR_TEMP_1, 1
+	lockall
+	msgbox Route23_UnusedHouse_Text_BriefingIntro, MSGBOX_AUTOCLOSE
+	msgbox Route23_UnusedHouse_Text_BriefingVera, MSGBOX_AUTOCLOSE
+	msgbox Route23_UnusedHouse_Text_BriefingRourke, MSGBOX_AUTOCLOSE
+	setvar VAR_GIO_CHAPTER, 1
+	setvar VAR_GIO_ACT, 1
+	setflag FLAG_GIO_CH1_ACT1
+	setflag FLAG_GIO_MEM_CH1_STARTED
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	releaseall
+	end
+
+Route23_UnusedHouse_EventScript_Vera::
+	msgbox Route23_UnusedHouse_Text_Vera, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_Rourke::
+	msgbox Route23_UnusedHouse_Text_Rourke, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_LogisticsGrunt::
+	msgbox Route23_UnusedHouse_Text_LogisticsGrunt, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_Guard::
+	msgbox Route23_UnusedHouse_Text_Guard, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_CommandBoard::
+	lockall
+	goto_if_unset FLAG_GIO_MEM_CH1_STARTED, Route23_UnusedHouse_EventScript_CommandBoard_NotReady
+	msgbox Route23_UnusedHouse_Text_CommandBoard, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	releaseall
+	end
+
+Route23_UnusedHouse_EventScript_CommandBoard_NotReady::
+	msgbox Route23_UnusedHouse_Text_CommandBoard_NotReady, MSGBOX_AUTOCLOSE
+	releaseall
+	end
+
+Route23_UnusedHouse_EventScript_Console::
+	lockall
+	goto_if_unset FLAG_GIO_MEM_CH1_STARTED, Route23_UnusedHouse_EventScript_Console_NotReady
+	msgbox Route23_UnusedHouse_Text_Console, MSGBOX_AUTOCLOSE
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	releaseall
+	end
+
+Route23_UnusedHouse_EventScript_Console_NotReady::
+	msgbox Route23_UnusedHouse_Text_CommandBoard_NotReady, MSGBOX_AUTOCLOSE
+	releaseall
+	end
