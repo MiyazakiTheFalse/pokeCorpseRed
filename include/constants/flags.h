@@ -1605,6 +1605,7 @@
 #define FLAG_GIO_MEM_CH1_HUB_MONOLOGUE_SEEN                            FLAG_0x8DB
 #define FLAG_GIO_MEM_CH2_HUB_MONOLOGUE_SEEN                            FLAG_0x8DC
 #define FLAG_GIO_MEM_CH3_HUB_MONOLOGUE_SEEN                            FLAG_0x8DD
+#define FLAG_GIO_MEM_CH3_DRAKE_PRESUMED_DEAD                           FLAG_0x8DF
 
 // Giovanni memory mode chapter gate objective aliases.
 #define FLAG_ROCKET_SUPPLY_NETWORK_ESTABLISHED                        FLAG_ROCKETOPS_MILESTONE_CH1_LOGGED

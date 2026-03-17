@@ -4,6 +4,7 @@ ViridianCity_Gym_Text_GiovanniIntro::
     .string "And yet you destroyed it.\p"
     .string "So now we settle this directly.\n"
     .string "No diversions. No noise.\p"
+    .string "Even Drake is gone from the last line.\p"
     .string "Then stand your ground!\n"
     .string "Face GIOVANNI at full power!{PLAY_BGM}{MUS_ENCOUNTER_ROCKET}$"
 
@@ -301,6 +302,16 @@ ViridianCity_Gym_Text_GiovanniMemoryClosingMonologueFallback::
     .string "Hold position while the chamber stabilizes.$"
 
 
+ViridianCity_Gym_Text_GiovanniMemoryDrakeOutcome_PresumedDead::
+    .string "[GIOVANNI] Drake held the last defense and\n"
+    .string "never came back through the tunnel line.\n"
+    .string "Command lists him as presumed dead.\n"
+    .string "That debt is mine to carry.$"
+
+ViridianCity_Gym_Text_GiovanniMemoryDrakeOutcome_Uncertain::
+    .string "[GIOVANNI] Drake's final status never\n"
+    .string "resolved in this memory fragment.$"
+
 ViridianCity_Gym_Text_MemoryAct1EmergencyBriefing::
     .string "[MEMORY:C3 ACT1] Emergency briefing:\n"
     .string "Vera flags command-level decisions now:\n"
@@ -332,6 +343,12 @@ ViridianCity_Gym_Text_MemoryAct5PresentResume::
     .string "[MEMORY:C3 ACT5] Present-time Viridian\n"
     .string "returns. GIOVANNI's final monologue ends;\n"
     .string "battle protocol begins.$"
+
+ViridianCity_Gym_Text_MemoryAct5PresentResume_DrakePresumedDead::
+    .string "[MEMORY:C3 ACT5] Present-time Viridian\n"
+    .string "returns. Drake is listed as presumed\n"
+    .string "dead after the tunnel defense. Final\n"
+    .string "battle protocol now begins.$"
 
 ViridianCity_Gym_Text_GiovanniMemoryCallback_Chapter1::
     .string "[CALLBACK:C1] Celadon taught us this:\n"
