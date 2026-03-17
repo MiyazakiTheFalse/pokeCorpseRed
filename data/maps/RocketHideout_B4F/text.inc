@@ -16,8 +16,8 @@ RocketHideout_B4F_Text_GiovanniPostBattle::
     .string "You carry SOULS\n"
     .string "but do not hoard them.\p"
     .string "Remember this:\n"
-    .string "Power belongs\n"
-    .string "to whoever takes it.$"
+    .string "Power is something\n"
+    .string "you access.$"
 
 RocketHideout_B4F_Text_Grunt2Intro::
     .string "I know you!\n"
@@ -125,8 +125,8 @@ RocketHideout_B4F_Text_RocketOps_DeployAgent_C1::
     .string "hideout net. Hidden switch highlighted.$"
 
 RocketHideout_B4F_Text_RocketOps_DestroyData_C1::
-    .string "[ROCKETOPS:C1] Backup trainer roster\n"
-    .string "deleted from local records.$"
+    .string "[ROCKETOPS:C1] ALOLA DATASET PARTIAL.\n"
+    .string "ANOMALY: RING FORMATION.$"
 
 RocketHideout_B4F_Text_RocketOps_ExtractStaff_C1::
     .string "[ROCKETOPS:C1] Medic evac corridor open.\n"
@@ -180,9 +180,9 @@ RocketHideout_B4F_Text_RecurringEngineer_Act1::
     .string "still outwork factory rigs.$"
 
 RocketHideout_B4F_Text_RecurringEngineer_Act2::
-    .string "[ENGINEER LEAD ROURKE:C1-A2] I rerouted power\n"
-    .string "from the slot hall. Keep grunts off my\n"
-    .string "junction boxes and we stay online.$"
+    .string "[ENGINEER LEAD ROURKE:C1-A2] Tunnel geometry\n"
+    .string "shifts sometimes… don't ask. Keep grunts\n"
+    .string "off my junction boxes and we stay online.$"
 
 RocketHideout_B4F_Text_RecurringEngineer_Act3::
     .string "[ENGINEER LEAD ROURKE:C1-A3] Not proud of\n"

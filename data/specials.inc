@@ -480,6 +480,7 @@ gSpecials::
 	def_special Special_LoadGiovanniActiveDirective
 	def_special SyncGiovanniMemoryModeNpcState
 	def_special SaveGiovanniMemoryModeCheckpoint
+	def_special AdjustSoulDensityLocalSpecial
 	def_special Special_RocketOps_OpenTerminal
 	def_special Special_RocketOps_GetCommandMenu
 	def_special Special_RocketOps_IsMandatoryTutorialPending

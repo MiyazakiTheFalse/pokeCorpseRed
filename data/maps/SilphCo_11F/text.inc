@@ -251,14 +251,13 @@ SilphCo_11F_Text_RecurringOpsOfficer_Done::
     .string "I am done with Rocket front operations.$"
 
 SilphCo_11F_Text_RecurringScientist_Act1::
-    .string "[SCIENTIST DR. NOX:C2-A1] The archive mirrors\n"
-    .string "are unstable. Give me clean access and I\n"
-    .string "can preserve the research branch.$"
+    .string "[SCIENTIST DR. NOX:C2-A1] The Alolan data did\n"
+    .string "not describe energy. It described…\n"
+    .string "direction.$"
 
 SilphCo_11F_Text_RecurringScientist_Act2::
-    .string "[SCIENTIST DR. NOX:C2-A2] Command wants metrics,\n"
-    .string "but the floor wants mercy. I am trying to\n"
-    .string "keep both from collapsing.$"
+    .string "[SCIENTIST DR. NOX:C2-A2] We are not storing\n"
+    .string "life. We are interrupting where it goes.$"
 
 SilphCo_11F_Text_RecurringScientist_Act3::
     .string "[SCIENTIST DR. NOX:C2-A3] Transfer window is\n"
@@ -276,8 +275,8 @@ SilphCo_11F_Text_MemoryRelic_ComplianceTerminal_Before::
     .string "CIVIL BLACKOUT ENFORCEMENT GRID, Section 11.$"
 
 SilphCo_11F_Text_MemoryRelic_ComplianceTerminal_After::
-    .string "[RELIC:C2] Terminal now routes to\n"
-    .string "EXECUTIVE ACCESS CONTROL and price locks.$"
+    .string "[RELIC:C2] ENERGY SIGNATURE DOES NOT\n"
+    .string "DECAY. SPATIAL DISTORTION DETECTED.$"
 
 SilphCo_11F_Text_MemoryRelic_LabCrate_Before::
     .string "[RELIC:C2] Lab crate label: VOLATILE\n"

@@ -263,14 +263,14 @@ ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH1CH2::
     .string "the last debt waits in this room.$"
 
 ViridianCity_Gym_Text_GiovanniMemoryBeat_SabrinaObservation::
-    .string "[CAMEO] Sabrina noted the Silph branch\n"
-    .string "before I did. She said every choice left\n"
-    .string "an imprint she could not ignore.$"
+    .string "[CAMEO] Sabrina: This energy… space bends\n"
+    .string "around it. Every choice leaves an imprint\n"
+    .string "I cannot ignore.$"
 
 ViridianCity_Gym_Text_GiovanniMemoryBeat_SabrinaFallback::
-    .string "[CAMEO] Sabrina offers no observation\n"
-    .string "from this fragment. The branch never\n"
-    .string "reached her line of sight.$"
+    .string "[CAMEO] Sabrina: Something is looking back\n"
+    .string "through it, but this fragment never held\n"
+    .string "long enough to prove it.$"
 
 ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH3::
     .string "[GIOVANNI] All three chapters stand\n"
@@ -278,9 +278,9 @@ ViridianCity_Gym_Text_GiovanniMemoryMonologue_CH3::
 
 @ NARRATIVE_REVIEW:WAR_SENSITIVE
 ViridianCity_Gym_Text_GiovanniMemoryBeat_WarReference::
-    .string "[CAMEO] The final reports read like war\n"
-    .string "dispatches: assets burned, convoys moved,\n"
-    .string "and no one left untouched.$"
+    .string "[CAMEO] Blaine: We tried to weaponize life\n"
+    .string "during the war. This goes further than\n"
+    .string "anything Cinnabar ever touched.$"
 
 @ NARRATIVE_REVIEW:WAR_SENSITIVE
 ViridianCity_Gym_Text_GiovanniMemoryBeat_WarFallback::
@@ -553,10 +553,9 @@ ViridianCity_Gym_Text_RecurringScientist_Act1::
     .string "objective tone is now emergency triage.$"
 
 ViridianCity_Gym_Text_RecurringScientist_Act2::
-    .string "[LAB NOTE:C3] Nox margin log: paired soul\n"
-    .string "signatures keep echoing after separation.\n"
-    .string "If command collapses, follow relay 7 before\n"
-    .string "the trace cools beyond recovery.$"
+    .string "[LAB NOTE:C3] Nox margin log: We did not\n"
+    .string "open anything. Something started\n"
+    .string "responding to us from relay 7.$"
 
 ViridianCity_Gym_Text_RecurringScientist_Act3::
     .string "[DR. NOX:C3-A3] Workstation empty. A fresh\n"
@@ -569,3 +568,12 @@ ViridianCity_Gym_Text_RecurringScientist_Done::
     .string "No recovery team found a body, only\n"
     .string "burned notes, an open relay, and one\n"
     .string "soul-link drive still transmitting.$"
+
+ViridianCity_Gym_Text_SoulSpace_MicroBreach::
+    .string "[ANOMALY] Ring distortion cuts across the\n"
+    .string "terminal frame. One crate blinks out and\n"
+    .string "returns half a beat later.$"
+
+ViridianCity_Gym_Text_SoulSpace_RingBehindEnemies::
+    .string "[ANOMALY] A brief ring distortion ripples\n"
+    .string "behind the defense line before contact.$"
