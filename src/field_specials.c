@@ -949,6 +949,7 @@ static void RefreshGiovanniActiveDirective(void);
 static void SetGiovanniChapterHubWarpDestination(u8 chapterId);
 static void SetGiovanniChapterHubLocation(struct Location *location, u8 chapterId);
 static void SaveGiovanniCheckpointPositionAndStage(u8 chapterId, bool8 saveAllowedAtCheckpoint);
+static void SaveGiovanniAct1StartCheckpoint(u8 chapterId, bool8 saveAllowedAtCheckpoint);
 static void LogRocketOpsSegmentTransition(u16 previousSegment, u16 nextSegment);
 static void SetGiovanniCampaignSegment(u16 segment);
 static bool8 IsGiovanniCampaignSegmentActActive(u16 segment);
@@ -1461,6 +1462,37 @@ static void SaveGiovanniCheckpointPositionAndStageAtMap(u8 chapterId, u8 mapGrou
     VarSet(VAR_GIO_CHECKPOINT_Y, y);
     VarSet(VAR_GIO_CHECKPOINT_STAGE, VarGet(chapterStageVar));
     SnapshotGiovanniActCheckpointState(saveAllowedAtCheckpoint);
+}
+
+static void SaveGiovanniAct1StartCheckpoint(u8 chapterId, bool8 saveAllowedAtCheckpoint)
+{
+    switch (chapterId)
+    {
+    case 1:
+        SaveGiovanniCheckpointPositionAndStageAtMap(chapterId,
+                                                    MAP_GROUP(MAP_ROCKET_HIDEOUT_B4F),
+                                                    MAP_NUM(MAP_ROCKET_HIDEOUT_B4F),
+                                                    19,
+                                                    6,
+                                                    saveAllowedAtCheckpoint);
+        break;
+    case 2:
+        SaveGiovanniCheckpointPositionAndStageAtMap(chapterId,
+                                                    MAP_GROUP(MAP_SILPH_CO_11F),
+                                                    MAP_NUM(MAP_SILPH_CO_11F),
+                                                    6,
+                                                    13,
+                                                    saveAllowedAtCheckpoint);
+        break;
+    case 3:
+        SaveGiovanniCheckpointPositionAndStageAtMap(chapterId,
+                                                    MAP_GROUP(MAP_VIRIDIAN_CITY_GYM),
+                                                    MAP_NUM(MAP_VIRIDIAN_CITY_GYM),
+                                                    17,
+                                                    20,
+                                                    saveAllowedAtCheckpoint);
+        break;
+    }
 }
 
 static bool8 TrySetGiovanniCheckpointWarpFromSavedPosition(void)
@@ -4935,7 +4967,12 @@ bool8 HandleGiovanniMemoryModeWhiteout(void)
     chapterId = GetGiovanniMemoryModeChapterId();
 
     if (IsGiovanniMemorySaveBlocked())
-        SaveGiovanniCheckpointPositionAndStage(chapterId, FALSE);
+    {
+        if (VarGet(VAR_GIO_ACT) <= 1)
+            SaveGiovanniAct1StartCheckpoint(chapterId, FALSE);
+        else
+            SaveGiovanniCheckpointPositionAndStage(chapterId, FALSE);
+    }
 
     if (FlagGet(FLAG_GIO_MEM_CH3_COMPLETE))
     {
@@ -5403,6 +5440,9 @@ u16 Special_RocketOps_WritebackState(void)
 
     if (VarGet(chapterStageVar) > previousStage)
     {
+        if (previousStage < 3 && VarGet(chapterStageVar) >= 3)
+            UpdateGiovanniMemorySaveStateForSegment(GIO_SEGMENT_3, GIO_SEGMENT_1, TRUE);
+
         if (VarGet(chapterStageVar) >= 3 && !IsGiovanniActPacingComplete(chapterId, TRUE))
         {
             SetGiovanniCampaignSegment(GIO_SEGMENT_6);
@@ -5627,6 +5667,7 @@ u16 Special_GiovanniCampaignDispatch(void)
     {
         actId++;
         VarSet(VAR_GIO_ACT, actId);
+        UpdateGiovanniMemorySaveStateForSegment(GIO_SEGMENT_1, GIO_SEGMENT_3, FALSE);
         VarSet(VAR_GIO_ACT_BEAT_INDEX, 0);
         VarSet(VAR_GIO_ACT_TIMER_BUCKET, 0);
         SetGiovanniCampaignSegment(GIO_SEGMENT_1);
