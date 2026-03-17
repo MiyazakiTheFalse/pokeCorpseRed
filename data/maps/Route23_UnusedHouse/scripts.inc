@@ -8,6 +8,8 @@ Route23_UnusedHouse_EventScript_FirstEntryBriefingTrigger::
 	msgbox Route23_UnusedHouse_Text_BriefingIntro, MSGBOX_AUTOCLOSE
 	msgbox Route23_UnusedHouse_Text_BriefingVera, MSGBOX_AUTOCLOSE
 	msgbox Route23_UnusedHouse_Text_BriefingRourke, MSGBOX_AUTOCLOSE
+	msgbox Route23_UnusedHouse_Text_BriefingNox, MSGBOX_AUTOCLOSE
+	msgbox Route23_UnusedHouse_Text_BriefingDrake, MSGBOX_AUTOCLOSE
 	setvar VAR_GIO_CHAPTER, 1
 	setvar VAR_GIO_ACT, 1
 	setflag FLAG_GIO_CH1_ACT1
@@ -17,19 +19,59 @@ Route23_UnusedHouse_EventScript_FirstEntryBriefingTrigger::
 	end
 
 Route23_UnusedHouse_EventScript_Vera::
-	msgbox Route23_UnusedHouse_Text_Vera, MSGBOX_NPC
+	goto_if_unset FLAG_GIO_CH1_ACT1, Route23_UnusedHouse_EventScript_Vera_NotAct1
+	goto_if_unset FLAG_GIO_MEM_CH1_STARTED, Route23_UnusedHouse_EventScript_Vera_Intro
+	msgbox Route23_UnusedHouse_Text_Vera_PostBriefing, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_Vera_NotAct1::
+	msgbox Route23_UnusedHouse_Text_Vera_NotAct1, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_Vera_Intro::
+	msgbox Route23_UnusedHouse_Text_Vera_Intro, MSGBOX_NPC
 	end
 
 Route23_UnusedHouse_EventScript_Rourke::
-	msgbox Route23_UnusedHouse_Text_Rourke, MSGBOX_NPC
+	goto_if_unset FLAG_GIO_CH1_ACT1, Route23_UnusedHouse_EventScript_Rourke_NotAct1
+	goto_if_unset FLAG_GIO_MEM_CH1_STARTED, Route23_UnusedHouse_EventScript_Rourke_Intro
+	msgbox Route23_UnusedHouse_Text_Rourke_PostBriefing, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_Rourke_NotAct1::
+	msgbox Route23_UnusedHouse_Text_Rourke_NotAct1, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_Rourke_Intro::
+	msgbox Route23_UnusedHouse_Text_Rourke_Intro, MSGBOX_NPC
 	end
 
 Route23_UnusedHouse_EventScript_LogisticsGrunt::
-	msgbox Route23_UnusedHouse_Text_LogisticsGrunt, MSGBOX_NPC
+	goto_if_unset FLAG_GIO_CH1_ACT1, Route23_UnusedHouse_EventScript_LogisticsGrunt_NotAct1
+	goto_if_unset FLAG_GIO_MEM_CH1_STARTED, Route23_UnusedHouse_EventScript_LogisticsGrunt_Intro
+	msgbox Route23_UnusedHouse_Text_LogisticsGrunt_PostBriefing, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_LogisticsGrunt_NotAct1::
+	msgbox Route23_UnusedHouse_Text_LogisticsGrunt_NotAct1, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_LogisticsGrunt_Intro::
+	msgbox Route23_UnusedHouse_Text_LogisticsGrunt_Intro, MSGBOX_NPC
 	end
 
 Route23_UnusedHouse_EventScript_Guard::
-	msgbox Route23_UnusedHouse_Text_Guard, MSGBOX_NPC
+	goto_if_unset FLAG_GIO_CH1_ACT1, Route23_UnusedHouse_EventScript_Guard_NotAct1
+	goto_if_unset FLAG_GIO_MEM_CH1_STARTED, Route23_UnusedHouse_EventScript_Guard_Intro
+	msgbox Route23_UnusedHouse_Text_Guard_PostBriefing, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_Guard_NotAct1::
+	msgbox Route23_UnusedHouse_Text_Guard_NotAct1, MSGBOX_NPC
+	end
+
+Route23_UnusedHouse_EventScript_Guard_Intro::
+	msgbox Route23_UnusedHouse_Text_Guard_Intro, MSGBOX_NPC
 	end
 
 Route23_UnusedHouse_EventScript_CommandBoard::

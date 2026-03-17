@@ -3,28 +3,63 @@ Route23_UnusedHouse_Text_BriefingIntro::
     .string "All field orders route through this room.$"
 
 Route23_UnusedHouse_Text_BriefingVera::
-    .string "VERA: Ops board is live. We run chapter\n"
-    .string "one from here and keep decisions tight.$"
+    .string "VERA: Logistics is command now. If supply\n"
+    .string "and routing stay clean, the chapter holds.$"
 
 Route23_UnusedHouse_Text_BriefingRourke::
-    .string "ROURKE: Power and relay lines are stable.\n"
-    .string "Directive feed is synced to Act 1.$"
+    .string "ROURKE: These relays ride old wartime\n"
+    .string "tunnel lines. They still carry command.$"
 
-Route23_UnusedHouse_Text_Vera::
-    .string "VERA (Ops Officer): Route pressure is\n"
-    .string "building. Check the board and move now.$"
+Route23_UnusedHouse_Text_BriefingNox::
+    .string "NOX: My read is neutral: map behavior,\n"
+    .string "test outcomes, then decide what survives.$"
 
-Route23_UnusedHouse_Text_Rourke::
-    .string "ROURKE (Engineer): I can keep this grid\n"
-    .string "alive, but not if we waste momentum.$"
+Route23_UnusedHouse_Text_BriefingDrake::
+    .string "DRAKE: Units fail without structure. Keep\n"
+    .string "formation, keep discipline, hold the line.$"
 
-Route23_UnusedHouse_Text_LogisticsGrunt::
-    .string "LOGISTICS: Staging crates are sorted by\n"
-    .string "checkpoint. Say the word and we roll.$"
+Route23_UnusedHouse_Text_Vera_Intro::
+    .string "VERA (Ops Officer): We run this chapter\n"
+    .string "through logistics. Route first, emotion last.$"
 
-Route23_UnusedHouse_Text_Guard::
-    .string "GUARD: Perimeter is sealed. Nobody gets\n"
-    .string "into the warehouse without clearance.$"
+Route23_UnusedHouse_Text_Vera_PostBriefing::
+    .string "VERA: Keep orders moving through the board.$"
+
+Route23_UnusedHouse_Text_Vera_NotAct1::
+    .string "VERA: Act 1 routing is closed. Follow the\n"
+    .string "current chapter directive instead.$"
+
+Route23_UnusedHouse_Text_Rourke_Intro::
+    .string "ROURKE (Engineer): These feeds came from\n"
+    .string "old tunnel infrastructure. I just woke them.$"
+
+Route23_UnusedHouse_Text_Rourke_PostBriefing::
+    .string "ROURKE: Tunnel relays are stable for now.$"
+
+Route23_UnusedHouse_Text_Rourke_NotAct1::
+    .string "ROURKE: Act 1 relay profile is archived.$"
+
+Route23_UnusedHouse_Text_LogisticsGrunt_Intro::
+    .string "NOX (Research): Baseline first. I don't\n"
+    .string "pick sides until the data starts to bite.$"
+
+Route23_UnusedHouse_Text_LogisticsGrunt_PostBriefing::
+    .string "NOX: Neutral log updated. Trend is sharp.$"
+
+Route23_UnusedHouse_Text_LogisticsGrunt_NotAct1::
+    .string "NOX: Chapter 1 samples are sealed with\n"
+    .string "the rest of Act 1 records.$"
+
+Route23_UnusedHouse_Text_Guard_Intro::
+    .string "DRAKE (Field Lead): Organization wins\n"
+    .string "fights before they start. Stay disciplined.$"
+
+Route23_UnusedHouse_Text_Guard_PostBriefing::
+    .string "DRAKE: Keep formation and keep moving.$"
+
+Route23_UnusedHouse_Text_Guard_NotAct1::
+    .string "DRAKE: Act 1 posture stood down. Await\n"
+    .string "new deployment orders.$"
 
 Route23_UnusedHouse_Text_CommandBoard::
     .string "[COMMAND BOARD]\n"
