@@ -15,7 +15,7 @@ Text_GiovanniDirectiveTarget_Ch1Act1::
 	.string "Viridian Forest checkpoint$"
 
 Text_GiovanniDirectiveAction_Ch1Act1::
-	.string "Secure corridor and stage convoy.$"
+	.string "Resolve stacked Route 2 objectives.$"
 
 Text_GiovanniDirectiveTitle_Ch1Act2::
 	.string "Convoy Breakthrough$"

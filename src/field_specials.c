@@ -1182,6 +1182,9 @@ static void SetGiovanniChapterHubLocation(struct Location *location, u8 chapterI
 u16 Special_LoadGiovanniActiveDirective(void)
 {
     const struct GiovanniDirective *directive;
+    bool8 routeSecured;
+    bool8 guardDeployed;
+    bool8 logisticsOnline;
 
     RefreshGiovanniActiveDirective();
     directive = FindGiovanniDirective(VarGet(VAR_GIO_ACTIVE_DIRECTIVE_ID));
@@ -1193,7 +1196,34 @@ u16 Special_LoadGiovanniActiveDirective(void)
 
     StringCopy(gStringVar1, directive->title);
     StringCopy(gStringVar2, directive->targetLocation);
-    StringCopy(gStringVar3, directive->nextAction);
+
+    if (VarGet(VAR_GIO_CHAPTER) == 1 && VarGet(VAR_GIO_ACT) == 1)
+    {
+        routeSecured = FlagGet(FLAG_ROCKETOPS_ROUTE_SECURED);
+        guardDeployed = FlagGet(FLAG_ROCKETOPS_AGENT_DEPLOYED);
+        logisticsOnline = FlagGet(FLAG_GIO_CH1_LOGISTICS_ASSET_ACTIVATED);
+        StringExpandPlaceholders(gStringVar3,
+                                 routeSecured
+                                     ? (guardDeployed
+                                            ? (logisticsOnline
+                                                   ? (const u8 *)_("Route2 checkpoint: DONE\nField guard: DONE\nLogistics asset: DONE")
+                                                   : (const u8 *)_("Route2 checkpoint: DONE\nField guard: DONE\nLogistics asset: PENDING"))
+                                            : (logisticsOnline
+                                                   ? (const u8 *)_("Route2 checkpoint: DONE\nField guard: PENDING\nLogistics asset: DONE")
+                                                   : (const u8 *)_("Route2 checkpoint: DONE\nField guard: PENDING\nLogistics asset: PENDING")))
+                                     : (guardDeployed
+                                            ? (logisticsOnline
+                                                   ? (const u8 *)_("Route2 checkpoint: PENDING\nField guard: DONE\nLogistics asset: DONE")
+                                                   : (const u8 *)_("Route2 checkpoint: PENDING\nField guard: DONE\nLogistics asset: PENDING"))
+                                            : (logisticsOnline
+                                                   ? (const u8 *)_("Route2 checkpoint: PENDING\nField guard: PENDING\nLogistics asset: DONE")
+                                                   : (const u8 *)_("Route2 checkpoint: PENDING\nField guard: PENDING\nLogistics asset: PENDING"))));
+    }
+    else
+    {
+        StringCopy(gStringVar3, directive->nextAction);
+    }
+
     StringExpandPlaceholders(gStringVar4, Text_GiovanniDirectiveTemplate);
     return TRUE;
 }
@@ -5128,6 +5158,16 @@ static bool8 IsRocketOpsChapter1SecureRouteTutorialPending(void)
         && !FlagGet(FLAG_GIO_MEM_CH1_ROCKETOPS_TUTORIAL_COMPLETE);
 }
 
+static u8 GetRocketOpsChapter1StackedObjectiveStage(void)
+{
+    if (FlagGet(FLAG_ROCKETOPS_ROUTE_SECURED)
+     && FlagGet(FLAG_ROCKETOPS_AGENT_DEPLOYED)
+     && FlagGet(FLAG_GIO_CH1_LOGISTICS_ASSET_ACTIVATED))
+        return 3;
+
+    return 0;
+}
+
 static bool8 AreRocketOpsAuthorityOrdersComplete(void)
 {
     return FlagGet(FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR)
@@ -5222,12 +5262,15 @@ u16 Special_RocketOps_ValidateCommandContext(void)
 
     if (chapterId == 1)
     {
+        if (chapterStage >= 3)
+            return FALSE;
+
         if (commandId == ROCKETOPS_COMMAND_SECURE_ROUTE)
-            isValid = chapterStage == 0;
+            isValid = !FlagGet(FLAG_ROCKETOPS_ROUTE_SECURED);
         else if (commandId == ROCKETOPS_COMMAND_DEPLOY_AGENT)
-            isValid = chapterStage == 1;
+            isValid = !FlagGet(FLAG_ROCKETOPS_AGENT_DEPLOYED);
         else if (commandId == ROCKETOPS_COMMAND_EXTRACT_STAFF)
-            isValid = chapterStage == 2;
+            isValid = !FlagGet(FLAG_GIO_CH1_LOGISTICS_ASSET_ACTIVATED);
     }
     else if (chapterId == 2)
     {
@@ -5303,7 +5346,7 @@ u16 Special_RocketOps_WritebackState(void)
         if (alert > 0)
             VarSet(VAR_ROCKETOPS_ALERT, alert - 1);
         VarSet(VAR_ROCKETOPS_PROGRESS, VarGet(VAR_ROCKETOPS_PROGRESS) + 1);
-        if (VarGet(chapterStageVar) == 0)
+        if (chapterId != 1 && VarGet(chapterStageVar) == 0)
             VarSet(chapterStageVar, 1);
         break;
     case ROCKETOPS_COMMAND_DEPLOY_AGENT:
@@ -5312,7 +5355,7 @@ u16 Special_RocketOps_WritebackState(void)
         VarSet(VAR_ROCKETOPS_PROGRESS, VarGet(VAR_ROCKETOPS_PROGRESS) + 1);
         if (chapterId == 3 && VarGet(chapterStageVar) == 0)
             VarSet(chapterStageVar, 1);
-        else if (chapterId != 3 && VarGet(chapterStageVar) == 1)
+        else if (chapterId == 2 && VarGet(chapterStageVar) == 1)
             VarSet(chapterStageVar, 2);
         break;
     case ROCKETOPS_COMMAND_DESTROY_DATA:
@@ -5324,23 +5367,27 @@ u16 Special_RocketOps_WritebackState(void)
         break;
     case ROCKETOPS_COMMAND_EXTRACT_STAFF:
         FlagSet(FLAG_ROCKETOPS_STAFF_EXTRACTED);
+        if (chapterId == 1)
+            FlagSet(FLAG_GIO_CH1_LOGISTICS_ASSET_ACTIVATED);
         if (chapterId == 3)
             FlagClear(FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE);
         VarSet(VAR_ROCKETOPS_PROGRESS, VarGet(VAR_ROCKETOPS_PROGRESS) + 2);
-        if (VarGet(chapterStageVar) == 2)
-        {
+        if (chapterId != 1 && VarGet(chapterStageVar) == 2)
             VarSet(chapterStageVar, 3);
-            if (AreRocketOpsAuthorityOrdersComplete())
-            {
-                if (chapterId == 1)
-                    FlagSet(FLAG_ROCKETOPS_MILESTONE_CH1_LOGGED);
-                else if (chapterId == 2)
-                    FlagSet(FLAG_ROCKETOPS_MILESTONE_CH2_LOGGED);
-                else
-                    FlagSet(FLAG_ROCKETOPS_MILESTONE_CH3_LOGGED);
-            }
-        }
         break;
+    }
+
+    if (chapterId == 1)
+        VarSet(chapterStageVar, GetRocketOpsChapter1StackedObjectiveStage());
+
+    if (previousStage < 3 && VarGet(chapterStageVar) >= 3 && AreRocketOpsAuthorityOrdersComplete())
+    {
+        if (chapterId == 1)
+            FlagSet(FLAG_ROCKETOPS_MILESTONE_CH1_LOGGED);
+        else if (chapterId == 2)
+            FlagSet(FLAG_ROCKETOPS_MILESTONE_CH2_LOGGED);
+        else
+            FlagSet(FLAG_ROCKETOPS_MILESTONE_CH3_LOGGED);
     }
 
     VarSet(VAR_ROCKETOPS_CHAIN_STATE, (VarGet(VAR_ROCKETOPS_CHAIN_STATE) & 0xFF00) | (VarGet(chapterStageVar) & 0xFF));
