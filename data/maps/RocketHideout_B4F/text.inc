@@ -85,6 +85,11 @@ RocketHideout_B4F_Text_ChapterReveal_InfrastructureControl::
     .string "muscle. It was routing: power, freight,\n"
     .string "and exits through one command spine.$"
 
+RocketHideout_B4F_Text_Act1ToAct2_ConfirmBeat::
+    .string "[HUB:C1-A2] Act 1 confirmed. Diglett\n"
+    .string "Tunnel control is now the active route.\n"
+    .string "Move and lock the corridor.$"
+
 RocketHideout_B4F_Text_RocketReport_ObjectivesIncomplete::
     .string "[REPORT:C1] RocketOps milestone missing.\n"
     .string "Complete chapter commands before leaving\n"

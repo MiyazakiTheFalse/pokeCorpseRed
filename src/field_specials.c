@@ -5257,6 +5257,7 @@ u16 Special_RocketOps_IsMandatoryTutorialPending(void)
 u16 Special_RocketOps_GetCommandMenu(void)
 {
     u16 chapterId = VarGet(VAR_GIO_CHAPTER_RUNTIME);
+    u16 actId = VarGet(VAR_GIO_ACT);
 
     if (chapterId < 1 || chapterId > 3)
         chapterId = VarGet(VAR_GIO_CHAPTER);
@@ -5264,6 +5265,8 @@ u16 Special_RocketOps_GetCommandMenu(void)
     switch (chapterId)
     {
     case 1:
+        if (actId >= 2)
+            return MULTICHOICE_ROCKETOPS_COMMANDS_C2;
         return MULTICHOICE_ROCKETOPS_COMMANDS_C1;
     case 2:
         return MULTICHOICE_ROCKETOPS_COMMANDS_C2;
