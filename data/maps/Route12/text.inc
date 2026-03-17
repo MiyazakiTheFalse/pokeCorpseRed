@@ -208,6 +208,26 @@ Route12_Text_BridgeLeadersPreBattleChallenge::
     .string "KOGA & SABRINA: Show us your resolve\n"
     .string "in a synchronized double battle!$"
 
+Route12_Text_BridgeLeadersSwarmWarning::
+    .string "KOGA: The collapse stirred up a swarm!\n"
+    .string "Brace yourself!$"
+
+Route12_Text_BridgeLeadersSwarmCleared::
+    .string "SABRINA: The shockwave fades… but one\n"
+    .string "mind still burns beneath us.$"
+
+Route12_Text_BridgeLeadersBossIntro::
+    .string "ALPHA DUGTRIO burst from the faultline!\n"
+    .string "This is the capstone--finish it!$"
+
+Route12_Text_BridgeLeadersBossDefeat::
+    .string "KOGA: Clean strike. The alpha falls.\n"
+    .string "Now claim your passage.$"
+
+Route12_Text_BridgeLeadersBossFailed::
+    .string "KOGA & SABRINA: Regroup and strike\n"
+    .string "the alpha again when ready.$"
+
 
 Route12_Text_BridgeLeadersShortcutUnlock::
     .string "A heavy rumble echoes from the cliff…\n"
