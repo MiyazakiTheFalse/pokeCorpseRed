@@ -40,6 +40,8 @@ EventScript_RocketOps_Terminal::
 	goto_if_eq VAR_RESULT, FALSE, EventScript_RocketOps_TerminalOffline
 	msgbox Text_RocketOpsTerminalBoot, MSGBOX_AUTOCLOSE
 	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_2
+	specialvar VAR_RESULT, Special_RocketOps_IsMandatoryTutorialPending
+	goto_if_eq VAR_RESULT, TRUE, EventScript_RocketOps_MandatoryTutorial
 	specialvar VAR_0x8006, Special_RocketOps_GetCommandMenu
 	call EventScript_RocketOps_ShowCommandMenu
 	goto_if_eq VAR_0x8004, 4, EventScript_RocketOps_Close
@@ -47,6 +49,12 @@ EventScript_RocketOps_Terminal::
 	goto_if_eq VAR_RESULT, TRUE, EventScript_RocketOps_CommandDispatch
 	call EventScript_RocketOps_CommandDenied
 	goto EventScript_RocketOps_Close
+
+
+EventScript_RocketOps_MandatoryTutorial::
+	msgbox Text_RocketOpsMandatoryTutorial, MSGBOX_AUTOCLOSE
+	setvar VAR_0x8004, 0
+	goto EventScript_RocketOps_CommandDispatch
 
 EventScript_RocketOps_ShowCommandMenu::
 	switch VAR_0x8006
@@ -274,6 +282,11 @@ Text_GiovanniHubMonologue_C3::
 Text_RocketOpsTerminalBoot::
 	.string "[ROCKETOPS] Link established. Routing\n"
 	.string "node command now.$"
+
+
+Text_RocketOpsMandatoryTutorial::
+	.string "[ROCKETOPS:TUTORIAL] Mandatory loop\n"
+	.string "engaged. SECURE ROUTE executing.$"
 
 Text_RocketOpsTriggerLinkMismatch::
 	.string "[ROCKETOPS] Node handshake failed.\n"

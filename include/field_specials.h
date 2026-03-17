@@ -65,6 +65,7 @@ bool8 IsGiovanniAuthorityPacingForcedRunActive(void);
 u16 ValidateGiovanniAuthorityPacingState(void);
 u16 Special_RocketOps_OpenTerminal(void);
 u16 Special_RocketOps_GetCommandMenu(void);
+u16 Special_RocketOps_IsMandatoryTutorialPending(void);
 u16 Special_RocketOps_ValidateCommandContext(void);
 u16 Special_RocketOps_ApplyCommandEffect(void);
 u16 Special_RocketOps_WritebackState(void);

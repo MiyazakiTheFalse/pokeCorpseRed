@@ -162,7 +162,11 @@ EventScript_RocketOps_Command_SecureRoute_C1::
 	call RocketHideout_B4F_EventScript_CommandMatrix_AllowSecureRoute
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
+	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
 	setflag FLAG_GIO_MEM_CH1_CHECKPOINT_SECURED_VISUAL
+	setflag FLAG_GIO_SECURE_ROUTE
+	setflag FLAG_GIO_MEM_CH1_ROCKETOPS_TUTORIAL_COMPLETE
+	setvar VAR_GIO_CHECKPOINT_ID, 1
 	call RocketHideout_B4F_EventScript_RemoveBarrier
 	special DrawWholeMapView
 	msgbox RocketHideout_B4F_Text_RocketOps_SecureRoute_C1

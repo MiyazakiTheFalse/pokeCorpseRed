@@ -5120,6 +5120,14 @@ u16 SaveGiovanniMemoryModeCheckpoint(void)
 }
 
 
+static bool8 IsRocketOpsChapter1SecureRouteTutorialPending(void)
+{
+    return VarGet(VAR_GIO_CHAPTER_RUNTIME) == 1
+        && VarGet(VAR_GIO_ACT) == 1
+        && VarGet(VAR_ROCKETOPS_CH1_STAGE) == 0
+        && !FlagGet(FLAG_GIO_MEM_CH1_ROCKETOPS_TUTORIAL_COMPLETE);
+}
+
 static bool8 AreRocketOpsAuthorityOrdersComplete(void)
 {
     return FlagGet(FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR)
@@ -5159,6 +5167,14 @@ u16 Special_RocketOps_OpenTerminal(void)
     FlagSet(FLAG_ROCKETOPS_TERMINAL_UNLOCKED);
     FlagClear(FLAG_ROCKETOPS_COMMAND_COOLDOWN);
     return TRUE;
+}
+
+u16 Special_RocketOps_IsMandatoryTutorialPending(void)
+{
+    if (!IsRocketOpsChapter1SecureRouteTutorialPending())
+        return FALSE;
+
+    return gSpecialVar_0x8005 == ROCKETOPS_TRIGGER_CONTROL_NODE;
 }
 
 u16 Special_RocketOps_GetCommandMenu(void)
