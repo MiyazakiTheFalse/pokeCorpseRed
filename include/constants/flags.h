@@ -978,7 +978,7 @@
 #define FLAG_0x3B5               0x3B5
 #define FLAG_0x3B6               0x3B6
 #define FLAG_ROUTE12_BRIDGE_SHORTCUT_CLEARED 0x3B7
-#define FLAG_0x3B8               0x3B8
+#define FLAG_GIO_CH1_ACT2_BOSS_WIN 0x3B8
 #define FLAG_0x3B9               0x3B9
 #define FLAG_0x3BA               0x3BA
 #define FLAG_0x3BB               0x3BB

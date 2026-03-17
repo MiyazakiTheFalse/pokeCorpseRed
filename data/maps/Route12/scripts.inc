@@ -10,6 +10,7 @@ Route12_OnResume::
 	end
 
 Route12_EventScript_UpdateHiddenPassVisual::
+	goto_if_set FLAG_GIO_CH1_ACT2_BOSS_WIN, Route12_EventScript_SetHiddenPassVisualOpen
 	goto_if_set FLAG_DEFEATED_ROUTE12_KOGA_SABRINA, Route12_EventScript_SetHiddenPassVisualOpen
 	setmetatile 19, 22, METATILE_Cave_RockBarrier_Top, 1
 	return
@@ -23,6 +24,7 @@ Route12_EventScript_TryRemoveSnorlax::
 	return
 
 Route12_EventScript_UpdateBridgeMidpointBlockers::
+	goto_if_set FLAG_GIO_CH1_ACT2_BOSS_WIN, Route12_EventScript_HideBridgeMidpointBlockers
 	goto_if_set FLAG_DEFEATED_ROUTE12_KOGA_SABRINA, Route12_EventScript_HideBridgeMidpointBlockers
 	call Route12_EventScript_CheckBridgePrerequisites
 	goto_if_eq VAR_RESULT, TRUE, Route12_EventScript_ShowBridgeMidpointBlockers
@@ -102,6 +104,7 @@ Route12_EventScript_BridgeMidpointBlock::
 	end
 
 Route12_EventScript_TryStartBridgeMidpointEncounter::
+	goto_if_set FLAG_GIO_CH1_ACT2_BOSS_WIN, Route12_EventScript_BridgeMidpointAlreadyCleared
 	goto_if_set FLAG_DEFEATED_ROUTE12_KOGA_SABRINA, Route12_EventScript_BridgeMidpointAlreadyCleared
 	call Route12_EventScript_CheckBridgePrerequisites
 	goto_if_eq VAR_RESULT, FALSE, Route12_EventScript_BridgeMidpointPrereqFailed
@@ -119,6 +122,9 @@ Route12_EventScript_TryStartBridgeMidpointEncounter::
 	return
 
 Route12_EventScript_AfterBridgeMidpointBattle::
+	call Route12_EventScript_RunSwarmCluster
+	call Route12_EventScript_BossCapstoneAlphaDugtrio
+	goto_if_eq VAR_RESULT, FALSE, Route12_EventScript_AfterBridgeMidpointBattle_BossFailed
 	call Route12_EventScript_CompleteBridgeMidpointEncounter
 	call Route12_EventScript_PostBattleUnlockShortcut
 	msgbox Route12_Text_BridgeLeadersHiddenPathReveal, MSGBOX_AUTOCLOSE
@@ -128,6 +134,10 @@ Route12_EventScript_AfterBridgeMidpointBattle::
 	waitmovement 0
 	removeobject 15
 	removeobject 16
+	return
+
+Route12_EventScript_AfterBridgeMidpointBattle_BossFailed::
+	msgbox Route12_Text_BridgeLeadersBossFailed, MSGBOX_AUTOCLOSE
 	return
 
 Route12_EventScript_BridgeMidpointAlreadyCleared::
@@ -148,12 +158,8 @@ Route12_EventScript_CheckBridgePrerequisites_Done::
 	return
 
 Route12_EventScript_RecoverBridgeMidpointState::
+	goto_if_set FLAG_GIO_CH1_ACT2_BOSS_WIN, Route12_EventScript_RecoverBridgeMidpointState_FromCompletedFlag
 	goto_if_set FLAG_DEFEATED_ROUTE12_KOGA_SABRINA, Route12_EventScript_RecoverBridgeMidpointState_FromCompletedFlag
-	checktrainerflag TRAINER_ROUTE12_KOGA
-	goto_if_eq FALSE, Route12_EventScript_RecoverBridgeMidpointState_Done
-	checktrainerflag TRAINER_ROUTE12_SABRINA
-	goto_if_eq FALSE, Route12_EventScript_RecoverBridgeMidpointState_Done
-	call Route12_EventScript_CompleteBridgeMidpointEncounter
 	goto Route12_EventScript_RecoverBridgeMidpointState_Done
 
 Route12_EventScript_RecoverBridgeMidpointState_FromCompletedFlag::
@@ -171,6 +177,7 @@ Route12_EventScript_RecoverBridgeMidpointState_Done::
 Route12_EventScript_CompleteBridgeMidpointEncounter::
 	settrainerflag TRAINER_ROUTE12_KOGA
 	settrainerflag TRAINER_ROUTE12_SABRINA
+	setflag FLAG_GIO_CH1_ACT2_BOSS_WIN
 	checktrainerflag TRAINER_ROUTE12_KOGA
 	goto_if_eq FALSE, Route12_EventScript_CompleteBridgeMidpointEncounter_Done
 	checktrainerflag TRAINER_ROUTE12_SABRINA
@@ -183,6 +190,47 @@ Route12_EventScript_CompleteBridgeMidpointEncounter::
 	removeobject 16
 
 Route12_EventScript_CompleteBridgeMidpointEncounter_Done::
+	return
+
+Route12_EventScript_RunSwarmCluster::
+	msgbox Route12_Text_BridgeLeadersSwarmWarning, MSGBOX_AUTOCLOSE
+	playse SE_M_EARTHQUAKE
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 4
+	setvar VAR_0x8007, 2
+	special ShakeScreen
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	setwildbattle SPECIES_DIGLETT, 42
+	dowildbattle
+	setwildbattle SPECIES_DUGTRIO, 43
+	dowildbattle
+	random 2
+	copyvar VAR_0x8008, VAR_RESULT
+	call_if_eq VAR_0x8008, 0, Route12_EventScript_RunSwarmCluster_ThirdBattle
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	msgbox Route12_Text_BridgeLeadersSwarmCleared, MSGBOX_AUTOCLOSE
+	return
+
+Route12_EventScript_RunSwarmCluster_ThirdBattle::
+	setwildbattle SPECIES_DIGLETT, 43
+	dowildbattle
+	return
+
+Route12_EventScript_BossCapstoneAlphaDugtrio::
+	msgbox Route12_Text_BridgeLeadersBossIntro, MSGBOX_AUTOCLOSE
+	setflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	setwildbattle SPECIES_DUGTRIO, 47
+	dowildbattle
+	clearflag FLAG_SYS_SPECIAL_WILD_BATTLE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, Route12_EventScript_BossCapstoneAlphaDugtrio_Won
+	setvar VAR_RESULT, FALSE
+	return
+
+Route12_EventScript_BossCapstoneAlphaDugtrio_Won::
+	msgbox Route12_Text_BridgeLeadersBossDefeat, MSGBOX_AUTOCLOSE
+	setvar VAR_RESULT, TRUE
 	return
 
 Route12_EventScript_PostBattleUnlockShortcut::
