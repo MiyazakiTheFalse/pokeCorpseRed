@@ -1,5 +1,6 @@
 Text_GiovanniDirectiveTemplate::
-	.string "[DIRECTIVE] {STR_VAR_1}\p"
+	.string "ACTIVE DIRECTIVE\n"
+	.string "{STR_VAR_1}\p"
 	.string "Target: {STR_VAR_2}\n"
 	.string "Next: {STR_VAR_3}$"
 
@@ -8,10 +9,10 @@ Text_GiovanniDirectiveUnknown::
 	.string "routing from the chapter hub.$"
 
 Text_GiovanniDirectiveTitle_Ch1Act1::
-	.string "Operation Groundwire$"
+	.string "SECURE ROUTE$"
 
 Text_GiovanniDirectiveTarget_Ch1Act1::
-	.string "Rocket Hideout B4F$"
+	.string "Viridian Forest checkpoint$"
 
 Text_GiovanniDirectiveAction_Ch1Act1::
 	.string "Secure corridor and stage convoy.$"
