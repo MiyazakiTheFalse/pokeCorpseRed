@@ -5,9 +5,36 @@ Route11_MapScripts::
 Route11_OnTransition::
 	specialvar VAR_RESULT, ValidateGiovanniInteractionOverlayForCurrentMap
 	goto_if_eq VAR_RESULT, FALSE, EventScript_Return
+	call Route11_EventScript_Act2ForcedStart
 	goto_if_set FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, Route11_EventScript_MemoryRoutingCheck
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, EventScript_Return
 	goto Route11_EventScript_MemoryDesyncReturnToHub
+
+
+Route11_EventScript_Act2ForcedStart::
+	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, Route11_EventScript_Act2ForcedStart_Return
+	goto_if_ne VAR_GIO_CHAPTER, 1, Route11_EventScript_Act2ForcedStart_Return
+	goto_if_ne VAR_GIO_ACT, 2, Route11_EventScript_Act2ForcedStart_Return
+	goto_if_ne VAR_GIO_SEGMENT, 2, Route11_EventScript_Act2ForcedStart_Return
+	lockall
+	setvar VAR_GIO_ACT, 2
+	setvar VAR_GIO_ACTIVE_DIRECTIVE_ID, 102
+	msgbox Route11_Text_MemoryAct2CollapseIncident, MSGBOX_AUTOCLOSE
+	playse SE_M_DIG
+	setvar VAR_0x8004, 0
+	setvar VAR_0x8005, 3
+	setvar VAR_0x8006, 4
+	setvar VAR_0x8007, 2
+	special ShakeScreen
+	setobjectxy LOCALID_ROUTE11_MEMORY_ENGINEER, 5, 8
+	setobjectxy LOCALID_ROUTE11_MEMORY_GUARD, 7, 8
+	addobject LOCALID_ROUTE11_MEMORY_ENGINEER
+	addobject LOCALID_ROUTE11_MEMORY_GUARD
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4; save blocked during active act pressure
+	releaseall
+Route11_EventScript_Act2ForcedStart_Return::
+	return
 
 Route11_EventScript_MemoryRoutingCheck::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, Route11_EventScript_MemoryDesyncReturnToHub
@@ -67,4 +94,12 @@ Route11_EventScript_MemoryRouteCheckpoint_Save::
 	setvar VAR_GIO_ACT, 2
 	setvar VAR_GIO_CHECKPOINT_ID, 1
 	special SaveGiovanniMemoryModeCheckpoint
+	end
+
+Route11_EventScript_MemoryBlockedEngineer::
+	msgbox Route11_Text_MemoryBlockedEngineer, MSGBOX_NPC
+	end
+
+Route11_EventScript_MemoryBlockedGuard::
+	msgbox Route11_Text_MemoryBlockedGuard, MSGBOX_NPC
 	end

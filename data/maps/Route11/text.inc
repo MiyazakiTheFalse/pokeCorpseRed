@@ -144,3 +144,15 @@ Route11_Text_MemorySupplyCrateRelic_Before::
 Route11_Text_MemorySupplyCrateRelic_After::
     .string "[RELIC:C1] Empty suppression crate. New tag\n"
     .string "reads CIVIL REPAIR TOOLS.$"
+
+Route11_Text_MemoryAct2CollapseIncident::
+    .string "[INCIDENT:C1] Tunnel braces failed. Controlled\n"
+    .string "collapse underway—secure surviving lanes now!$"
+
+Route11_Text_MemoryBlockedEngineer::
+    .string "ENGINEER: The cut buckled. We marked this\n"
+    .string "lane blocked until supports are reset.$"
+
+Route11_Text_MemoryBlockedGuard::
+    .string "GUARD: Route control failed. Keep civilians\n"
+    .string "back while command secures the tunnel.$"
