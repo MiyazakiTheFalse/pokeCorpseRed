@@ -1541,6 +1541,9 @@
 #define FLAG_GIO_CH3_ACT2                                           FLAG_0x8C1
 #define FLAG_GIO_CH3_ACT3                                           FLAG_0x8C2
 #define FLAG_GIO_CH3_ACT4                                           FLAG_0x8C3
+#define FLAG_GIO_CH3_ROURKE_COLLAPSE_LINE_SEEN                      FLAG_0x8C4
+#define FLAG_GIO_CH3_DRAKE_HOLD_LINE_SEEN                           FLAG_0x8C5
+#define FLAG_GIO_CH3_NOX_POST_SWARM_LINE_SEEN                       FLAG_0x8C6
 
 // RocketOps per-NPC narrative state aliases.
 #define FLAG_GIO_NPC_VERA_CH1_MILESTONE                             FLAG_GIO_CH1_ACT2

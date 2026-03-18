@@ -66,6 +66,7 @@ RocketHideout_B4F_Text_RedImpactBeat_C1::
     .string "minor disruption, but the route gate is\n"
     .string "sealed and half the checkpoint staff is gone.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
 RocketHideout_B4F_Text_MemoryChapterIntro::
     .string "[MEMORY:C1] Celadon operations begin.\n"
     .string "Secure the hideout, keep pressure on\n"
@@ -206,5 +207,5 @@ RocketHideout_B4F_Text_RecurringCaptain_Act2::
 
 RocketHideout_B4F_Text_RecurringCaptain_Act3::
     .string "[FIELD CAPTAIN DRAKE:C1-A3] Celadon wraps soon.\n"
-    .string "War discipline keeps people breathing;\n"
+    .string "War discipline in this memory keeps people breathing;\n"
     .string "that's all I need to know.$"
