@@ -162,3 +162,7 @@ Route11_Text_MemoryCollapseCleared::
     .string "Engineer squad rerouted to collapse node.\p"
     .string "[OBJECTIVE:C1] Rubble cleared. Route 11\n"
     .string "lane reopened—advance to the next beat.$"
+
+Route11_Text_MemoryStabilized::
+    .string "[MEMORY:C1] Memory stabilized. Return to\n"
+    .string "hub for convoy staging orders.$"

@@ -26,6 +26,15 @@ Text_GiovanniDirectiveTarget_Ch1Act2::
 Text_GiovanniDirectiveAction_Ch1Act2::
 	.string "Hold tunnel control and lock exits.$"
 
+Text_GiovanniDirectiveTitle_Ch1Act3::
+	.string "Convoy Staging$"
+
+Text_GiovanniDirectiveTarget_Ch1Act3::
+	.string "Celadon hideout command floor$"
+
+Text_GiovanniDirectiveAction_Ch1Act3::
+	.string "Stage convoy lanes and launch transfer.$"
+
 Text_GiovanniDirectiveTitle_Ch2Act1::
 	.string "Silph Breach Window$"
 
