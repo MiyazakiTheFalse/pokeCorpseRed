@@ -491,6 +491,11 @@ ViridianCity_Gym_Text_RecurringCaptain_Act2::
     .string "else starts to waver. Final hold timer\n"
     .string "starts the moment command hesitates.$"
 
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
+ViridianCity_Gym_Text_RecurringCaptain_MidpointHoldLine::
+    .string "[CAPTAIN DRAKE:C3] Midpoint confirmed:\n"
+    .string "hold the line or lose the corridor.$"
+
 ViridianCity_Gym_Text_RecurringCaptain_Act3::
     .string "[CAPTAIN DRAKE:C3-A3] I know what this costs.\n"
     .string "I am still standing with Giovanni.\n"
@@ -512,6 +517,11 @@ ViridianCity_Gym_Text_RecurringEngineer_Act2::
     .string "we are patching a sinking hull. I am tired\n"
     .string "of calling this control. I can still\n"
     .string "explain which breakers open side routes.$"
+
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
+ViridianCity_Gym_Text_RecurringEngineer_CollapseSiteInfra::
+    .string "[ENGINEER ROURKE:C3] Collapse site confirms\n"
+    .string "this memory-site grid was built on war-era footings.$"
 
 ViridianCity_Gym_Text_RecurringEngineer_Act3::
     .string "[ENGINEER ROURKE:C3-A3] Finish this and I walk.\n"
@@ -563,6 +573,11 @@ ViridianCity_Gym_Text_RecurringScientist_Act3::
     .string "note reads: \"If this falls, I go below.\"\n"
     .string "Only relay static remains on his channel.\n"
     .string "No direct contact available.$"
+
+@ NARRATIVE_REVIEW:WAR_SENSITIVE
+ViridianCity_Gym_Text_RecurringScientist_PostSwarmAdaptation::
+    .string "[DR. NOX:C3] Post-swarm tissue logs adapted\n"
+    .string "faster than control models allow.$"
 
 ViridianCity_Gym_Text_RecurringScientist_Done::
     .string "[DR. NOX:C3] FINAL STATUS: UNRESOLVED.\n"
