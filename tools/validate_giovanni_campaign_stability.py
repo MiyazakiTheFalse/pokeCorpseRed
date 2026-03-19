@@ -171,6 +171,9 @@ def main() -> int:
             r"bool8 HandleGiovanniMemoryModeBootstrapOnLoad\(void\)",
             r"AbortGiovanniMemoryMode\(\);\s*ReconcileGiovanniMemoryModeOutcome\(\);",
             r"RunGiovanniMemoryModeResetHooks\(0\)",
+            r"UpdateGiovanniCheckpointFromRocketOpsStage\(u8 chapterId, u8 chapterStage\).*FLAG_ROCKETOPS_ROUTE_SECURED.*FLAG_GIO_MEM_CH3_MIDPOINT_AMBUSH_CLEARED",
+            r"ReconcileGiovanniEscortAndConvoyRecoveryState\(u8 chapterId, u8 chapterStage, u8 checkpointId\).*FLAG_ROCKETOPS_ROUTE_SECURED.*FLAG_GIO_MEM_CH3_MIDPOINT_AMBUSH_CLEARED",
+            r"RestoreGiovanniCheckpointContextForRestart\(bool8 setWarp\).*RefreshGiovanniActiveDirective\(\);",
         ],
     )
     checks.append(Check("Regression", "Whiteout/load fallback teardown + reconciliation", ok, "" if ok else f"missing={missing}"))
