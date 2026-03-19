@@ -1,7 +1,9 @@
 ViridianCity_Gym_Text_GiovanniIntro::
+    @ LOCKED_NARRATIVE_START (immutable lines; do not edit)
     .string "You never saw the system.\p"
     .string "You only saw the pieces.\p"
     .string "And yet you destroyed it.\p"
+    @ LOCKED_NARRATIVE_END
     .string "So now we settle this directly.\n"
     .string "No diversions. No noise.\p"
     .string "Even Drake is gone from the last line.\p"
@@ -18,7 +20,10 @@ ViridianCity_Gym_Text_GiovanniDefeat::
 ViridianCity_Gym_Text_GiovanniPostBattle::
     .string "I have no excuse for this loss.\n"
     .string "My men will not forgive it.\p"
+    @ LOCKED_NARRATIVE_START (immutable lines; do not edit)
+    .string "This empire ends with me.\p"
     .string "Team Rocket is finished.\p"
+    @ LOCKED_NARRATIVE_END
     .string "Reports kept arriving: dock crews forced\n"
     .string "out, Celadon shelves squeezed, families\n"
     .string "driven by rushed evacuations.\p"
@@ -68,6 +73,8 @@ ViridianCity_Gym_Text_ExplainTM26::
 
 ViridianCity_Gym_Text_YouDoNotHaveSpace::
     .string "You do not have space for this!$"
+
+@ EDITABLE_NPC_ZONE_START (approved category: Gym trainers and Gym Guy; keep concise in-world battle tone)
 
 ViridianCity_Gym_Text_YujiIntro::
     .string "Heh!\n"
@@ -169,6 +176,8 @@ ViridianCity_Gym_Text_GymGuyAdvice::
     .string "the GYM LEADERS.\p"
     .string "Also, I heard that the TRAINERS\n"
     .string "here like GROUND-type POKéMON.$"
+
+@ EDITABLE_NPC_ZONE_END
 
 ViridianCity_Gym_Text_GymGuyPostVictory::
     .string "Giovanni abandoned Team Rocket.$"
