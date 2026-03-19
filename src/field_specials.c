@@ -5213,6 +5213,19 @@ u16 SyncGiovanniMemoryModeNpcState(void)
     return TRUE;
 }
 
+
+u16 AdjustSoulDensityLocalSpecial(void)
+{
+    s16 density = VarGet(VAR_SOUL_DENSITY_LOCAL);
+    density += (s16)gSpecialVar_0x8004;
+    if (density < 0)
+        density = 0;
+    else if (density > 100)
+        density = 100;
+    VarSet(VAR_SOUL_DENSITY_LOCAL, (u16)density);
+    return TRUE;
+}
+
 u16 SaveGiovanniMemoryModeCheckpoint(void)
 {
     u8 chapterId;

@@ -4,10 +4,31 @@
 #include "menu.h"
 #include "text_window.h"
 #include "strings.h"
+#include "constants/vars.h"
 
 #define MAX_MONEY 999999
 
 EWRAM_DATA static u8 sMoneyBoxWindowId = 0;
+
+#define SOUL_DENSITY_MAX 100
+#define SOUL_DENSITY_GAIN_DIVISOR 2000
+
+static void TryIncreaseLocalSoulDensityFromSoulGain(u32 *moneyPtr, u32 oldValue, u32 newValue)
+{
+    u16 density;
+    u16 gain;
+
+    if (moneyPtr != &gSaveBlock1Ptr->money || newValue <= oldValue)
+        return;
+
+    density = VarGet(VAR_SOUL_DENSITY_LOCAL);
+    gain = 1 + (newValue - oldValue) / SOUL_DENSITY_GAIN_DIVISOR;
+    if (gain > 12)
+        gain = 12;
+
+    density = min((u16)SOUL_DENSITY_MAX, (u16)(density + gain));
+    VarSet(VAR_SOUL_DENSITY_LOCAL, density);
+}
 
 u32 GetMoney(u32 *moneyPtr)
 {
@@ -29,7 +50,8 @@ bool8 IsEnoughMoney(u32 *moneyPtr, u32 cost)
 
 void AddMoney(u32 *moneyPtr, u32 toAdd)
 {
-    u32 toSet = GetMoney(moneyPtr);
+    u32 oldValue = GetMoney(moneyPtr);
+    u32 toSet = oldValue;
 
     // can't have more money than MAX
     if (toSet + toAdd > MAX_MONEY)
@@ -40,11 +62,12 @@ void AddMoney(u32 *moneyPtr, u32 toAdd)
     {
         toSet += toAdd;
         // check overflow, can't have less money after you receive more
-        if (toSet < GetMoney(moneyPtr))
+        if (toSet < oldValue)
             toSet = MAX_MONEY;
     }
 
     SetMoney(moneyPtr, toSet);
+    TryIncreaseLocalSoulDensityFromSoulGain(moneyPtr, oldValue, toSet);
 }
 
 void RemoveMoney(u32 *moneyPtr, u32 toSub)

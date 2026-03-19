@@ -22,6 +22,7 @@
 #include "constants/maps.h"
 #include "constants/opponents.h"
 #include "constants/trainers.h"
+#include "constants/vars.h"
 
 #define CORPSE_RUN_PAYLOAD_OFFSET offsetof(struct CorpseRunSaveData, state)
 #define CORPSE_RUN_MAX_PARTY_COUNT PARTY_SIZE
@@ -37,6 +38,11 @@
 #define CORPSE_RUN_STASH_VALID_INDEX 0
 #define CORPSE_RUN_STASH_COUNT_INDEX 1
 #define CORPSE_RUN_STASH_DATA_START 2
+
+#define SOUL_DENSITY_MAX 100
+#define SOUL_DENSITY_DEATH_SPIKE 18
+#define SOUL_DENSITY_RECOVERY_REDUCTION 12
+#define SOUL_DENSITY_MAP_DECAY 2
 
 STATIC_ASSERT(sizeof(struct CorpseRunSaveData) == 400, CorpseRunSaveDataSize);
 
@@ -64,6 +70,20 @@ static u8 CorpseRun_GetBadgeCount(void);
 static void CorpseRun_SyncVisibleMarkerObject(void);
 static bool8 CorpseRun_IsPlayerAtOrFacingMarker(void);
 static void CorpseRun_ClearPartyStashMetadata(void);
+
+static void CorpseRun_AdjustLocalSoulDensity(s16 delta)
+{
+    s16 density = VarGet(VAR_SOUL_DENSITY_LOCAL);
+
+    density += delta;
+    if (density < 0)
+        density = 0;
+    else if (density > SOUL_DENSITY_MAX)
+        density = SOUL_DENSITY_MAX;
+
+    VarSet(VAR_SOUL_DENSITY_LOCAL, density);
+}
+
 
 static bool8 CorpseRun_IsMapInSalvageSafariScope(u8 mapGroup, u8 mapNum)
 {
@@ -643,6 +663,7 @@ void CorpseRun_HandlePlayerDefeat(void)
     gSaveBlock1Ptr->corpseRun.deathElevation = 0;
     gSaveBlock1Ptr->corpseRun.droppedSouls = ComputeWhiteOutMoneyLoss();
     RemoveMoney(&gSaveBlock1Ptr->money, gSaveBlock1Ptr->corpseRun.droppedSouls);
+    CorpseRun_AdjustLocalSoulDensity(SOUL_DENSITY_DEATH_SPIKE);
     SoulsHud_Update();
 
     CorpseRun_SerializeParty();
@@ -671,6 +692,7 @@ void CorpseRun_TryRecoverByTouch(void)
     if (CorpseRun_IsPlayerAtOrFacingMarker())
     {
         AddMoney(&gSaveBlock1Ptr->money, gSaveBlock1Ptr->corpseRun.droppedSouls);
+        CorpseRun_AdjustLocalSoulDensity(-SOUL_DENSITY_RECOVERY_REDUCTION);
         CorpseRun_RestorePartyFromPcStash();
         CorpseRun_ApplyRecoveryHpToParty();
         gSaveBlock1Ptr->corpseRun.droppedSouls = 0;
@@ -687,6 +709,8 @@ void CorpseRun_OnMapEnter(void)
 {
     if (!CorpseRun_IsSchemaValid(&gSaveBlock1Ptr->corpseRun))
         CorpseRun_ResetSaveData();
+
+    CorpseRun_AdjustLocalSoulDensity(-SOUL_DENSITY_MAP_DECAY);
 
     if (gSaveBlock1Ptr->corpseRun.state == CR_RECOVERED || gSaveBlock1Ptr->corpseRun.state == CR_FAILED)
         CorpseRun_SetState(CR_OFF);

@@ -177,6 +177,9 @@ EventScript_RocketOps_Command_DestroyData_C3::
 	setvar VAR_0x8007, 2
 	special ShakeScreen
 	setflag FLAG_GIO_MEM_CH3_ARCHIVE_EXPLOSION_VISUAL
+	setvar VAR_0x8004, 15
+	special AdjustSoulDensityLocalSpecial
+	msgbox ViridianCity_Gym_Text_SoulSpace_MicroBreach, MSGBOX_AUTOCLOSE
 EventScript_RocketOps_Command_DestroyData_C3_SkipArchiveFx::
 	setflag FLAG_GIO_MEM_CH3_POWER_OUTAGE_VISUAL
 	clearflag FLAG_GIO_CH3_ACT1
@@ -384,6 +387,7 @@ ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter::
 
 ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter_DestroyData::
 	msgbox ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_DestroyData, MSGBOX_AUTOCLOSE
+	msgbox ViridianCity_Gym_Text_SoulSpace_RingBehindEnemies, MSGBOX_AUTOCLOSE
 	trainerbattle_no_intro TRAINER_ROCKETOPS_ACE_TASKFORCE_CAPTAIN, ViridianCity_Gym_Text_MemoryFinalDefenseEncounterDefeat
 	goto ViridianCity_Gym_EventScript_MemoryFinalDefenseEncounter_End
 
