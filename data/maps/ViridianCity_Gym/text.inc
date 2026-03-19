@@ -409,6 +409,11 @@ ViridianCity_Gym_Text_RocketOps_StaffCheckpoint_C3::
     .string "[ROCKETOPS:C3] Escort checkpoint locked.\n"
     .string "Staff convoy moved to extraction lane.$"
 
+ViridianCity_Gym_Text_RocketOps_EscortLaunchNeedsDeploy_C3::
+    .string "[ROCKETOPS:C3] Convoy launch denied.\n"
+    .string "Issue DEPLOY AGENT to start movement\n"
+    .string "and spawn escort guards on this lane.$"
+
 ViridianCity_Gym_Text_RocketOps_EvacEndpoint_C3::
     .string "[ROCKETOPS:C3] Evac endpoint secured.\n"
     .string "Chapter extraction cycle can now close.$"
@@ -452,6 +457,11 @@ ViridianCity_Gym_Text_MemoryRecoveryStationDone::
 ViridianCity_Gym_Text_RocketOps_StaffCheckpointDone_C3::
     .string "[ROCKETOPS:C3] Staff convoy already\n"
     .string "advanced past this checkpoint.$"
+
+ViridianCity_Gym_Text_RocketOps_EscortMidpointNeedsSecureRoute_C3::
+    .string "[ROCKETOPS:C3] Midpoint blocked by ambush.\n"
+    .string "Issue SECURE ROUTE to clear blockade\n"
+    .string "and reopen the extraction corridor.$"
 
 ViridianCity_Gym_Text_RocketOps_EvacEndpointLocked_C3::
     .string "[ROCKETOPS:C3] Escort route not staged.\n"

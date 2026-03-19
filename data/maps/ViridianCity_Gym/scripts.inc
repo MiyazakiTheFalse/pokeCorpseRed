@@ -97,6 +97,7 @@ ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpoint::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_set FLAG_GIO_MEM_CH3_STAFF_EXTRACTED, ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpointDone
+	goto_if_unset FLAG_ROCKETOPS_AGENT_DEPLOYED, ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpointNeedsDeploy
 	setflag FLAG_GIO_MEM_CH3_ESCORT_SEGMENT_ACTIVE
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1
 	clearflag FLAG_GIO_CH3_ACT2
@@ -113,6 +114,10 @@ ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpoint::
 	msgbox ViridianCity_Gym_Text_MemoryAct3EscortRoute, MSGBOX_AUTOCLOSE
 	end
 
+ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpointNeedsDeploy::
+	msgbox ViridianCity_Gym_Text_RocketOps_EscortLaunchNeedsDeploy_C3, MSGBOX_AUTOCLOSE
+	end
+
 ViridianCity_Gym_EventScript_MemoryStaffEscortCheckpointDone::
 	msgbox ViridianCity_Gym_Text_RocketOps_StaffCheckpointDone_C3, MSGBOX_AUTOCLOSE
 	end
@@ -121,10 +126,15 @@ ViridianCity_Gym_EventScript_MemoryEvacEndpoint::
 	goto_if_unset FLAG_SYS_GIOVANNI_MEMORY_MODE_ACTIVE, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_ne VAR_GIO_CHAPTER, 3, ViridianCity_Gym_EventScript_MemorySpaceMarkerMismatch
 	goto_if_unset FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1, ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked
+	goto_if_unset FLAG_ROCKETOPS_ROUTE_SECURED, ViridianCity_Gym_EventScript_MemoryEvacEndpointNeedsSecureRoute
 	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2
 	setvar VAR_GIO_CHECKPOINT_ID, 2
 	special SaveGiovanniMemoryModeCheckpoint
 	goto EventScript_RocketOps_UseExtractionNodeTerminal
+
+ViridianCity_Gym_EventScript_MemoryEvacEndpointNeedsSecureRoute::
+	msgbox ViridianCity_Gym_Text_RocketOps_EscortMidpointNeedsSecureRoute_C3, MSGBOX_AUTOCLOSE
+	end
 
 ViridianCity_Gym_EventScript_MemoryEvacEndpointLocked::
 	msgbox ViridianCity_Gym_Text_RocketOps_EvacEndpointLocked_C3, MSGBOX_AUTOCLOSE
@@ -134,6 +144,9 @@ EventScript_RocketOps_Command_SecureRoute_C3::
 	call ViridianCity_Gym_EventScript_CommandMatrix_DenySecureRoute
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_SECURE_CORRIDOR
+	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_2
+	setvar VAR_GIO_CHECKPOINT_ID, 2
+	call EventScript_GiovanniCampaign_PrintActiveDirective
 	call ViridianCity_Gym_EventScript_RunGuardDoorSealMovement
 	special DrawWholeMapView
 	msgbox ViridianCity_Gym_Text_RocketOps_SecureRoute_C3
@@ -143,6 +156,10 @@ EventScript_RocketOps_Command_DeployAgent_C3::
 	call ViridianCity_Gym_EventScript_CommandMatrix_AllowDeployAgent
 	setvar VAR_GIO_SEGMENT, 3 @ GIO_SEGMENT_4
 	setflag FLAG_ROCKETOPS_ORDER_HOLD_POSITION
+	setflag FLAG_GIO_MEM_CH3_ESCORT_CHECKPOINT_1
+	setvar VAR_GIO_CHECKPOINT_ID, 1
+	call EventScript_GiovanniCampaign_PrintActiveDirective
+	call ViridianCity_Gym_EventScript_RunEscortConvoyMovement
 	special DrawWholeMapView
 	msgbox ViridianCity_Gym_Text_RocketOps_DeployAgent_C3
 	goto EventScript_RocketOps_CommandFinalize
@@ -207,6 +224,7 @@ EventScript_RocketOps_Command_ExtractStaff_C3_SkipEvacFx::
 	@ - Act 3: allow Extract Staff; forbid Secure Route / Deploy Agent / Destroy Data.
 	@ - Act 4: forbid all commands.
 ViridianCity_Gym_EventScript_CommandMatrix_DenySecureRoute::
+	goto_if_set FLAG_GIO_CH3_ACT3, EventScript_Return
 	goto ViridianCity_Gym_EventScript_CommandMatrix_DenySecureRouteMessage
 
 ViridianCity_Gym_EventScript_CommandMatrix_AllowDeployAgent::
