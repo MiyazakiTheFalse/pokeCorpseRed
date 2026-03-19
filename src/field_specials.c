@@ -281,6 +281,9 @@ extern const u8 Text_GiovanniDirectiveAction_Ch1Act1[];
 extern const u8 Text_GiovanniDirectiveTitle_Ch1Act2[];
 extern const u8 Text_GiovanniDirectiveTarget_Ch1Act2[];
 extern const u8 Text_GiovanniDirectiveAction_Ch1Act2[];
+extern const u8 Text_GiovanniDirectiveTitle_Ch1Act3[];
+extern const u8 Text_GiovanniDirectiveTarget_Ch1Act3[];
+extern const u8 Text_GiovanniDirectiveAction_Ch1Act3[];
 extern const u8 Text_GiovanniDirectiveTitle_Ch2Act1[];
 extern const u8 Text_GiovanniDirectiveTarget_Ch2Act1[];
 extern const u8 Text_GiovanniDirectiveAction_Ch2Act1[];
@@ -304,6 +307,7 @@ static const struct GiovanniDirective sGiovanniDirectiveTable[] =
 {
     {101, Text_GiovanniDirectiveTitle_Ch1Act1, Text_GiovanniDirectiveTarget_Ch1Act1, Text_GiovanniDirectiveAction_Ch1Act1},
     {102, Text_GiovanniDirectiveTitle_Ch1Act2, Text_GiovanniDirectiveTarget_Ch1Act2, Text_GiovanniDirectiveAction_Ch1Act2},
+    {103, Text_GiovanniDirectiveTitle_Ch1Act3, Text_GiovanniDirectiveTarget_Ch1Act3, Text_GiovanniDirectiveAction_Ch1Act3},
     {201, Text_GiovanniDirectiveTitle_Ch2Act1, Text_GiovanniDirectiveTarget_Ch2Act1, Text_GiovanniDirectiveAction_Ch2Act1},
     {202, Text_GiovanniDirectiveTitle_Ch2Act2, Text_GiovanniDirectiveTarget_Ch2Act2, Text_GiovanniDirectiveAction_Ch2Act2},
     {301, Text_GiovanniDirectiveTitle_Ch3Act1, Text_GiovanniDirectiveTarget_Ch3Act1, Text_GiovanniDirectiveAction_Ch3Act1},
@@ -1187,8 +1191,8 @@ u16 Special_LoadGiovanniActiveDirective(void)
     bool8 guardDeployed;
     bool8 logisticsOnline;
     bool8 collapseCleared;
-    bool8 midpointGuardDeployed;
-    bool8 controlNodeRestored;
+    bool8 dugtrioDefeated;
+    bool8 routeSecurityNodeSet;
     bool8 act2GateSatisfied;
 
     RefreshGiovanniActiveDirective();
@@ -1227,41 +1231,41 @@ u16 Special_LoadGiovanniActiveDirective(void)
     else if (VarGet(VAR_GIO_CHAPTER) == 1 && VarGet(VAR_GIO_ACT) == 2)
     {
         collapseCleared = FlagGet(FLAG_GIO_MEM_CH1_COLLAPSE_CLEARED);
-        midpointGuardDeployed = FlagGet(FLAG_ROCKETOPS_AGENT_DEPLOYED);
-        controlNodeRestored = FlagGet(FLAG_GIO_CH1_LOGISTICS_ASSET_ACTIVATED);
-        act2GateSatisfied = collapseCleared && (midpointGuardDeployed || controlNodeRestored);
+        dugtrioDefeated = FlagGet(FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED);
+        routeSecurityNodeSet = FlagGet(FLAG_ROCKETOPS_ROUTE_SECURED);
+        act2GateSatisfied = collapseCleared && dugtrioDefeated && routeSecurityNodeSet;
         StringExpandPlaceholders(gStringVar3,
                                  collapseCleared
-                                     ? (midpointGuardDeployed
-                                            ? (controlNodeRestored
+                                     ? (dugtrioDefeated
+                                            ? (routeSecurityNodeSet
                                                    ? (act2GateSatisfied
-                                                          ? (const u8 *)_("Collapse: DONE\nGuard squad midpoint: DONE\nControl node restore: DONE\nAct2 gate: READY")
-                                                          : (const u8 *)_("Collapse: DONE\nGuard squad midpoint: DONE\nControl node restore: DONE\nAct2 gate: PENDING"))
+                                                          ? (const u8 *)_("Collapse cleared: DONE\nAlpha Dugtrio defeated: DONE\nRoute security node: DONE\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse cleared: DONE\nAlpha Dugtrio defeated: DONE\nRoute security node: DONE\nAct2 gate: PENDING"))
                                                    : (act2GateSatisfied
-                                                          ? (const u8 *)_("Collapse: DONE\nGuard squad midpoint: DONE\nControl node restore: PENDING\nAct2 gate: READY")
-                                                          : (const u8 *)_("Collapse: DONE\nGuard squad midpoint: DONE\nControl node restore: PENDING\nAct2 gate: PENDING")))
-                                            : (controlNodeRestored
+                                                          ? (const u8 *)_("Collapse cleared: DONE\nAlpha Dugtrio defeated: DONE\nRoute security node: PENDING\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse cleared: DONE\nAlpha Dugtrio defeated: DONE\nRoute security node: PENDING\nAct2 gate: PENDING")))
+                                            : (routeSecurityNodeSet
                                                    ? (act2GateSatisfied
-                                                          ? (const u8 *)_("Collapse: DONE\nGuard squad midpoint: PENDING\nControl node restore: DONE\nAct2 gate: READY")
-                                                          : (const u8 *)_("Collapse: DONE\nGuard squad midpoint: PENDING\nControl node restore: DONE\nAct2 gate: PENDING"))
+                                                          ? (const u8 *)_("Collapse cleared: DONE\nAlpha Dugtrio defeated: PENDING\nRoute security node: DONE\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse cleared: DONE\nAlpha Dugtrio defeated: PENDING\nRoute security node: DONE\nAct2 gate: PENDING"))
                                                    : (act2GateSatisfied
-                                                          ? (const u8 *)_("Collapse: DONE\nGuard squad midpoint: PENDING\nControl node restore: PENDING\nAct2 gate: READY")
-                                                          : (const u8 *)_("Collapse: DONE\nGuard squad midpoint: PENDING\nControl node restore: PENDING\nAct2 gate: PENDING"))))
-                                     : (midpointGuardDeployed
-                                            ? (controlNodeRestored
+                                                          ? (const u8 *)_("Collapse cleared: DONE\nAlpha Dugtrio defeated: PENDING\nRoute security node: PENDING\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse cleared: DONE\nAlpha Dugtrio defeated: PENDING\nRoute security node: PENDING\nAct2 gate: PENDING"))))
+                                     : (dugtrioDefeated
+                                            ? (routeSecurityNodeSet
                                                    ? (act2GateSatisfied
-                                                          ? (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: DONE\nControl node restore: DONE\nAct2 gate: READY")
-                                                          : (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: DONE\nControl node restore: DONE\nAct2 gate: PENDING"))
+                                                          ? (const u8 *)_("Collapse cleared: PENDING\nAlpha Dugtrio defeated: DONE\nRoute security node: DONE\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse cleared: PENDING\nAlpha Dugtrio defeated: DONE\nRoute security node: DONE\nAct2 gate: PENDING"))
                                                    : (act2GateSatisfied
-                                                          ? (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: DONE\nControl node restore: PENDING\nAct2 gate: READY")
-                                                          : (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: DONE\nControl node restore: PENDING\nAct2 gate: PENDING")))
-                                            : (controlNodeRestored
+                                                          ? (const u8 *)_("Collapse cleared: PENDING\nAlpha Dugtrio defeated: DONE\nRoute security node: PENDING\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse cleared: PENDING\nAlpha Dugtrio defeated: DONE\nRoute security node: PENDING\nAct2 gate: PENDING")))
+                                            : (routeSecurityNodeSet
                                                    ? (act2GateSatisfied
-                                                          ? (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: PENDING\nControl node restore: DONE\nAct2 gate: READY")
-                                                          : (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: PENDING\nControl node restore: DONE\nAct2 gate: PENDING"))
+                                                          ? (const u8 *)_("Collapse cleared: PENDING\nAlpha Dugtrio defeated: PENDING\nRoute security node: DONE\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse cleared: PENDING\nAlpha Dugtrio defeated: PENDING\nRoute security node: DONE\nAct2 gate: PENDING"))
                                                    : (act2GateSatisfied
-                                                          ? (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: PENDING\nControl node restore: PENDING\nAct2 gate: READY")
-                                                          : (const u8 *)_("Collapse: PENDING\nGuard squad midpoint: PENDING\nControl node restore: PENDING\nAct2 gate: PENDING"))))));
+                                                          ? (const u8 *)_("Collapse cleared: PENDING\nAlpha Dugtrio defeated: PENDING\nRoute security node: PENDING\nAct2 gate: READY")
+                                                          : (const u8 *)_("Collapse cleared: PENDING\nAlpha Dugtrio defeated: PENDING\nRoute security node: PENDING\nAct2 gate: PENDING"))))));
     }
     else
     {
@@ -5242,8 +5246,7 @@ static u8 GetRocketOpsChapter1StackedObjectiveStage(void)
 {
     if (FlagGet(FLAG_ROCKETOPS_ROUTE_SECURED)
      && FlagGet(FLAG_GIO_MEM_CH1_COLLAPSE_CLEARED)
-     && (FlagGet(FLAG_ROCKETOPS_AGENT_DEPLOYED)
-      || FlagGet(FLAG_GIO_CH1_LOGISTICS_ASSET_ACTIVATED)))
+     && FlagGet(FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED))
         return 3;
 
     return 0;

@@ -102,9 +102,14 @@ Route11_EventScript_MemoryRouteCheckpoint_Save::
 	goto_if_eq VAR_RESULT, GIO_SHARED_WARP_RESULT_LOCKED_FALLBACK, Route11_EventScript_MemoryDesyncReturnToHub
 	setflag FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED
 	setflag FLAG_GIO_MEM_CH1_DIGLETT_SWARM_VISUAL
-	setvar VAR_GIO_ACT, 2
-	setvar VAR_GIO_CHECKPOINT_ID, 1
+	setflag FLAG_GIO_CH1_ACT2
+	setvar VAR_GIO_ACT, 3
+	setvar VAR_GIO_ACTIVE_DIRECTIVE_ID, 103
+	setvar VAR_GIO_SEGMENT, 1 @ GIO_SEGMENT_1; between-acts save window
+	msgbox Route11_Text_MemoryStabilized, MSGBOX_AUTOCLOSE
 	special SaveGiovanniMemoryModeCheckpoint
+	warp MAP_ROCKET_HIDEOUT_B4F, 19, 6
+	waitstate
 	end
 
 Route11_EventScript_MemoryBlockedEngineer::

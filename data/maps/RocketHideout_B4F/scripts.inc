@@ -108,7 +108,9 @@ RocketHideout_B4F_EventScript_Act2_Return::
 	end
 
 RocketHideout_B4F_EventScript_Act3_Start::
+	goto_if_unset FLAG_GIO_MEM_CH1_COLLAPSE_CLEARED, RocketHideout_B4F_EventScript_ActLocked
 	goto_if_unset FLAG_GIO_MEM_CH1_DUGTRIO_BOSS_DEFEATED, RocketHideout_B4F_EventScript_ActLocked
+	goto_if_unset FLAG_ROCKETOPS_ROUTE_SECURED, RocketHideout_B4F_EventScript_ActLocked
 	goto_if_set FLAG_GIO_CH1_ACT3, RocketHideout_B4F_EventScript_Act3_Return
 	clearflag FLAG_GIO_CH1_ACT2
 	setflag FLAG_GIO_CH1_ACT3
