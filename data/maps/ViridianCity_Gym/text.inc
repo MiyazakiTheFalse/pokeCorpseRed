@@ -467,6 +467,13 @@ ViridianCity_Gym_Text_RocketOps_EvacEndpointLocked_C3::
     .string "[ROCKETOPS:C3] Escort route not staged.\n"
     .string "Reach checkpoint alpha first.$"
 
+ViridianCity_Gym_Text_MemoryEscortMidpointAmbushMotive::
+    .string "[TASKFORCE:C3] We are not letting Rocket\n"
+    .string "turn this lane into another graveyard.$"
+
+ViridianCity_Gym_Text_MemoryEscortMidpointAmbushDefeat::
+    .string "[TASKFORCE:C3] Pull back! Midpoint is blown.$"
+
 ViridianCity_Gym_Text_MemoryFinalDefenseEncounter_DestroyData::
     .string "[TASKFORCE:C3] Burned archives mean we lose\n"
     .string "medical and hazard records too. Drake's\n"
