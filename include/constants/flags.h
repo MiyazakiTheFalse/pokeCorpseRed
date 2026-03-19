@@ -1609,6 +1609,7 @@
 #define FLAG_GIO_MEM_CH1_HUB_MONOLOGUE_SEEN                            FLAG_0x8DB
 #define FLAG_GIO_MEM_CH2_HUB_MONOLOGUE_SEEN                            FLAG_0x8DC
 #define FLAG_GIO_MEM_CH3_HUB_MONOLOGUE_SEEN                            FLAG_0x8DD
+#define FLAG_GIO_MEM_CH3_MIDPOINT_AMBUSH_CLEARED                        FLAG_0x8DE
 #define FLAG_GIO_MEM_CH3_DRAKE_PRESUMED_DEAD                           FLAG_0x8DF
 
 // Giovanni memory mode chapter gate objective aliases.
